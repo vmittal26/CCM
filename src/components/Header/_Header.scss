@@ -1,18 +1,16 @@
-.Header-Parent{
-    position: relative;
-    padding:1rem;
-}
-
 .Header{
     padding:1rem;
     background-color: $color-primary;
     display: flex;
     color: #fff;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top:0;
     left:0;
-    
+    z-index: 1;
+    button:active{
+        border:none;
+    }
     &__logo{
         width:2rem;
         cursor: pointer;
