@@ -31,14 +31,14 @@ module.exports = {
           }
         ]
       },
-      {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader"
-      },
+      // {
+      //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      //   loader: "url-loader?limit=100000"
+      // },
+      // {
+      //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: "file-loader"
+      // },
 
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]

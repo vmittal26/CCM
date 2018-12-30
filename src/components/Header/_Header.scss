@@ -1,19 +1,32 @@
+.Header-Parent{
+    position: relative;
+    padding:1rem;
+}
+
 .Header{
-    padding:1.5rem;
-    background-color: darken($color-primary,12%);
+    padding:1rem;
+    background-color: $color-primary;
     display: flex;
     color: #fff;
+    position: absolute;
+    width: 100%;
+    top:0;
+    left:0;
     
     &__logo{
-        width:1.5rem;
+        width:2rem;
         cursor: pointer;
     }
     &__left{
+        display: flex;
+        align-items: center;
         flex-basis: 80%;
     }
     &__right{
         flex-basis: 20%;
         display: flex;
         justify-content: space-between;
+        align-items: center
     }
 }
+
