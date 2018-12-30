@@ -1,22 +1,4 @@
 .Increment{
     background: gold;
     padding:3rem;
-    text-align: center;
-    h1,button{
-        display: inline-block;
-    }
-    button{
-        padding:15px 30px;
-        font-family: sans-serif;
-        text-transform: uppercase;
-        margin-left: 10px;
-        background: orange;
-        outline: none;
-        border:none;
-        color:white;
-
-        &:hover{
-            background-color: darken(orange,2%);
-        }
-    }
 }

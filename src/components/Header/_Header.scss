@@ -1,0 +1,19 @@
+.Header{
+    padding:1.5rem;
+    background-color: darken($color-primary,12%);
+    display: flex;
+    color: #fff;
+    
+    &__logo{
+        width:1.5rem;
+        cursor: pointer;
+    }
+    &__left{
+        flex-basis: 80%;
+    }
+    &__right{
+        flex-basis: 20%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

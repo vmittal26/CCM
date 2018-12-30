@@ -1,7 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = process.env.NODE_ENV !== "production";
+const globImporter = require("node-sass-glob-importer");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -13,13 +14,32 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test:/\.scss$/,
+        test: /\.scss$/,
         use: [
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
+          {
+            loader: devMode ? "style-loader" : MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader"
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              importer: globImporter(),
+              includePaths: ['./node_modules']
+            }
+          }
+        ]
       },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: "url-loader?limit=100000"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      },
+
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },

@@ -1,1 +1,5 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./abstracts/variables";
+@import "./base/base";
+@import "../components/Header/Header";
 @import "../components/Increment/Increment";
