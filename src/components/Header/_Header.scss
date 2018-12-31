@@ -1,8 +1,8 @@
 .Header{
     padding:1rem;
-    background-color: $color-primary;
+    background-color: #FFF;
     display: flex;
-    color: #fff;
+    color:$color-primary;
     position: fixed;
     width: 100%;
     top:0;
@@ -12,7 +12,7 @@
         border:none;
     }
     &__logo{
-        width:2rem;
+        width:4rem;
         cursor: pointer;
     }
     &__left{

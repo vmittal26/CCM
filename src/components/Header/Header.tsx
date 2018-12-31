@@ -14,11 +14,11 @@ export default function Header() {
         <div className="Header__logo-box">
           <img
             className="Header__logo"
-            src="./src/images/vodafone_icon.jpg"
+            src="./src/images/vodafone.png"
             alt="KTM"
           />
         </div>
-        <button  className="btn text-white" onClick={() => onToogleSliderMenu()}>
+        <button  className="btn" onClick={() => onToogleSliderMenu()}>
           <FontAwesomeIcon
             style={{ marginLeft: "0.5rem", fontSize: "2rem" }}
             icon="bars"

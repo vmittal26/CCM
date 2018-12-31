@@ -6,6 +6,11 @@ const globImporter = require("node-sass-glob-importer");
 
 module.exports = {
   entry: "./src/index.tsx",
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'index_bundle.js',
+    publicPath: '/'
+},
   module: {
     rules: [
       {
@@ -26,7 +31,7 @@ module.exports = {
             loader: "sass-loader",
             options: {
               importer: globImporter(),
-              includePaths: ['./node_modules']
+              includePaths: ["./node_modules"]
             }
           }
         ]
@@ -42,6 +47,9 @@ module.exports = {
 
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
+  },
+  devServer: {
+    historyApiFallback: true
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"]
@@ -59,5 +67,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({ template: "./src/index.html" })
   ],
-  devtool: "source-map"
+  devtool: "source-map",
+  devServer: {
+    historyApiFallback: true
+  }
 };
