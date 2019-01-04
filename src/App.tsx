@@ -8,6 +8,7 @@ import GestioneKOSospesi from "./components/GestioneKOSospesi/GestioneKOSospesi"
 import GestioneKO from "./components/GestioneKO/GestioneKO";
 import GestioneKOSegnlazione from "./components/GestioneKOSegnalazione/GestioneKOSegnlazione";
 import SospensioneVodafone from "./components/SospensioneVodafone/SospensioneVodafone";
+import CanaliVendita from "./components/CanaliVendita/CanaliVendita";
 
 fontawesome();
 
@@ -21,6 +22,7 @@ const AppRouter = () => (
         <Route path="/gestioneKOSospesi" component={GestioneKOSospesi} />
         <Route path="/gestioneKOSegnalazione" component={GestioneKOSegnlazione} />
         <Route path="/sospensioniVodafone" component={SospensioneVodafone} />
+        <Route path="/canaliVendita" component={CanaliVendita} />
       </Switch>
     </main>
   </div>
