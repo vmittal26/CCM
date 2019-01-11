@@ -1,51 +1,33 @@
 import * as React from "react";
 import ReactTable from "react-table";
-import { ICanaliVenditaTableState } from "../../model/ICanaliVenditaTableState";
-import "react-table/react-table.css";
-import axios from "axios";
+import ITableState from "../../model/ITableState";
+
+import axios from "../../config/axiosKTMConfig";
+import getCanaliVenditaData from "../../Utils/getTableData";
 
 export default function CanaliVendita() {
-  const [tableState, setTableState] = React.useState<ICanaliVenditaTableState>({
+  const [tableState, setTableState] = React.useState<ITableState>({
     data: [],
     pages: null,
     loading: true
   });
 
-  const baseURL = "http://localhost:8080/canvaliVendita/v1/canaliVendita";
+  const baseURL = `canvaliVendita/v1/list`;
 
   const fetchData = (state: any, instance: any) => {
-    const getDataURL: string = `${baseURL}?pageNumber=${state.page}&&pageSize=${
+    const filtered: Array<{}> = state.filtered;
+    const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${
       state.pageSize
     }`;
+    const getFilteredDataURL: string = `${baseURL}/filter${pageParamsString}`;
 
-    setTableState((prevState: ICanaliVenditaTableState) => ({
+    setTableState((prevState: ITableState) => ({
       ...prevState,
       loading: true
     }));
-
-    (async ():Promise<void>=>{
-        try {
-          var response = await axios.get(getDataURL);
-          const { content, totalPages } = response.data;
-          setTableState({
-            data: content,
-            pages: totalPages,
-            loading: false
-          });
-        } catch (err) {
-          console.log("Error: ", err.message);
-        }
-    })();
-
-    // axios.get(getDataURL).then(response => {
-    //   const { content, totalPages } = response.data;
-    //   setTableState({
-    //     data: content,
-    //     pages: totalPages,
-    //     loading: false
-    //   });
-    // });
+    getCanaliVenditaData(getFilteredDataURL, filtered, setTableState, axios);
   };
+
   return (
     <div>
       <ReactTable
@@ -56,7 +38,17 @@ export default function CanaliVendita() {
           },
           {
             Header: "Descrizione",
-            accessor: "descrizione"
+            accessor: "descrizione",
+            Filter: ({ filter, onChange }) =>
+                    <select
+                      onChange={event => onChange(event.target.value)}
+                      style={{ width: "100%" }}
+                      value={filter ? filter.value : "all"}
+                    >
+                      <option value="all">Show All</option>
+                      <option value="true">Can Drink</option>
+                      <option value="false">Can't Drink</option>
+                    </select>
           }
         ]}
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
@@ -67,6 +59,8 @@ export default function CanaliVendita() {
         filterable
         defaultPageSize={10}
         className="-striped -highlight"
+        showPaginationTop
+        showPaginationBottom={false}
       />
       <br />
     </div>

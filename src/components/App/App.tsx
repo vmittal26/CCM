@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
-import "./styles/main.scss";
-import Increment from "./components/Increment/Increment";
-import Header from "./components/Header/Header";
-import fontawesome from "./fontawesomeSVGConfig";
-import GestioneKOSospesi from "./components/GestioneKOSospesi/GestioneKOSospesi";
-import GestioneKO from "./components/GestioneKO/GestioneKO";
-import GestioneKOSegnlazione from "./components/GestioneKOSegnalazione/GestioneKOSegnlazione";
-import SospensioneVodafone from "./components/SospensioneVodafone/SospensioneVodafone";
-import CanaliVendita from "./components/CanaliVendita/CanaliVendita";
+import Increment from "../Increment/Increment";
+import Header from "../Header/Header";
+import fontawesome from "../../config/fontawesomeSVGConfig";
+import GestioneKOSospesi from "../GestioneKOSospesi/GestioneKOSospesi";
+import GestioneKO from "../GestioneKO/GestioneKO";
+import GestioneKOSegnlazione from "../GestioneKOSegnalazione/GestioneKOSegnlazione";
+import SospensioneVodafone from "../SospensioneVodafone/SospensioneVodafone";
+import CanaliVendita from "../CanaliVendita/CanaliVendita";
+import SegnalzioneEntita from "../SegnalazioniEntita/SegnalzioneEntita";
 
 fontawesome();
 
@@ -23,6 +23,7 @@ const AppRouter = () => (
         <Route path="/gestioneKOSegnalazione" component={GestioneKOSegnlazione} />
         <Route path="/sospensioniVodafone" component={SospensioneVodafone} />
         <Route path="/canaliVendita" component={CanaliVendita} />
+        <Route path="/segnlazioneEntita" component={SegnalzioneEntita} />
       </Switch>
     </main>
   </div>
