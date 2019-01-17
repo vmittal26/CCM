@@ -5,7 +5,7 @@ import ReactTable from "react-table";
 import getTableData from "../../Utils/getTableData";
 import headerConfig from "./HeaderConfig";
 import Spinner from "../UI/Spinner/Spinner";
-import Backdrop from "../UI/Backdrop/Backdrop";
+import IFilter from "../../model/IFilter";
 
 export default function SegnalzioneEntita() {
   const [tableState, setTableState] = React.useState<ITableState>({
@@ -16,30 +16,11 @@ export default function SegnalzioneEntita() {
   });
 
   const baseURL = `segnalazione/v1/list`;
-
+  
   const fetchData = (state: any, instance: any) => {
-    const filtersFromTable: Array<{}> = state.filtered;
-    
-    const filters = filtersFromTable.filter((filter:any)=> filter.type && filter.type!=="CLEAR");
-
-    const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${
-      state.pageSize
-    }`;
-    const getFilteredDataURL: string = `${baseURL}/filter${pageParamsString}`;
-
-    setTableState((prevState: ITableState) => ({
-      ...prevState,
-      loading: true
-    }));
-    getTableData(getFilteredDataURL, filters, setTableState, axios);
+    getTableData(state, baseURL, setTableState, null,axios);
   };
 
-  // const
-  // createVisibleColumnHeaders=(columnHeaders:Array<String>,headerConfig:any)=>
-  //                    columnHeaders.map((columnHeader:any)=> {
-  //     const header =  headerConfig[columnHeader];
-  // header.className="cell";
-  // header.headerClassName="header"                       return header});
 
   return (
     <div>

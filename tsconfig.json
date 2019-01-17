@@ -9,7 +9,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "allowJs": true,
-    "lib": ["dom", "es2015.promise", "es5"]
+    "lib": ["dom", "es2015.promise","es2015.collection", "es5"]
   },
   "include": ["src/**/*"]
 }

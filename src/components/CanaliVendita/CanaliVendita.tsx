@@ -3,7 +3,7 @@ import ReactTable from "react-table";
 import ITableState from "../../model/ITableState";
 
 import axios from "../../config/axiosKTMConfig";
-import getCanaliVenditaData from "../../Utils/getTableData";
+import getTableData from "../../Utils/getTableData";
 
 export default function CanaliVendita() {
   const [tableState, setTableState] = React.useState<ITableState>({
@@ -15,17 +15,7 @@ export default function CanaliVendita() {
   const baseURL = `canvaliVendita/v1/list`;
 
   const fetchData = (state: any, instance: any) => {
-    const filtered: Array<{}> = state.filtered;
-    const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${
-      state.pageSize
-    }`;
-    const getFilteredDataURL: string = `${baseURL}/filter${pageParamsString}`;
-
-    setTableState((prevState: ITableState) => ({
-      ...prevState,
-      loading: true
-    }));
-    getCanaliVenditaData(getFilteredDataURL, filtered, setTableState, axios);
+    getTableData(state, baseURL, setTableState,null, axios);
   };
 
   return (
