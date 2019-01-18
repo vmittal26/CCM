@@ -35,8 +35,11 @@ export default async (
        return Object.keys(headerObject).map((e:string)=>{
               return {
                         
-                        "Header": headerObject[e]["columnCaption"],
-                        "accessor":headerObject[e]["accessor"],
+                        Header: headerObject[e]["columnCaption"],
+                        accessor:headerObject[e]["accessor"],
+                        headerClassName:"header",
+                        className: "cell",
+                        minWidth:200,
                          ...headerConfigMap.get(e)
               }
        });

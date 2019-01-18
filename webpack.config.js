@@ -3,9 +3,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 const globImporter = require("node-sass-glob-importer");
+require("@babel/polyfill");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: ["@babel/polyfill","./src/index.tsx"],
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'index_bundle.js',
@@ -36,14 +37,14 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      //   loader: "url-loader?limit=100000"
-      // },
-      // {
-      //   test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      //   loader: "file-loader"
-      // },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: "url-loader?limit=100000"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      },
 
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]

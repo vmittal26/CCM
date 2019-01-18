@@ -23,7 +23,7 @@ export default async (url:string, axios:any, id:string) => {
           <select
             onChange={event => onChange(event.target.value)}
             style={{ width: "100%" }}
-            value={filter ? filter[id] : "0"}
+            value={filter ?filter.value : "0"}
           >
             <option value="0" />
             {optionList}

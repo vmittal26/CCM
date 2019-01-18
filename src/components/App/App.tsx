@@ -15,7 +15,7 @@ fontawesome();
 const AppRouter = () => (
   <div className="App">
     <Header />
-    <main className="App__main">
+    <div className="App__main">
       <Switch>
         <Route path="/"exact component={Increment} />
         <Route path="/gestioneKO" component={GestioneKO} />
@@ -25,7 +25,7 @@ const AppRouter = () => (
         <Route path="/canaliVendita" component={CanaliVendita} />
         <Route path="/segnlazioneEntita" component={SegnalzioneEntita} />
       </Switch>
-    </main>
+    </div>
   </div>
 );
 
