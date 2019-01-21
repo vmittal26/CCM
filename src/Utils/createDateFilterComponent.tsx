@@ -1,21 +1,17 @@
 import * as React from "react";
 import * as moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
-import {
-  DateRangePicker,
-  SingleDatePicker,
-  DayPickerRangeController
-} from "react-dates";
+
 import DateFilterComponent from "../components/UI/DateFilterComponent/DateFilterComponent";
 
 export default function createDateFilterComponent() {
   return {
-    minWidth: 230,
+    minWidth: 240,
     headerClassName: "header",
-    Cell: ({ value }: any) => (value ? value.descrizione : null),
     Filter: (element: any) => {
       let { filter, onChange } = element;
-      console.log(filter);
+      filter ? (filter.type = "DATE_RANGE") : filter;
+      filter =filter && Object.keys(filter.value).length === 0 ? (filter.type = "CLEAR") : filter;
       return (
         <DateFilterComponent {...element}/>
       );

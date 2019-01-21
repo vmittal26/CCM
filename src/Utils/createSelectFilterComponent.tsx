@@ -14,7 +14,7 @@ export default async (url:string, axios:any, id:string) => {
         let { filter, onChange } = element;
         filter ? (filter.type = "EQUAL") : filter;
         filter =filter && filter.value === "0" ? (filter.type = "CLEAR") : filter;
-        console.log(filter);
+        // console.log(filter);
         let optionList = masterDataList ? masterDataList.map((element: IMasterData) => 
                               <option key={element.id} value={element.id}>{element.descrizione}</option>):null;
   

@@ -22,9 +22,38 @@ body{
     background: none;
     border:none;
     color:#fff;
-    outline: none;
 }
 svg{
     cursor: pointer;
+  
 }
 
+input[type="checkbox"]{
+
+    -webkit-appearance: none;   
+	background-color: #fff;
+    border: 1px solid #333;
+    width: 1.4rem;
+    height: 1.4rem;
+	display: inline-block;
+    position: relative;
+    outline: none;
+     
+    &:checked:after{
+       content:"\2714";
+       border: 1px solid #333;
+       color:#333;
+	   position: absolute;
+	   top: 0px;
+       left: 0px;
+       padding-left:2px;
+       width: 1.3rem;
+       height: 1.3rem;
+       display: inline-block;
+       background-color:$color-primary;
+   }
+}
+
+.checkbox{
+    font-size:1rem;
+}

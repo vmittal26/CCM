@@ -9,8 +9,12 @@ export default async (
 ): Promise<void> => {
 
   const filtersFromTable: Array<IFilter> = state.filtered;
+
+  const sorted = state.sorted;
+
+  console.log(sorted);
     
-  const filters = filtersFromTable.filter((filter:IFilter)=> filter.type && filter.type!=="CLEAR");
+  const filters = filtersFromTable.filter((filter:IFilter)=> filter.type && filter.type!=="CLEAR"|| !filter.type);
 
   const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${
     state.pageSize

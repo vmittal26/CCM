@@ -1,4 +1,3 @@
-import * as React from "react";
 import axios from "../../config/axiosKTMConfig";
 import createSelectFilterComponent from "../../Utils/createSelectFilterComponent";
 import createDateFilterComponent from "../../Utils/createDateFilterComponent";
@@ -17,4 +16,6 @@ var headerConfigMap = new Map();
 
 
 headerConfigMap.set("DATA_CHIUSURA_SEGNALAZIONE",createDateFilterComponent());
+headerConfigMap.set("DATA_INVIO_MAIL",createDateFilterComponent());
+headerConfigMap.set("DATA_INVIO_RICHIESTA",createDateFilterComponent());
 export default headerConfigMap;

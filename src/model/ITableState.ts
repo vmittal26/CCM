@@ -2,5 +2,6 @@ export default interface ITableState{
     data:[],
     columnHeaders?:Array<{}>
     pages:number,
-    loading:boolean
+    loading:boolean,
+    isSelectAll?:boolean
 }
