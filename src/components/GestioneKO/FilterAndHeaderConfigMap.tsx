@@ -18,4 +18,5 @@ var headerConfigMap = new Map();
 headerConfigMap.set("DATA_CHIUSURA_SEGNALAZIONE",createDateFilterComponent());
 headerConfigMap.set("DATA_INVIO_MAIL",createDateFilterComponent());
 headerConfigMap.set("DATA_INVIO_RICHIESTA",createDateFilterComponent());
+
 export default headerConfigMap;
