@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
-
-import DateFilterComponent from "../components/UI/DateFilterComponent/DateFilterComponent";
+import DateFilterComponent from "../UI/DateFilterComponent/DateFilterComponent";
 
 export default function createDateFilterComponent() {
   return {

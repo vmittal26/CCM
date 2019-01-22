@@ -19,4 +19,25 @@
     }
 }
 
+.SliderMenuList{
+
+    list-style: none;
+    height: 100%;
+    &__item{
+        padding:0.8rem;
+        background: #fff;
+        margin-bottom:1px;
+        a,a:hover{
+            text-decoration: none;
+        }
+        a{
+            color:$color-primary;
+            &:hover{
+              color:lighten($color-primary,10%);
+            }
+        }
+    }
+
+}
+
 

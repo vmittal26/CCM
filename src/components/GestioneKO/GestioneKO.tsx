@@ -1,16 +1,15 @@
 import * as React from "react";
 import ITableState from "../../model/ITableState";
 import axios from "../../config/axiosKTMConfig";
-import IFilter from "../../model/IFilter";
 import getTableData from "../../Utils/getTableData";
-import Spinner from "../UI/Spinner/Spinner";
 import ReactTable from "react-table";
 import filterAndHeaderConfigMap from "./FilterAndHeaderConfigMap";
 import {
   onToggleSelectAllCheckBox,
   deselectAllCheckbox
 } from "../../Utils/TableRowSelectionsUtil";
-import getClosestElement from "../../Utils/getClosestElement";
+import Spinner from "../UI/Spinner/Spinner";
+import highlightRowOnChangeCheckbox from "../../Utils/highlightRowOnChangeCheckbox";
 
 export default function GestioneKO() {
   const [tableState, setTableState] = React.useState<ITableState>({
@@ -31,22 +30,13 @@ export default function GestioneKO() {
       axios
     );
   };
-  let checkboxSelection: Array<string> = [];
-
   const onChangeHandler = (event: any) => {
     onToggleSelectAllCheckBox(event.target.checked);
   };
 
   const onChangeRowCheckBox= (event:any)=>{
     let checkbox= event.target;
-    if (event.target.checked) {
-      let row = getClosestElement(checkbox, "rt-tr");
-      row.classList.add('rowColorHighlight');
-    }
-    else {
-      let row = getClosestElement(checkbox, "rt-tr");
-      row.classList.remove('rowColorHighlight');
-    }
+    highlightRowOnChangeCheckbox(checkbox);
   }
 
   const checkboxHeader = {

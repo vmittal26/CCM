@@ -1,6 +1,6 @@
 import axios from "../../config/axiosKTMConfig";
-import createSelectFilterComponent from "../../Utils/createSelectFilterComponent";
-import createDateFilterComponent from "../../Utils/createDateFilterComponent";
+import createSelectFilterComponent from "../Filtergenerators/createSelectFilterComponent";
+import createDateFilterComponent from "../Filtergenerators/createDateFilterComponent";
 
 var headerConfigMap = new Map();
 

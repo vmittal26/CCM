@@ -1,4 +1,4 @@
-import IMasterData from "../model/IMasterData";
+import IMasterData from "../../model/IMasterData";
 import * as React from "react";
 
 export default async (url:string, axios:any, id:string) => {
