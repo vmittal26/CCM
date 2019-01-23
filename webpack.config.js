@@ -33,7 +33,7 @@ module.exports = {
             options: {
               importer: globImporter(),
               includePaths: ["./node_modules"]
-            }
+            },
           }
         ]
       },

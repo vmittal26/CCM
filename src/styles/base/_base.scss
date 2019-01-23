@@ -1,59 +1,70 @@
 *,
 *::after,
-*::before{
-    margin:0;
-    padding:0;
-    box-sizing: inherit;
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
 
-html{
-    font-size: 100%;
+html {
+  font-size: 100%;
 }
 
-body{
-    margin:0.2rem;
-    font-family: "Roboto", Helvetica, sans-serif;
-    font-size: 1rem;
-    box-sizing: border-box;
-    height: 100vh;
+body {
+  margin: 0.2rem;
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+  height: 100vh;
 }
 
-.icon-btn{
-    background: none;
-    border:none;
-    color:#fff;
+.icon-btn {
+  background: none;
+  border: none;
+  color: #fff;
 }
-svg{
-    cursor: pointer;
-  
+svg {
+  cursor: pointer;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  background-color: #fff;
+  border: 1px solid #333;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-block;
+  position: relative;
+  outline: none;
 
-    -webkit-appearance: none;   
-	background-color: #fff;
+  &:checked:after {
+    content: "\2714";
     border: 1px solid #333;
-    width: 1.4rem;
-    height: 1.4rem;
-	display: inline-block;
-    position: relative;
-    outline: none;
-     
-    &:checked:after{
-       content:"\2714";
-       border: 1px solid #333;
-       color:#333;
-	   position: absolute;
-	   top: 0px;
-       left: 0px;
-       padding-left:2px;
-       width: 1.3rem;
-       height: 1.3rem;
-       display: inline-block;
-       background-color:$color-primary;
-   }
+    color: #333;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding-left: 2px;
+    width: 1.3rem;
+    height: 1.3rem;
+    display: inline-block;
+    background-color: $color-primary;
+  }
 }
 
-.checkbox{
-    font-size:1rem;
+.checkbox {
+  font-size: 1rem;
+}
+
+::placeholder {
+  color: rgba(51, 51, 51, 0.589) !important;
+}
+
+.ant-collapse .ant-collapse-item .ant-collapse-header .anticon {
+  left: initial;
+  right: 16px;
+}
+input[type="text"] {
+  border: 1px solid rgba(51, 51, 51, 0.623);
+  padding: 0.2rem 0.75rem;
 }
