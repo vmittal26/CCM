@@ -1,12 +1,28 @@
 .DetailPagePanel {
-    padding:0.5rem;
-    .ant-select{
-      min-width: 100%;
-    }
-    .ant-input{
-      border:1px solid #ccc;
-    }
-    input{
-      height: 32px;
-    }
+  padding: 0.5rem;
+  .ant-select {
+    min-width: 100%;
+  }
+  .ant-input {
+    border: 1px solid #ccc;
+  }
+  input {
+    height: 32px;
+  }
+
+  @include respond(xs) {
+    padding: 1.2rem;
+  }
+  @include respond(sm) {
+    padding: 1rem;
+  }
+  @include respond(md) {
+    padding: 0.8rem;
+  }
+  @include respond(lg) {
+    padding: 0.8rem;
+  }
+  @include respond(xl) {
+    padding: 0.5rem;
+  }
 }
