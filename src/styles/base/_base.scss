@@ -7,7 +7,21 @@
 }
 
 html {
+
   font-size: 100%;
+
+  @include respond(xs){
+    font-size: 50%;
+  }
+  @include respond(sm){
+    font-size: 60%;
+  }
+  @include respond(md){
+    font-size: 80%;
+  }
+  @include respond(lg){
+    font-size: 100%;
+  }
 }
 
 body {
@@ -58,6 +72,18 @@ input[type="checkbox"] {
 
 ::placeholder {
   color: rgba(51, 51, 51, 0.589) !important;
+  font-size: 0.8rem !important;
+
+  @include respond(xs){
+    font-size: 1.4rem !important;
+  }
+
+  @include respond(sm){
+    font-size: 1.2rem !important;
+  }
+  @include respond(lg){
+    font-size:0.9rem !important;
+  }
 }
 
 .ant-collapse .ant-collapse-item .ant-collapse-header .anticon {
@@ -67,4 +93,10 @@ input[type="checkbox"] {
 input[type="text"] {
   border: 1px solid rgba(51, 51, 51, 0.623);
   padding: 0.2rem 0.75rem;
+}
+.Collapsible__trigger{
+  background-color: #f4f4f4d0;
+  border:1px solid #ccc;
+  padding:14px;
+  display: block;
 }

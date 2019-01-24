@@ -8,7 +8,9 @@
 @import "../../node_modules/bootstrap/scss/buttons";
 @import '~antd/dist/antd.css';
 @import "./abstracts/variables";
+@import "./abstracts/mixins";
 @import "./base/base";
+@import "./components/Field";
 @import "./components/ReactTable";
 @import "./components/DetailPagePanel";
 @import "../components/UI/Spinner/Spinner";

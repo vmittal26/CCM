@@ -17,10 +17,9 @@
     &__left{
         display: flex;
         align-items: center;
-        flex-basis: 80%;
+        flex-grow: 1;
     }
     &__right{
-        flex-basis: 20%;
         display: flex;
         justify-content: space-between;
         align-items: center

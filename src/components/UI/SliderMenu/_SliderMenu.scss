@@ -10,6 +10,10 @@
     background-color:#f4f4f4;
     z-index: 200;
 
+    @include respond(xs){
+        width:40vw;
+    }
+
     &__Close{
         transform: translateX(-100%);
     }

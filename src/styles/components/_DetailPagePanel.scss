@@ -1,8 +1,12 @@
 .DetailPagePanel {
-    div > * {
-      margin-bottom: 0.5rem;
-    }
+    padding:0.5rem;
     .ant-select{
       min-width: 100%;
+    }
+    .ant-input{
+      border:1px solid #ccc;
+    }
+    input{
+      height: 32px;
     }
 }

@@ -5123,6 +5123,11 @@ react-addons-shallow-compare@^15.6.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-collapsible@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-collapsible/-/react-collapsible-2.3.2.tgz#fb5593f6601c0a255319a8dedc678e56dd122411"
+  integrity sha512-mi8pHO01wvflliqByXUqGqhJlCe2jk4CaKPL4zbMONx2F+RZk0VWdT3s5veqwvzJ5Qj7YYRNJZCIgw4ZKUhHUA==
+
 react-dates@^18.4.0:
   version "18.4.0"
   resolved "https://registry.yarnpkg.com/react-dates/-/react-dates-18.4.0.tgz#c74da8b6f7eb3e70ea640b3a4b0d4f152fc8d602"

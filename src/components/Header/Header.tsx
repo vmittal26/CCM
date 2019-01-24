@@ -27,8 +27,8 @@ export default function Header() {
         </button>
       </div>
       <div className="Header__right">
-        <span>Username</span>
-        <span>RoleName</span>
+        {/* <span>Username</span>
+        <span>RoleName</span> */}
         <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon="power-off" />
       </div>
     </div>
