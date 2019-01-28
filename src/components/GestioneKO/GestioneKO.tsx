@@ -11,7 +11,7 @@ import {
 import Spinner from "../UI/Spinner/Spinner";
 import highlightRowOnChangeCheckbox from "../../Utils/highlightRowOnChangeCheckbox";
 
-export default function GestioneKO() {
+export default function GestioneKO(props:any) {
   const [tableState, setTableState] = React.useState<ITableState>({
     data: [],
     columnHeaders: [],
@@ -39,6 +39,18 @@ export default function GestioneKO() {
     highlightRowOnChangeCheckbox(checkbox);
   }
 
+  const rowHandler=((state:any, rowInfo:any) => {
+    if (rowInfo && rowInfo.row) {
+      return {
+        onDoubleClick: (e:any) => {
+          console.log(rowInfo.original);
+          props.history.replace("/detailPageFase2",{data:rowInfo.original});
+        }
+      }
+    }else{
+      return {}
+    }
+  })
   const checkboxHeader = {
     Header: "SELECT ALL",
     minWidth: 100,
@@ -79,6 +91,7 @@ export default function GestioneKO() {
         className="-striped -highlight ReactKTMTable"
         showPaginationTop
         showPaginationBottom={false}
+        getTrProps={rowHandler}
       />
     </div>
   );

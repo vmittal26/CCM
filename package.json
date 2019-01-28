@@ -39,12 +39,14 @@
     "@types/react-dom": "^16.0.11",
     "@types/react-router-dom": "^4.3.1",
     "@types/react-table": "^6.7.21",
+    "@types/yup": "^0.26.6",
     "antd": "^3.12.4",
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "es6-object-assign": "^1.1.0",
     "es6-promise-promise": "^1.0.0",
     "formik": "^1.4.2",
+    "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "react": "16.7.0-alpha.0",
     "react-collapsible": "^2.3.2",
@@ -52,6 +54,7 @@
     "react-dom": "16.7.0-alpha.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-table": "^6.8.6"
+    "react-table": "^6.8.6",
+    "yup": "^0.26.10"
   }
 }

@@ -8,6 +8,7 @@
         font-size:0.9rem !important;
         margin-bottom:0 !important;
         color: #333;
+        white-space: nowrap;
         @include respond(xs){
             font-size: 1.6rem !important;
         }
@@ -20,7 +21,7 @@
         @include respond(lg){
             font-size:0.8rem !important;
         }
-        @include respond(lg){
+        @include respond(xl){
             font-size:0.85rem !important;
         }
     }

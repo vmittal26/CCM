@@ -9,6 +9,8 @@ import GestioneKOSegnlazione from "../GestioneKOSegnalazione/GestioneKOSegnlazio
 import SospensioneVodafone from "../SospensioneVodafone/SospensioneVodafone";
 import CanaliVendita from "../CanaliVendita/CanaliVendita";
 import SegnalzioneEntita from "../SegnalazioniEntita/SegnalzioneEntita";
+import DetailPageWithFormik from "../DetailPageWithFormik/DetailPageWithFormik";
+import GestioneKODetailPageFase2 from "../GestioneKODetailPageFase2/GestioneKODetailPageFase2";
 
 fontawesome();
 
@@ -24,6 +26,8 @@ const AppRouter = () => (
         <Route path="/sospensioniVodafone" component={SospensioneVodafone} />
         <Route path="/canaliVendita" component={CanaliVendita} />
         <Route path="/segnlazioneEntita" component={SegnalzioneEntita} />
+        <Route path="/detailPageWithFormik" component={DetailPageWithFormik} />
+        <Route path="/detailPageFase2" component={GestioneKODetailPageFase2} />
       </Switch>
     </div>
   </div>

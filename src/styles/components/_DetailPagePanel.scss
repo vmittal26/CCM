@@ -1,13 +1,23 @@
 .DetailPagePanel {
   padding: 0.5rem;
-  .ant-select {
+  .ant-select,.ant-calendar-picker {
     min-width: 100%;
   }
   .ant-input {
     border: 1px solid #ccc;
   }
-  input {
-    height: 32px;
+  .ant-form-item{
+    margin-bottom: 0;
+  }
+  .ant-form-item-control{
+    line-height:20px;
+  }
+  .ant-select-selection__rendered{
+    line-height:25px;
+  }
+  input,.ant-select-selection
+  {
+    height: 28px;
   }
 
   @include respond(xs) {

@@ -7,13 +7,14 @@ import 'react-dates/lib/css/_datepicker.css';
 import 'typeface-roboto';
 import "./styles/main.scss";
 import App from "./components/App/App";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory';
 
-// polyfill();
-// assign.polyfill();
+const history = createBrowserHistory();
+
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );

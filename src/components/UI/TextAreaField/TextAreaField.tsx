@@ -5,7 +5,7 @@ export default function TextAreaField({caption,placeholder}:any) {
     return (
         <div className="Field">
           <label className="Field__label" htmlFor="">{caption}</label>
-          <TextArea placeholder={placeholder} onChange={()=>{}}/>
+          <TextArea placeholder={placeholder}/>
         </div>
       )
 }
