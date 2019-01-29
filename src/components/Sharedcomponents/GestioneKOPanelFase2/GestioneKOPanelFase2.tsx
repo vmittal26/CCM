@@ -95,7 +95,7 @@ export default function GestioneKOPanelFase2() {
           <Field
             label="Data Risposta Mail OLO Donating"
             component={AntDatePicker}
-            name="dataRispostaMailOLODonating"
+            name="dataRispostaMailOpDonating"
             format={dateFormat}
           />
         </Col>

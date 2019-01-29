@@ -17,6 +17,22 @@
 .ReactKTMTable{
     font-size: 0.75rem;
     font-family: sans-serif;
+
+    @include respond(xs) {
+        font-size:1.2rem;
+      }
+      @include respond(sm) {
+        font-size:1rem;
+      }
+      @include respond(md) {
+        font-size:0.8rem;
+      }
+      @include respond(lg) {
+        font-size:0.8rem;
+      }
+      @include respond(xl) {
+        font-size:0.75rem;
+      }
 }
 
 .ReactTable .rt-tbody{

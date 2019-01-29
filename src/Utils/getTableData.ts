@@ -1,12 +1,13 @@
 import  ITableState  from '../model/ITableState';
 import IFilter from '../model/IFilter';
+import deviceCheckConfig from '../config/deviceCheckConfig';
 export default async (
   state:any,
   baseURL:String,
-  setTableState: Function,
   headerConfigMap:Map<string,any>,
-  axios: any
-): Promise<void> => {
+  axios: any,
+  isMobileView:boolean
+): Promise<ITableState> => {
 
   const filtersFromTable: Array<IFilter> = state.filtered;
 
@@ -14,17 +15,11 @@ export default async (
 
   console.log(sorted);
     
-  const filters = filtersFromTable.filter((filter:IFilter)=> filter.type && filter.type!=="CLEAR"|| !filter.type);
+  const filters = filtersFromTable ? filtersFromTable.filter((filter:IFilter)=> filter.type && filter.type!=="CLEAR"|| !filter.type):[];
 
-  const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${
-    state.pageSize
-  }`;
+  const pageParamsString: string = `?pageNumber=${state.page}&&pageSize=${state.pageSize}`;
   const getFilteredDataURL: string = `${baseURL}/filter${pageParamsString}`;
 
-  setTableState((prevState: ITableState) => ({
-    ...prevState,
-    loading: true
-  }));
   try {
     var response = await axios.post(
       getFilteredDataURL,
@@ -48,15 +43,25 @@ export default async (
               }
        });
     }
-    
-    setTableState((prevState: ITableState) => ({
-      ...prevState,
-      columnHeaders:transformHeaderObject(),
+    return {
+      columnHeaders:!isMobileView?transformHeaderObject():[{
+                                                            Header:headerObject["CODICE_RICHIESTA_SPP"]["columnCaption"],
+                                                            accessor:headerObject["CODICE_RICHIESTA_SPP"]["accessor"],
+                                                            headerClassName:"header",
+                                                            className: "cell",
+                                                            minWidth:200,
+                                                            
+                                                         },{
+                                                          Header:headerObject["LINK_ACCOUNT"]["columnCaption"],
+                                                          accessor:headerObject["LINK_ACCOUNT"]["accessor"],
+                                                          headerClassName:"header",
+                                                          className: "cell",
+                                                          minWidth:200
+                                                         }],
       data: records,
       pages: totalPages,
       loading: false
-    }));
-   
+    }
   } catch (err) {
     console.log("Error: ", err.message);
   }

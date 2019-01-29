@@ -11,8 +11,10 @@ import CanaliVendita from "../CanaliVendita/CanaliVendita";
 import SegnalzioneEntita from "../SegnalazioniEntita/SegnalzioneEntita";
 import DetailPageWithFormik from "../DetailPageWithFormik/DetailPageWithFormik";
 import GestioneKODetailPageFase2 from "../GestioneKODetailPageFase2/GestioneKODetailPageFase2";
-
+import deviceCheckConfig from "../../config/deviceCheckConfig";
 fontawesome();
+
+if(deviceCheckConfig())console.log("mobile");
 
 const AppRouter = () => (
   <div className="App">

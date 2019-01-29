@@ -108,7 +108,7 @@ export default function DatiGeneraliPanelFase2() {
           <Field
             label="DRO"
             component={AntDatePicker}
-            name="dro"
+            name="droTi"
             format={dateFormat}
           />
         </Col>

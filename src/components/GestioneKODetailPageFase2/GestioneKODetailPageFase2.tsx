@@ -34,18 +34,19 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     console.log(props.history.location.state.data);
 
     const [detailPageData, setDetailPageData] = React.useState( props.history.location.state.data);
-    
-    console.log(moment(detailPageData.dataInvioRichiesta));
 
     this.initialValues = 
-                          detailPageData ? {
-                           ...detailPageData,
-                           dataLavorazione: detailPageData.dataLavorazione ?moment(detailPageData.dataLavorazione,dateFormat):moment(),
-                           dataFineSospensione:detailPageData.dataFineSospensione?moment(detailPageData.dataFineSospensione,dateFormat):moment(),
-                           dataInvioRichiesta:detailPageData.dataInvioRichiesta?moment(detailPageData.dataInvioRichiesta,dateFormat):moment(),
-                           dataChiusuraSegnalazione:detailPageData.dataChiusuraSegnalazione?moment(detailPageData.dataChiusuraSegnalazione,dateFormat):moment(),
-                           dataAperturaSegnalazione:detailPageData.dataAperturaSegnalazione?moment(detailPageData.dataAperturaSegnalazione,dateFormat):moment()
-                         }:{}
+              detailPageData ? {
+                ...detailPageData,
+                dataLavorazione: detailPageData.dataLavorazione ?moment(detailPageData.dataLavorazione,dateFormat):null,
+                dataFineSospensione:detailPageData.dataFineSospensione?moment(detailPageData.dataFineSospensione,dateFormat):null,
+                dataInvioRichiesta:detailPageData.dataInvioRichiesta?moment(detailPageData.dataInvioRichiesta,dateFormat):null,
+                dataChiusuraSegnalazione:detailPageData.dataChiusuraSegnalazione?moment(detailPageData.dataChiusuraSegnalazione,dateFormat):null,
+                dataAperturaSegnalazione:detailPageData.dataAperturaSegnalazione?moment(detailPageData.dataAperturaSegnalazione,dateFormat):null,
+                dataRispostaMailOpDonating:detailPageData.dataRispostaMailOpDonating?moment(detailPageData.dataRispostaMailOpDonating,dateFormat):null,
+                droTi:detailPageData.droTi?moment(detailPageData.droTi,dateFormat):null,
+                dataInvioMailOloDonatng:detailPageData.dataInvioMailOloDonatng?moment(detailPageData.dataInvioMailOloDonatng,dateFormat):null,
+              }:{}
 
 
 

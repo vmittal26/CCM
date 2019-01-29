@@ -18,7 +18,7 @@ export default function SegnalzioneEntita() {
   const baseURL = `segnalazione/v1/list`;
   
   const fetchData = (state: any, instance: any) => {
-    getTableData(state, baseURL, setTableState, null,axios);
+    // getTableData(state, baseURL, setTableState, null,axios);
   };
 
 
