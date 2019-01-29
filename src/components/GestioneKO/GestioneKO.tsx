@@ -37,6 +37,7 @@ class GestioneKO extends BaseComponent {
     );
 
     const fetchData = (state: any, instance: any) => {
+      console.log("in fetch Data")
       setTableState({
         ...tableState,
         loading: true
