@@ -30,6 +30,7 @@ body {
   font-size: 1rem;
   box-sizing: border-box;
   height: 100vh;
+  overflow: hidden;
 }
 
 .icon-btn {
@@ -93,20 +94,4 @@ input[type="checkbox"] {
 input[type="text"] {
   border: 1px solid rgba(51, 51, 51, 0.623);
   padding: 0.2rem 0.75rem;
-}
-.Collapsible__trigger{
-  background-color: #f4f4f4d0;
-  border:1px solid #ccc;
-  padding:14px;
-  display: block;
-  
-  @include respond(xs){
-    font-size: 1.4rem !important;
-  }
-  @include respond(sm){
-    font-size: 1.2rem !important;
-  }
-  @include respond(lg){
-    font-size:0.9rem !important;
-  }
 }

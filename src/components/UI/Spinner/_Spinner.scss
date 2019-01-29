@@ -1,11 +1,11 @@
 .Spinner {
-    font-size: 10px;
+    font-size: 0.625rem;
     margin: 50px auto;
     text-indent: -9999em;
-    width: 11em;
-    height: 11em;
+    width: 5rem;
+    height: 5rem;
     border-radius: 50%;
-    top:25%;
+    top:30%;
     left:50%;
     background: #ffffff;
     background: -moz-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
@@ -20,6 +20,7 @@
     -ms-transform: translateZ(0);
     transform: translateZ(0);
     z-index: 5;
+    transform: translate(-50%,-50%);
   }
   .Spinner:before {
     width: 50%;

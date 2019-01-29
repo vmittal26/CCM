@@ -55,14 +55,31 @@ class GestioneKODetailPageFase2 extends BaseComponent {
         initialValues={this.initialValues}
         render={
           props => (
-          <Form >
-            <button type="submit" className="btn btn-primary ml-0">SALVA</button>
+          <Form className="DetailPagePanel">
+            <div className="DetailPagePanel__ButtonSection"> 
+              <button className="btn btn-primary">INDIETRO</button>
+              <button type="submit" className="btn btn-primary">SALVA</button>
+            </div>
+            <div>
+            <div className="DetailPagePanel__PanelSection">
               <Collapsible trigger="Dati Generali" open>
-                  <DatiGeneraliPanelFase2 />
-               </Collapsible>
-               <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
-                  <GestioneKOPanelFase2 /> 
-              </Collapsible>
+                    <DatiGeneraliPanelFase2 />
+                </Collapsible>
+                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
+                    <GestioneKOPanelFase2 /> 
+                </Collapsible>
+                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
+                    <GestioneKOPanelFase2 /> 
+                </Collapsible>
+                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
+                    <GestioneKOPanelFase2 /> 
+                </Collapsible>
+                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
+                    <GestioneKOPanelFase2 /> 
+                </Collapsible>
+                
+            </div>
+            </div>
            </Form>
           )}
         onSubmit={(values) => console.log(values)}

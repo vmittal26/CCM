@@ -20,6 +20,33 @@
     height: 28px;
   }
 
+  &__ButtonSection{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__PanelSection{
+    max-height: 80vh;
+    padding:0.5rem;
+    overflow: auto;
+  }
+  .Collapsible__trigger{
+    background-color: #f4f4f4d0;
+    border:1px solid #ccc;
+    padding:14px;
+    display: block;
+    
+    @include respond(xs){
+      font-size: 1.4rem !important;
+    }
+    @include respond(sm){
+      font-size: 1.2rem !important;
+    }
+    @include respond(lg){
+      font-size:0.9rem !important;
+    }
+  }
+  
   @include respond(xs) {
     padding: 1.2rem;
   }

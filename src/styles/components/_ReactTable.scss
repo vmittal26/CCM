@@ -15,6 +15,17 @@
   background-color: #f7f7f763;
   overflow: visible;
 }
+
+.ReactTable .-pagination .-previous, .ReactTable .-pagination .-next{
+    @include respond(xs) {
+        flex:none;
+    }
+}
+.ReactTable .-pagination{
+    @include respond(xs) {
+        padding-top:28px;
+    }
+}
 .ReactKTMTable {
   font-size: 0.75rem;
   font-family: sans-serif;
