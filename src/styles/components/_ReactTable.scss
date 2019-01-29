@@ -1,53 +1,54 @@
-.cell{
-    text-align: center;
+.cell {
+  text-align: center;
 }
 
-.header{
-    font-family: "Roboto",sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color:#333;
+.header {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
 }
- 
-.ReactTable .rt-thead .rt-th, .ReactTable .rt-thead .rt-td{
-    padding:9px 5px;
-    background-color:#f7f7f763;
-    overflow: visible;
+
+.ReactTable .rt-thead .rt-th,
+.ReactTable .rt-thead .rt-td {
+  padding: 9px 5px;
+  background-color: #f7f7f763;
+  overflow: visible;
 }
-.ReactKTMTable{
+.ReactKTMTable {
+  font-size: 0.75rem;
+  font-family: sans-serif;
+
+  @include respond(xs) {
+    font-size: 1.2rem;
+  }
+  @include respond(sm) {
+    font-size: 1rem;
+  }
+  @include respond(md) {
+    font-size: 0.8rem;
+  }
+  @include respond(lg) {
+    font-size: 0.8rem;
+  }
+  @include respond(xl) {
     font-size: 0.75rem;
-    font-family: sans-serif;
-
-    @include respond(xs) {
-        font-size:1.2rem;
-      }
-      @include respond(sm) {
-        font-size:1rem;
-      }
-      @include respond(md) {
-        font-size:0.8rem;
-      }
-      @include respond(lg) {
-        font-size:0.8rem;
-      }
-      @include respond(xl) {
-        font-size:0.75rem;
-      }
+  }
 }
 
-.ReactTable .rt-tbody{
-    max-height: 25rem;
-    min-height: 25rem;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.ReactTable .rt-tbody {
+  max-height: 25rem;
+  min-height: 25rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-.-loading-inner{
-    display: none !important;
+.-loading-inner {
+  display: none !important;
 }
-.ReactTable-loading{
-    z-index:0;
+.ReactTable-loading {
+  z-index: 0;
 }
 
-.rowColorHighlight{
-    background-color: $color-secondary !important;
+.rowColorHighlight {
+  background-color: $color-secondary !important;
 }
