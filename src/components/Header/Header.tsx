@@ -8,8 +8,6 @@ export default function Header() {
 
   return (
     <div className="Header">
-      <SliderMenu show={isHidden} onClick={onToogleSliderMenu} />
-
       <div className="Header__left">
         <div className="Header__logo-box">
           <img
@@ -31,6 +29,7 @@ export default function Header() {
         <span>RoleName</span> */}
         <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon="power-off" />
       </div>
+      <SliderMenu show={isHidden} onClick={onToogleSliderMenu} />
     </div>
   );
 }

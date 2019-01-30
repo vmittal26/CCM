@@ -23,6 +23,17 @@
   &__ButtonSection{
     display: flex;
     justify-content: space-between;
+     
+    @include respond(xs) {
+      padding-top: 2rem;
+    }
+
+    @include respond(lg) {
+      padding-top: 0rem;
+    }
+    @include respond(xl) {
+      padding-top: 0rem;
+    }
   }
 
   &__PanelSection{

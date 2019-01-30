@@ -15,7 +15,9 @@
   background-color: #f7f7f763;
   overflow: visible;
 }
-
+.ReactTable .rt-tr-group{
+  flex:none;
+}
 .ReactTable .-pagination .-previous, .ReactTable .-pagination .-next{
     @include respond(xs) {
         flex:none;

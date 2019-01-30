@@ -1,28 +1,42 @@
+.label{
+    position: relative;
+    margin-left: 2px;
+    font-size:0.9rem !important;
+    margin-bottom:0 !important;
+    color: #333;
+    white-space: nowrap;
+
+    @include respond(xs){
+        font-size: 1.6rem !important;
+    }
+    @include respond(sm){
+        font-size: 1.5rem !important;
+    }
+    @include respond(md){
+        font-size:1.2rem !important;
+    }
+    @include respond(lg){
+        font-size:0.8rem !important;
+    }
+    @include respond(xl){
+        font-size:0.85rem !important;
+    }
+}
 .Field{
     display: flex;
     flex-direction: column;
     margin: 4px 0px;
 
     &__label{
-        margin-left: 2px;
-        font-size:0.9rem !important;
-        margin-bottom:0 !important;
-        color: #333;
-        white-space: nowrap;
-        @include respond(xs){
-            font-size: 1.6rem !important;
-        }
-        @include respond(sm){
-            font-size: 1.5rem !important;
-        }
-        @include respond(md){
-            font-size:1.2rem !important;
-        }
-        @include respond(lg){
-            font-size:0.8rem !important;
-        }
-        @include respond(xl){
-            font-size:0.85rem !important;
+        @extend .label;
+    }
+    &__mandatoryLabel{
+        @extend .label;
+        &:after{
+            content:'\002A';
+            color:red;
+            position: absolute;
+            right:0;
         }
     }
 }

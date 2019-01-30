@@ -25,6 +25,7 @@ const CreateAntField = (Component:any) => ({
     form.setFieldValue(field.name, value);
   const onChange = (value:any) => form.setFieldValue(field.name, value);
   const onBlur = () => form.setFieldTouched(field.name, true);
+  const ismandatory = props.ismandatory && props.ismandatory;
   return (
       <FormItem
         // hasFeedback={
@@ -34,7 +35,7 @@ const CreateAntField = (Component:any) => ({
         // validateStatus={submittedError || touchedError ? "error" : "success"}
       >
        <div className="Field">
-        <label className="Field__label" htmlFor="tipoAnomalia">
+        <label className={ismandatory ?"Field__mandatoryLabel":"Field__label"} htmlFor="tipoAnomalia">
                 {label}
         </label>
         <Component

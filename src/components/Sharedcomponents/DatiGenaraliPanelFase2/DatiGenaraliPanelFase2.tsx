@@ -8,10 +8,8 @@ import {
   AntTextArea
 } from "../../../Utils/AntDesignFieldCreator";
 import { dateFormat } from "../../../Utils/DateFormat";
-import * as moment from "moment";
 
 export default function DatiGeneraliPanelFase2() {
-  const errorClassName = "text-left text-danger text-uppercase";
 
   return (
     <div className="DatiGeneraliPanelFase2">
@@ -20,8 +18,9 @@ export default function DatiGeneraliPanelFase2() {
           <Field
             label="Tipo Ordine"
             component={AntInput}
-            name="tipoOrdine"
+            name="tipiOrdine.descrizione"
             type="text"
+            ismandatory="true"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
@@ -92,7 +91,7 @@ export default function DatiGeneraliPanelFase2() {
           <Field
             label="Canale Di Vendita"
             component={AntInput}
-            name="canaleDiVendita"
+            name="canaleVendita"
             type="text"
           />
         </Col>

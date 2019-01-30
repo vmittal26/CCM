@@ -7,6 +7,9 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import * as moment from "moment";
 import { dateFormat } from "../../Utils/DateFormat";
+import axios from "../../config/axiosKTMConfig";
+import Spinner from "../UI/Spinner/Spinner";
+import Backdrop from "../UI/Backdrop/Backdrop";
 
 class GestioneKODetailPageFase2 extends BaseComponent {
 
@@ -29,11 +32,13 @@ class GestioneKODetailPageFase2 extends BaseComponent {
   }
 
   //Arrow function points this to current context 
-  public gestioneKODetailPageFase2=(props: any):JSX.Element=> {
+  public gestioneKODetailPageFase2=(componentProps: any):JSX.Element=> {
 
-    console.log(props.history.location.state.data);
+    console.log(componentProps.history.location.state.data);
 
-    const [detailPageData, setDetailPageData] = React.useState( props.history.location.state.data);
+    const [detailPageData, setDetailPageData] = React.useState( componentProps.history.location.state.data);
+
+    const[loading,setLoading]= React.useState<boolean>(false);
 
     this.initialValues = 
               detailPageData ? {
@@ -48,44 +53,69 @@ class GestioneKODetailPageFase2 extends BaseComponent {
                 dataInvioMailOloDonatng:detailPageData.dataInvioMailOloDonatng?moment(detailPageData.dataInvioMailOloDonatng,dateFormat):null,
               }:{}
 
+    let form = (
+    <Formik
+    initialValues={this.initialValues}
+    children={(
+      <Form  className="DetailPagePanel">
+        <div className="DetailPagePanel__ButtonSection"> 
+          <button type="button" onClick={()=>componentProps.history.goBack()} className="btn btn-primary">INDIETRO</button>
+          <button type="submit" className="btn btn-primary">SALVA</button>
+        </div>
+        <div>
+        <div className="DetailPagePanel__PanelSection">
+           <Collapsible trigger="Dati Generali" open>
+                <DatiGeneraliPanelFase2 />
+            </Collapsible>
+            <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
+                <GestioneKOPanelFase2 /> 
+            </Collapsible>
+        </div>
+        </div>
+       </Form >
+      )}
+    onSubmit={(values,props)=>{
+          console.log(values);
+          let detailPageData:any = {
+            ...values,
+            dataLavorazione: values.dataLavorazione ?values.dataLavorazione.format(dateFormat):null,
+            dataFineSospensione:values.dataFineSospensione?values.dataFineSospensione.format(dateFormat):null,
+            dataInvioRichiesta:values.dataInvioRichiesta?values.dataInvioRichiesta.format(dateFormat):null,
+            dataChiusuraSegnalazione:values.dataChiusuraSegnalazione?values.dataChiusuraSegnalazione.format(dateFormat):null,
+            dataAperturaSegnalazione:values.dataAperturaSegnalazione?values.dataAperturaSegnalazione.format(dateFormat):null,
+            dataRispostaMailOpDonating:values.dataRispostaMailOpDonating?values.dataRispostaMailOpDonating.format(dateFormat):null,
+            droTi:values.droTi?values.droTi.format(dateFormat):null,
+            dataInvioMailOloDonatng:values.dataInvioMailOloDonatng?values.dataInvioMailOloDonatng.format(dateFormat):null,
+          }
 
+          console.log(detailPageData);
+
+          (async()=>{
+            setLoading(true);
+              const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
+              console.log(response);
+              componentProps.history.replace("/gestioneKO")
+          })();
+          
+        
+    }}
+    validate={(values)=>{ 
+      let errors:any = {};
+      if (values.tipiOrdine && values.tipiOrdine.descrizione && values.tipiOrdine.descrizione.trim()==="")  {
+        errors.tipiOrdine.descrizione = 'Required';
+      } 
+      console.log(errors);
+      return errors;
+    }}
+    //  validationSchema={this.validationSchema}
+  />);
 
     return (
-      <Formik
-        initialValues={this.initialValues}
-        render={
-          props => (
-          <Form className="DetailPagePanel">
-            <div className="DetailPagePanel__ButtonSection"> 
-              <button className="btn btn-primary">INDIETRO</button>
-              <button type="submit" className="btn btn-primary">SALVA</button>
-            </div>
-            <div>
-            <div className="DetailPagePanel__PanelSection">
-              <Collapsible trigger="Dati Generali" open>
-                    <DatiGeneraliPanelFase2 />
-                </Collapsible>
-                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
-                    <GestioneKOPanelFase2 /> 
-                </Collapsible>
-                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
-                    <GestioneKOPanelFase2 /> 
-                </Collapsible>
-                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
-                    <GestioneKOPanelFase2 /> 
-                </Collapsible>
-                <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
-                    <GestioneKOPanelFase2 /> 
-                </Collapsible>
-                
-            </div>
-            </div>
-           </Form>
-          )}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={this.validationSchema}
-      />
-    );
+      <>
+      {loading?<><Spinner/></>:null}
+      {form}
+      </>
+    )
   }
 
   public getComponent():React.FunctionComponent{

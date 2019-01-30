@@ -2,7 +2,7 @@ import * as React from "react";
 import ITableState from "../../model/ITableState";
 import axios from "../../config/axiosKTMConfig";
 import getTableData from "../../Utils/getTableData";
-import ReactTable from "react-table";
+import ReactTable, { Filter, SortingRule } from "react-table";
 import filterAndHeaderConfigMap from "./FilterAndHeaderConfigMap";
 import {
   onToggleSelectAllCheckBox,
@@ -129,6 +129,10 @@ class GestioneKO extends BaseComponent {
           showPaginationTop
           showPaginationBottom={false}
           getTrProps={rowHandler}
+          // onPageChange={(page:number)=>{console.log(page)}}
+          // onPageSizeChange={(newPageSize: number, newPage: number)=>{console.log(newPageSize,newPage)}}
+          // onFilteredChange={(newFiltering: Filter[], column: any, value: any)=>{console.log(newFiltering,column,value)}}
+          // onSortedChange={(newSorted: SortingRule[], column: any, additive: boolean)=>{console.log(newSorted,column,additive)}}
         />
       </div>
     );
