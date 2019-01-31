@@ -112,7 +112,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
 
     return (
       <>
-      {loading?<><Spinner/></>:null}
+      {loading?<><Backdrop show iswhite/><Spinner/></>:null}
       {form}
       </>
     )

@@ -1,0 +1,24 @@
+import axios from "../../config/axiosKTMConfig";
+import createSelectFilterComponent from "../Filtergenerators/createSelectFilterComponent";
+import createDateFilterComponent from "../Filtergenerators/createDateFilterComponent";
+import { useContext } from "react";
+import GlobalContext from "../../GlobalContext";
+
+var headerConfigMap = new Map();
+
+(async()=>{
+ let data = await createSelectFilterComponent("tipiOpiList/v1",axios,"tipoOpi");
+ headerConfigMap.set("TIPO_OPI",data);
+})();
+
+(async()=>{
+  let data = await createSelectFilterComponent("tipiOrdineList/v1",axios,"tipoOrdine");
+  headerConfigMap.set("TIPO_ORDINE",data);
+ })();
+
+
+headerConfigMap.set("DATA_CHIUSURA_SEGNALAZIONE",createDateFilterComponent());
+headerConfigMap.set("DATA_INVIO_MAIL",createDateFilterComponent());
+headerConfigMap.set("DATA_INVIO_RICHIESTA",createDateFilterComponent());
+
+export default headerConfigMap;
