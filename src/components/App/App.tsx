@@ -14,7 +14,7 @@ import GestioneKODetailPageFase2 from "../GestioneKODetailPageFase2/GestioneKODe
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 fontawesome();
 
-if(deviceCheckConfig())console.log("mobile");
+deviceCheckConfig()?console.log("mobile"):console.log("desktop");
 
 const AppRouter = () => (
   <div className="App">

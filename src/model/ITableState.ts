@@ -1,3 +1,4 @@
+import { Filter } from 'react-table';
 export default interface ITableState{
     data:[],
     columnHeaders?:Array<{}>,
@@ -5,7 +6,7 @@ export default interface ITableState{
     page?:number,
     pageSize?:number,
     sorted?:any,
-    filters?:[],
+    filters?:Array<Filter>,
     loading:boolean,
     isSelectAll?:boolean,
     isMobileView?:boolean

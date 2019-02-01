@@ -1,7 +1,6 @@
 import * as React from "react";
 import ITableState from "../../model/ITableState";
 import axios from "../../config/axiosKTMConfig";
-import getTableData from "../../Utils/getTableData";
 import ReactTable, { Filter, SortingRule } from "react-table";
 import filterAndHeaderConfigMap from "./FilterAndHeaderConfigMap";
 import {
@@ -16,152 +15,214 @@ import getDataForTable from "../../Utils/getDataForTable";
 
 class GestioneKOSospesi extends BaseComponent {
   private baseURL = `gestioneko/v1/list`;
-  private isMobileView: any = deviceCheckConfig();
-  private page:number=1;
-  private pages:number=0;
-  private pageSize:number=10;
-  private sorted:any;
-  private filters:[]=[];
-  private data:[]=[];
-  private columnHeaders:[]=[];
-  private loading:boolean=true;
+  private isMobileView:boolean= deviceCheckConfig()?true:false;
+  private page: number = 0;
+  private defaultPageSize: number = 10;
+  private pages: number = 0;
+  private pageSize: number = 10;
+  private sorted: [] = [];
+  private filters:Array<Filter> = [];
+  private data: [] = [];
+  private loading: boolean = true;
+  private history: any;
+  private setTableState: Function;
+  private showPaginationBottom: boolean = false;
+  private checkboxHeader = 
+  {
+    Header: "SELECT ALL",
+    minWidth: 100,
+    className: "cell",
+    headerClassName: "header",
+    Cell: (row: any) => {
+      return ( <input className="checkbox" type="checkbox" onChange={this.onChangeRowCheckBox} /> );
+    },
+    Filter: ({ filter, onChange }: any) => 
+    ( <input id="#selectAll" className="checkbox" role="selectAll" type="checkbox" onChange={this.onChangeHandler} /> )
+  };
+  private columnHeaders:Array<any> = this.isMobileView?[]:[this.checkboxHeader];
 
   private previousTableState: ITableState = {
     data: this.data,
     columnHeaders: this.columnHeaders,
     pages: this.pages,
-    page:this.page,
-    pageSize:this.pageSize,
-    sorted:this.sorted,
-    filters:this.filters,
+    page: this.page,
+    pageSize: this.pageSize,
+    sorted: this.sorted,
+    filters: this.filters,
     loading: this.loading
   };
-
   constructor() {
     super();
     console.log("GestioneKOSospesi constructor called");
+    deviceCheckConfig()?this.isMobileView=true:this.isMobileView=false;
+    
   }
 
-  public setLoading(loading:boolean){
-    this.loading=loading;
+  private onChangeHandler = (event: any) => {
+    onToggleSelectAllCheckBox(event.target.checked);
+  };
+
+  private onChangeRowCheckBox = (event: any) => {
+    let checkbox = event.target;
+    highlightRowOnChangeCheckbox(checkbox);
+  };
+
+  private requestTableData( 
+    pageSize:number,
+    page:number,
+    sorted:any,
+    filters:Array<Filter>,
+    baseURL:String,
+    headerConfigMap:Map<string,any>,
+    axios: any,
+    isMobileView:boolean) {
+    this.previousTableState.loading = true;
+    this.setTableState({ ...this.previousTableState, loading: !this.loading });
+    getDataForTable(
+      pageSize,
+      page,
+      sorted,
+      filters,
+      baseURL,
+      headerConfigMap,
+      axios,
+      isMobileView
+    ).then((tableData: ITableState) => {
+      let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
+      this.setPreviousTableState(newTableState);
+      this.setTableState(newTableState);
+    });
   }
 
-  public setPreviousTableState(tableState:ITableState){
-     this.previousTableState= tableState;
+  private onPageChange = (page: number) => {
+    this.requestTableData(
+      this.previousTableState.pageSize,
+      page,
+      this.previousTableState.sorted,
+      this.previousTableState.filters,
+      this.baseURL,
+      filterAndHeaderConfigMap,
+      axios,
+      this.isMobileView
+    );
+  };
+
+  private onPageSizeChange = (newPageSize: number, newPage: number) => {
+    this.requestTableData(
+      newPageSize,
+      newPage,
+      this.previousTableState.sorted,
+      this.previousTableState.filters,
+      this.baseURL,
+      filterAndHeaderConfigMap,
+      axios,
+      this.isMobileView
+    );
+  };
+
+  private onFilterChange=(newFiltering: Filter[], column: any, value: any) =>{
+    this.requestTableData(
+      this.previousTableState.pageSize,
+      this.previousTableState.page,
+      this.previousTableState.sorted,
+      newFiltering,
+      this.baseURL,
+      filterAndHeaderConfigMap,
+      axios,
+      this.isMobileView
+    );
   }
+
+  private onSortingChange=(
+    newSorted: SortingRule[],
+    column: any,
+    additive: boolean
+  )=> {
+    this.setLoading(true);
+  }
+  private rowHandler = (state: any, rowInfo: any) => {
+    if (rowInfo && rowInfo.row) {
+      if (!this.isMobileView) {
+        return {
+          onDoubleClick: (e: any) => {
+            console.log(rowInfo.original);
+            this.history.push("/detailPageFase2", {
+              data: rowInfo.original
+            });
+          }
+        };
+      } else {
+        return {
+          onClick: (e: any) => {
+            console.log(rowInfo.original);
+            this.history.push("/detailPageFase2", {
+              data: rowInfo.original
+            });
+          }
+        };
+      }
+    } else {
+      return {};
+    }
+  };
+  
+
+  public setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
+  public setPreviousTableState = (tableState: ITableState) => {
+    this.previousTableState = tableState;
+  };
+ 
   public gestioneKOTableComponent = (props: any): JSX.Element => {
     const [tableState, setTableState] = React.useState<ITableState>(
       this.previousTableState
     );
-    const fetchData = (state:any, instance: any) => {
-      console.log(instance);
-      if(this.loading){
-          console.log("in fetch Data")
-          setTableState({
-              ...tableState,
-              loading: true
-          });
-          deselectAllCheckbox();
-          getDataForTable(
-            state.pageSize,
-            state.page,
-            state.sorted,
-            state.filtered,
-            this.baseURL,
-            filterAndHeaderConfigMap,
-            axios,
-            this.isMobileView).then((tableData: ITableState) => {
-                                  this.setPreviousTableState({
-                                    ...tableData,
-                                    loading:false
-                                  }
-                                  );
-                                  this.loading=false;
-                                  setTableState(this.previousTableState);
+    this.setTableState = setTableState;
+
+    this.history = props.history;
+
+    React.useEffect(() => {
+        deselectAllCheckbox();
+        getDataForTable(
+          this.previousTableState.pageSize,
+          this.previousTableState.page,
+          this.previousTableState.sorted,
+          this.previousTableState.filters,
+          this.baseURL,
+          filterAndHeaderConfigMap,
+          axios,
+          this.isMobileView
+        ).then((tableData: ITableState) => {
+          let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
+          this.setPreviousTableState(newTableState);
+          setTableState(newTableState);
         });
-    }else{
-      setTableState(this.previousTableState)
-    }
-    };
-    const onChangeHandler = (event: any) => {
-      onToggleSelectAllCheckBox(event.target.checked);
-    };
-
-    const onChangeRowCheckBox = (event: any) => {
-      let checkbox = event.target;
-      highlightRowOnChangeCheckbox(checkbox);
-    };
-
-    const rowHandler = (state: any, rowInfo: any) => {
-      if (rowInfo && rowInfo.row) {
-        if (!this.isMobileView) {
-          return {
-            onDoubleClick: (e: any) => {
-              console.log(rowInfo.original);
-              props.history.push("/detailPageFase2", {
-                data: rowInfo.original
-              });
-            }
-          };
-        } else {
-          return {
-            onClick: (e: any) => {
-              console.log(rowInfo.original);
-              props.history.push("/detailPageFase2", {
-                data: rowInfo.original
-              });
-            }
-          };
-        }
-      } else {
-        return {};
-      }
-    };
-    const checkboxHeader = {
-      Header: "SELECT ALL",
-      minWidth: 100,
-      className: "cell",
-      headerClassName: "header",
-      Cell: (row: any) => {
-        return (
-          <input
-            className="checkbox"
-            type="checkbox"
-            onChange={onChangeRowCheckBox}
-          />
-        );
-      },
-      Filter: ({ filter, onChange }: any) => (
-        <input
-          id="#selectAll"
-          className="checkbox"
-          role="selectAll"
-          type="checkbox"
-          onChange={onChangeHandler}
-        />
-      )
-    };
+    }, []);
 
     return (
       <div>
-        {tableState.loading ? <Spinner /> : null}
+        {this.previousTableState.loading ? <Spinner /> : null}
         <ReactTable
-          columns={ this.isMobileView ? [...tableState.columnHeaders] : [checkboxHeader, ...tableState.columnHeaders] }
+          columns={this.previousTableState.columnHeaders}
           manual // Forces table not to paginate or sort automatically, so we can handle it server-side
-          data={tableState.data}
-          pages={tableState.pages} // Display the total number of pages
-          loading={tableState.loading} // Display the loading overlay when we need it
-          onFetchData={fetchData} // Request new data when things change
+          data={this.previousTableState.data}
+          pages={this.previousTableState.pages} // Display the total number of pages
+          page={this.previousTableState.page}
+          pageSize={this.previousTableState.pageSize}
+          loading={this.previousTableState.loading} // Display the loading overlay when we need it
+          // onFetchData={fetchData} // Request new data when things change
           filterable
-          defaultPageSize={10}
+          defaultPageSize={this.defaultPageSize}
           className="-striped -highlight ReactKTMTable"
           showPaginationTop
-          showPaginationBottom={false}
-          getTrProps={rowHandler}
-          onPageChange={()=>{this.setLoading(true)}}
-          onPageSizeChange={(newPageSize: number, newPage: number)=>{this.setLoading(true)}}
-          onFilteredChange={(newFiltering: Filter[], column: any, value: any)=>{this.setLoading(true)}}
-          onSortedChange={(newSorted: SortingRule[], column: any, additive: boolean)=>{this.setLoading(true)}}
+          showPaginationBottom={this.showPaginationBottom}
+          getTrProps={this.rowHandler}
+          onPageChange={this.onPageChange}
+          onPageSizeChange={this.onPageSizeChange}
+          onFilteredChange={this.onFilterChange}
+          onSortedChange={this.onSortingChange}
         />
       </div>
     );

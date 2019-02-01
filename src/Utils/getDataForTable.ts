@@ -1,3 +1,4 @@
+import { Filter } from 'react-table';
 import  ITableState  from '../model/ITableState';
 import IFilter from '../model/IFilter';
 import deviceCheckConfig from '../config/deviceCheckConfig';
@@ -5,7 +6,7 @@ export default async (
   pageSize:number,
   page:number,
   sorted:any,
-  filters:[],
+  filters:Array<Filter>,
   baseURL:String,
   headerConfigMap:Map<string,any>,
   axios: any,
@@ -57,9 +58,9 @@ export default async (
                                                           minWidth:200
                                                          }],
       data: records,
-      pages: totalPages,
       page,
       pageSize,
+      pages: totalPages,
       loading: false
     }
   } catch (err) {
