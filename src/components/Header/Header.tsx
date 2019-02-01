@@ -2,14 +2,14 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SliderMenu from "../UI/SliderMenu/SliderMenu";
 
-export default function Header() {
+export default function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
   const onToogleSliderMenu = () => setIsHidden(!isHidden);
 
   return (
     <div className="Header">
       <div className="Header__left">
-        <div className="Header__logo-box">
+        <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
           <img
             className="Header__logo"
             src="./src/images/vodafone-logo.png"
