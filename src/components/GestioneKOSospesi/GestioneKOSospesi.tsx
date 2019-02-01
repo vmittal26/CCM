@@ -27,6 +27,7 @@ class GestioneKOSospesi extends BaseComponent {
   private history: any;
   private setTableState: Function;
   private showPaginationBottom: boolean = false;
+  private isTableLoadedFirstTime:boolean=false;
   private checkboxHeader = 
   {
     Header: "SELECT ALL",
@@ -67,33 +68,6 @@ class GestioneKOSospesi extends BaseComponent {
     highlightRowOnChangeCheckbox(checkbox);
   };
 
-  private requestTableData( 
-    pageSize:number,
-    page:number,
-    sorted:any,
-    filters:Array<Filter>,
-    baseURL:String,
-    headerConfigMap:Map<string,any>,
-    axios: any,
-    isMobileView:boolean) {
-    this.previousTableState.loading = true;
-    this.setTableState({ ...this.previousTableState, loading: !this.loading });
-    getDataForTable(
-      pageSize,
-      page,
-      sorted,
-      filters,
-      baseURL,
-      headerConfigMap,
-      axios,
-      isMobileView
-    ).then((tableData: ITableState) => {
-      let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
-      this.setPreviousTableState(newTableState);
-      this.setTableState(newTableState);
-    });
-  }
-
   private onPageChange = (page: number) => {
     this.requestTableData(
       this.previousTableState.pageSize,
@@ -120,7 +94,36 @@ class GestioneKOSospesi extends BaseComponent {
     );
   };
 
-  private onFilterChange=(newFiltering: Filter[], column: any, value: any) =>{
+  private requestTableData( 
+    pageSize:number,
+    page:number,
+    sorted:any,
+    filters:Array<Filter>,
+    baseURL:String,
+    headerConfigMap:Map<string,any>,
+    axios: any,
+    isMobileView:boolean) {
+    this.previousTableState.loading = true;
+    this.setTableState({ ...this.previousTableState, loading: !this.loading });
+    deselectAllCheckbox();
+    getDataForTable(
+      pageSize,
+      page,
+      sorted,
+      filters,
+      baseURL,
+      headerConfigMap,
+      axios,
+      isMobileView
+    ).then((tableData: ITableState) => {
+      let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
+      this.setPreviousTableState(newTableState);
+      this.setTableState(newTableState);
+      this.isTableLoadedFirstTime?this.isTableLoadedFirstTime:this.isTableLoadedFirstTime=true;
+    });
+  }
+
+  private onFilterChange(newFiltering: Filter[], column: any, value: any) {
     this.requestTableData(
       this.previousTableState.pageSize,
       this.previousTableState.page,
@@ -133,11 +136,11 @@ class GestioneKOSospesi extends BaseComponent {
     );
   }
 
-  private onSortingChange=(
+  private onSortingChange(
     newSorted: SortingRule[],
     column: any,
     additive: boolean
-  )=> {
+  ) {
     this.setLoading(true);
   }
   private rowHandler = (state: any, rowInfo: any) => {
@@ -184,21 +187,25 @@ class GestioneKOSospesi extends BaseComponent {
     this.history = props.history;
 
     React.useEffect(() => {
-        deselectAllCheckbox();
-        getDataForTable(
-          this.previousTableState.pageSize,
-          this.previousTableState.page,
-          this.previousTableState.sorted,
-          this.previousTableState.filters,
-          this.baseURL,
-          filterAndHeaderConfigMap,
-          axios,
-          this.isMobileView
-        ).then((tableData: ITableState) => {
-          let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
-          this.setPreviousTableState(newTableState);
-          setTableState(newTableState);
-        });
+
+        let isTableToReload = props.history.location.state && props.history.location.state.isTableToReload;
+
+        if(isTableToReload || !this.isTableLoadedFirstTime){
+          deselectAllCheckbox();
+          this.previousTableState.loading = true;
+          this.setTableState({ ...this.previousTableState, loading: !this.loading });
+          this.requestTableData(
+            this.previousTableState.pageSize,
+            this.previousTableState.page,
+            this.previousTableState.sorted,
+            this.previousTableState.filters,
+            this.baseURL,
+            filterAndHeaderConfigMap,
+            axios,
+            this.isMobileView
+          );
+        }
+       
     }, []);
 
     return (

@@ -23,7 +23,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/"exact component={Home} />
         <Route path="/gestioneKO" component={GestioneKO} />
-        <Route path="/gestioneKOSospesi" component={GestioneKOSospesi} />
+        <Route path="/gestioneKOSospesi" component={(GestioneKOSospesi)} />
         <Route path="/gestioneKOSegnalazione" component={GestioneKOSegnlazione} />
         <Route path="/sospensioniVodafone" component={SospensioneVodafone} />
         <Route path="/canaliVendita" component={CanaliVendita} />

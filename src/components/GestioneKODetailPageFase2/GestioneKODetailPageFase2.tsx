@@ -59,7 +59,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     children={(
       <Form  className="DetailPagePanel">
         <div className="DetailPagePanel__ButtonSection"> 
-          <button type="button" onClick={()=>componentProps.history.goBack()} className="btn btn-primary">INDIETRO</button>
+          <button type="button" onClick={()=>componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:false})} className="btn btn-primary">INDIETRO</button>
           <button type="submit" className="btn btn-primary">SALVA</button>
         </div>
         <div>
@@ -94,7 +94,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
             setLoading(true);
               const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
               console.log(response);
-              componentProps.history.replace("/gestioneKO")
+              componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:true})
           })();
           
         
