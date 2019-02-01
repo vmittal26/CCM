@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
-import Increment from "../Increment/Increment";
+import Home from "../Home/Home";
 import Header from "../Header/Header";
 import fontawesome from "../../config/fontawesomeSVGConfig";
 import GestioneKOSospesi from "../GestioneKOSospesi/GestioneKOSospesi";
@@ -21,7 +21,7 @@ const AppRouter = () => (
     <Header />
     <div className="App__main">
       <Switch>
-        <Route path="/"exact component={Increment} />
+        <Route path="/"exact component={Home} />
         <Route path="/gestioneKO" component={GestioneKO} />
         <Route path="/gestioneKOSospesi" component={GestioneKOSospesi} />
         <Route path="/gestioneKOSegnalazione" component={GestioneKOSegnlazione} />

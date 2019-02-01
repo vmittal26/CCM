@@ -4,5 +4,8 @@
     top: 6rem;
     left: 0;
     z-index: 0;
+    @include respond(xs) {
+      top: 9rem;
+    }
   }
 }

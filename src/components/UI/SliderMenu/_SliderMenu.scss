@@ -1,87 +1,108 @@
-.SliderMenu{
-    display: flex;
-    flex-direction: column;
-    width:25vw;
-    min-height: 100vh;
-    transition:all 0.3s;
-    position: absolute;
-    top:0;
-    left:0;
-    background-color:#fff;
-    z-index: 200;
-    font-size:0.9rem;
-    overflow-y: auto;
-    height: 90vh;
+.SliderMenu {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  min-height: 100vh;
+  transition: all 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 200;
+  font-size: 0.9rem;
+  overflow-y: auto;
+  height: 90vh;
 
-    @include respond(xs){
-        width:40vw;
+  @include respond(xs) {
+    width: 40vw;
+  }
+
+  @include respond(md) {
+    width: 30vw;
+  }
+
+  @include respond(lg) {
+    width: 25vw;
+  }
+
+  @include respond(xl) {
+    width: 21vw;
+  }
+
+  &__Close {
+    transform: translateX(-100%);
+  }
+
+  &__Open {
+    transform: translateX(0);
+  }
+
+  .Collapsible__trigger {
+    background-color: #f4f4f4d0;
+    border: 1px solid #ccc;
+    display: block;
+    @include respond(xs) {
+      font-size: 1rem;
+      padding: 0.7rem 1.4rem;
     }
-
-    @include respond(md){
-        width:30vw;
+    @include respond(sm) {
+      font-size: 1.2rem;
+      padding: 0.9rem 1.4rem;
     }
-
-    @include respond(lg){
-        width:25vw;
+    @include respond(md) {
+      font-size: 1.2rem;
+      padding: 0.9rem 1.4rem;
     }
-
-    @include respond(xl){
-        width:21vw;
+    @include respond(lg) {
+      font-size: 0.9rem;
+      padding: 0.9rem 1.4rem;
     }
-
-    &__Close{
-        transform: translateX(-100%);
+    @include respond(xl) {
+      font-size: 1rem;
+      padding: 0.6rem 1.4rem;
     }
-
-    &__Open{
-        transform: translateX(0);
-    }
-
-    .Collapsible__trigger{
-        background-color: #f4f4f4d0;
-        border:1px solid #ccc;
-        display: block;
-        @include respond(xs){
-          font-size: 1rem;
-          padding:0.7rem 1.4rem;
-        }
-        @include respond(sm){
-          font-size: 1.2rem;
-          padding:0.9rem 1.4rem;
-        }
-        @include respond(md){
-            font-size: 1.2rem;
-            padding:0.9rem 1.4rem;
-          }
-        @include respond(lg){
-            font-size:0.9rem;
-            padding:0.9rem 1.4rem;
-        }
-        @include respond(xl){
-          font-size:1rem;
-          padding:0.6rem 1.4rem;
-        }
-}
-}
-
-.SliderMenuList{
-
-    list-style: none;
-    height: 100%;
-    &__item{
-        padding:0.3rem 1.5rem;
-        a,a:hover{
-            text-decoration: none;
-            transition: all 0.1s;
-        }
-        a{
-            color:#333;
-            &:hover{
-              color:lighten($color-primary,10%);
-            }
-        }
-    }
-
+  }
 }
 
+.SliderMenuList {
+  list-style: none;
+  height: 100%;
+  &__item {
+    padding: 0.3rem 1.5rem;
+    position: relative;
+    &:not(:last-child) {
+      margin-bottom: 0.2rem;
+    }
+    a,
+    a:hover {
+      position: relative;
+      text-decoration: none;
+      transition: all 0.4s;
+    }
+    a {
+      color: #333;
+      &:hover {
+        color: $color-primary;
+      }
+    }
 
+    &:hover::before {
+      transform: scaleY(1);
+    }
+
+    &:hover{
+        background-color: $color-grey-light-2;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background-color: $color-primary;
+      transform: scaleY(0);
+      transition: transform 0.2s, width 0.4s 0.2s;
+    }
+  }
+}

@@ -71,13 +71,16 @@ class GestioneKOSospesi extends BaseComponent {
             filterAndHeaderConfigMap,
             axios,
             this.isMobileView).then((tableData: ITableState) => {
-                                  this.setPreviousTableState(tableData);
-                                  this.loading=false;
-                                  setTableState({
+                                  this.setPreviousTableState({
                                     ...tableData,
-                                    loading:false}
+                                    loading:false
+                                  }
                                   );
+                                  this.loading=false;
+                                  setTableState(this.previousTableState);
         });
+    }else{
+      setTableState(this.previousTableState)
     }
     };
     const onChangeHandler = (event: any) => {

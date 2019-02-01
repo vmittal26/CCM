@@ -8,7 +8,7 @@ import menuConfig from "../../../config/menuConfig";
 export default function SliderMenu(props: ISliderProps) {
   const classToggle = props.show ? "SliderMenu SliderMenu__Open" : " SliderMenu SliderMenu__Close";
 
-  let jsx = Object.keys(menuConfig).map((element: any) => {
+  let slider = Object.keys(menuConfig).map((element: any) => {
     return (
       <Collapsible key={element} trigger={element} open>
         <ul className="SliderMenuList">
@@ -25,7 +25,7 @@ export default function SliderMenu(props: ISliderProps) {
   return (
     <>
       <Backdrop show={props.show} onClick={props.onClick} />
-      <div className={classToggle + " text-dark"}>{jsx}</div>
+      <div className={classToggle + " text-dark"}>{slider}</div>
     </>
   );
 }
