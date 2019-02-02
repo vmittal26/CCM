@@ -103,7 +103,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.baseURL,
       filterAndHeaderConfigMap,
       axios,
-      this.isMobileView
+      this.previousTableState.isMobileView
     );
   };
 
@@ -116,7 +116,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.baseURL,
       filterAndHeaderConfigMap,
       axios,
-      this.isMobileView
+      this.previousTableState.isMobileView
     );
   };
 
@@ -146,20 +146,15 @@ class GestioneKOSospesi extends BaseComponent {
       let newTableState = {
         ...this.previousTableState,
         ...tableData,
-        columnHeaders: isMobileView
-          ? tableData.columnHeaders
-          : [this.checkboxHeader, ...tableData.columnHeaders],
-        isMobileView: isMobileView
+        columnHeaders: isMobileView ? tableData.columnHeaders : [this.checkboxHeader, ...tableData.columnHeaders], isMobileView: isMobileView
       };
       this.setPreviousTableState(newTableState);
       this.setTableState(newTableState);
-      this.isTableLoadedFirstTime
-        ? this.isTableLoadedFirstTime
-        : (this.isTableLoadedFirstTime = true);
+      this.isTableLoadedFirstTime ? this.isTableLoadedFirstTime : (this.isTableLoadedFirstTime = true);
     });
   }
 
-  private onFilterChange(newFiltering: Filter[], column: any, value: any) {
+  private onFilterChange=(newFiltering: Filter[], column: any, value: any)=> {
     this.requestTableData(
       this.previousTableState.pageSize,
       this.previousTableState.page,
@@ -168,7 +163,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.baseURL,
       filterAndHeaderConfigMap,
       axios,
-      this.isMobileView
+      this.previousTableState.isMobileView
     );
   }
 
@@ -181,7 +176,7 @@ class GestioneKOSospesi extends BaseComponent {
   }
   private rowHandler = (state: any, rowInfo: any) => {
     if (rowInfo && rowInfo.row) {
-      if (!this.isMobileView) {
+      if (!this.previousTableState.isMobileView) {
         return {
           onDoubleClick: (e: any) => {
             console.log(rowInfo.original);
@@ -244,7 +239,7 @@ class GestioneKOSospesi extends BaseComponent {
           this.baseURL,
           filterAndHeaderConfigMap,
           axios,
-          this.isMobileView
+          this.previousTableState.isMobileView
         );
       }
       return () => {

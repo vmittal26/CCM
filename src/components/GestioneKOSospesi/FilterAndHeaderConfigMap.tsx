@@ -1,8 +1,6 @@
 import axios from "../../config/axiosKTMConfig";
 import createSelectFilterComponent from "../Filtergenerators/createSelectFilterComponent";
 import createDateFilterComponent from "../Filtergenerators/createDateFilterComponent";
-import { useContext } from "react";
-import GlobalContext from "../../GlobalContext";
 
 var headerConfigMap = new Map();
 
