@@ -52,7 +52,9 @@ class GestioneKOSospesi extends BaseComponent {
       />
     )
   };
-  private columnHeaders: Array<any> = this.isMobileView ? [] : [this.checkboxHeader];
+  private columnHeaders: Array<any> = this.isMobileView
+    ? []
+    : [this.checkboxHeader];
 
   private previousTableState: ITableState = {
     data: this.data,
@@ -70,10 +72,8 @@ class GestioneKOSospesi extends BaseComponent {
     deviceCheckConfig()
       ? (this.isMobileView = true)
       : (this.isMobileView = false);
-    this.EE.on("switchMode",this.onModeChange);
-   
   }
-  public onModeChange=(checked: boolean) => {
+  public onModeChange = (checked: boolean) => {
     this.requestTableData(
       this.previousTableState.pageSize,
       this.previousTableState.page,
@@ -83,8 +83,8 @@ class GestioneKOSospesi extends BaseComponent {
       filterAndHeaderConfigMap,
       axios,
       !this.previousTableState.isMobileView
-    )
-  }
+    );
+  };
   private onChangeHandler = (event: any) => {
     onToggleSelectAllCheckBox(event.target.checked);
   };
@@ -146,8 +146,10 @@ class GestioneKOSospesi extends BaseComponent {
       let newTableState = {
         ...this.previousTableState,
         ...tableData,
-        columnHeaders: isMobileView?tableData.columnHeaders:[this.checkboxHeader, ...tableData.columnHeaders],
-        isMobileView:isMobileView
+        columnHeaders: isMobileView
+          ? tableData.columnHeaders
+          : [this.checkboxHeader, ...tableData.columnHeaders],
+        isMobileView: isMobileView
       };
       this.setPreviousTableState(newTableState);
       this.setTableState(newTableState);
@@ -220,6 +222,9 @@ class GestioneKOSospesi extends BaseComponent {
     this.history = props.history;
 
     React.useEffect(() => {
+      console.log("adding switch mode listener");
+      this.EE.on("switchMode", this.onModeChange);
+
       let isTableToReload =
         props.history.location.state &&
         props.history.location.state.isTableToReload;
@@ -241,11 +246,11 @@ class GestioneKOSospesi extends BaseComponent {
           axios,
           this.isMobileView
         );
-        return()=>{
-          console.log("removing switchMode Listener on unmount")
-          this.EE.removeListener('switchMode', this.onModeChange);
-        }
       }
+      return () => {
+        console.log("removing switchMode Listener on unmount");
+        this.EE.removeListener("switchMode", this.onModeChange);
+      };
     }, []);
 
     return (
