@@ -2,6 +2,8 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SliderMenu from "../UI/SliderMenu/SliderMenu";
 import { withRouter } from "react-router";
+import SwitchMode from "../UI/SwitchMode/SwitchMode";
+import deviceCheckConfig from "../../config/deviceCheckConfig";
 
 export  function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
@@ -28,6 +30,7 @@ export  function Header(props:any) {
       <div className="Header__right">
         {/* <span>Username</span>
         <span>RoleName</span> */}
+        <SwitchMode isMobileView={deviceCheckConfig() ? true : false}/>
         <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon="power-off" />
       </div>
       <SliderMenu show={isHidden} onClick={onToogleSliderMenu} />

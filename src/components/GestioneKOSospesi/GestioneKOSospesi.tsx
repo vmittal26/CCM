@@ -15,32 +15,44 @@ import getDataForTable from "../../Utils/getDataForTable";
 
 class GestioneKOSospesi extends BaseComponent {
   private baseURL = `gestioneko/v1/list`;
-  private isMobileView:boolean= deviceCheckConfig()?true:false;
+  private isMobileView: boolean = deviceCheckConfig() ? true : false;
   private page: number = 0;
   private defaultPageSize: number = 10;
   private pages: number = 0;
   private pageSize: number = 10;
   private sorted: [] = [];
-  private filters:Array<Filter> = [];
+  private filters: Array<Filter> = [];
   private data: [] = [];
   private loading: boolean = true;
   private history: any;
   private setTableState: Function;
   private showPaginationBottom: boolean = false;
-  private isTableLoadedFirstTime:boolean=false;
-  private checkboxHeader = 
-  {
+  private isTableLoadedFirstTime: boolean = false;
+  private checkboxHeader = {
     Header: "SELECT ALL",
     minWidth: 100,
     className: "cell",
     headerClassName: "header",
     Cell: (row: any) => {
-      return ( <input className="checkbox" type="checkbox" onChange={this.onChangeRowCheckBox} /> );
+      return (
+        <input
+          className="checkbox"
+          type="checkbox"
+          onChange={this.onChangeRowCheckBox}
+        />
+      );
     },
-    Filter: ({ filter, onChange }: any) => 
-    ( <input id="#selectAll" className="checkbox" role="selectAll" type="checkbox" onChange={this.onChangeHandler} /> )
+    Filter: ({ filter, onChange }: any) => (
+      <input
+        id="#selectAll"
+        className="checkbox"
+        role="selectAll"
+        type="checkbox"
+        onChange={this.onChangeHandler}
+      />
+    )
   };
-  private columnHeaders:Array<any> = this.isMobileView?[]:[this.checkboxHeader];
+  private columnHeaders: Array<any> = this.isMobileView ? [] : [this.checkboxHeader];
 
   private previousTableState: ITableState = {
     data: this.data,
@@ -55,10 +67,24 @@ class GestioneKOSospesi extends BaseComponent {
   constructor() {
     super();
     console.log("GestioneKOSospesi constructor called");
-    deviceCheckConfig()?this.isMobileView=true:this.isMobileView=false;
-    
+    deviceCheckConfig()
+      ? (this.isMobileView = true)
+      : (this.isMobileView = false);
+    this.EE.on("switchMode",this.onModeChange);
+   
   }
-
+  public onModeChange=(checked: boolean) => {
+    this.requestTableData(
+      this.previousTableState.pageSize,
+      this.previousTableState.page,
+      this.previousTableState.sorted,
+      this.previousTableState.filters,
+      this.baseURL,
+      filterAndHeaderConfigMap,
+      axios,
+      !this.previousTableState.isMobileView
+    )
+  }
   private onChangeHandler = (event: any) => {
     onToggleSelectAllCheckBox(event.target.checked);
   };
@@ -94,15 +120,16 @@ class GestioneKOSospesi extends BaseComponent {
     );
   };
 
-  private requestTableData( 
-    pageSize:number,
-    page:number,
-    sorted:any,
-    filters:Array<Filter>,
-    baseURL:String,
-    headerConfigMap:Map<string,any>,
+  private requestTableData(
+    pageSize: number,
+    page: number,
+    sorted: any,
+    filters: Array<Filter>,
+    baseURL: String,
+    headerConfigMap: Map<string, any>,
     axios: any,
-    isMobileView:boolean) {
+    isMobileView: boolean
+  ) {
     this.previousTableState.loading = true;
     this.setTableState({ ...this.previousTableState, loading: !this.loading });
     deselectAllCheckbox();
@@ -116,10 +143,17 @@ class GestioneKOSospesi extends BaseComponent {
       axios,
       isMobileView
     ).then((tableData: ITableState) => {
-      let newTableState = { ...this.previousTableState, ...tableData ,columnHeaders:[...this.columnHeaders,...tableData.columnHeaders] };
+      let newTableState = {
+        ...this.previousTableState,
+        ...tableData,
+        columnHeaders: isMobileView?tableData.columnHeaders:[this.checkboxHeader, ...tableData.columnHeaders],
+        isMobileView:isMobileView
+      };
       this.setPreviousTableState(newTableState);
       this.setTableState(newTableState);
-      this.isTableLoadedFirstTime?this.isTableLoadedFirstTime:this.isTableLoadedFirstTime=true;
+      this.isTableLoadedFirstTime
+        ? this.isTableLoadedFirstTime
+        : (this.isTableLoadedFirstTime = true);
     });
   }
 
@@ -168,7 +202,6 @@ class GestioneKOSospesi extends BaseComponent {
       return {};
     }
   };
-  
 
   public setLoading(loading: boolean) {
     this.loading = loading;
@@ -177,7 +210,7 @@ class GestioneKOSospesi extends BaseComponent {
   public setPreviousTableState = (tableState: ITableState) => {
     this.previousTableState = tableState;
   };
- 
+
   public gestioneKOTableComponent = (props: any): JSX.Element => {
     const [tableState, setTableState] = React.useState<ITableState>(
       this.previousTableState
@@ -187,25 +220,32 @@ class GestioneKOSospesi extends BaseComponent {
     this.history = props.history;
 
     React.useEffect(() => {
+      let isTableToReload =
+        props.history.location.state &&
+        props.history.location.state.isTableToReload;
 
-        let isTableToReload = props.history.location.state && props.history.location.state.isTableToReload;
-
-        if(isTableToReload || !this.isTableLoadedFirstTime){
-          deselectAllCheckbox();
-          this.previousTableState.loading = true;
-          this.setTableState({ ...this.previousTableState, loading: !this.loading });
-          this.requestTableData(
-            this.previousTableState.pageSize,
-            this.previousTableState.page,
-            this.previousTableState.sorted,
-            this.previousTableState.filters,
-            this.baseURL,
-            filterAndHeaderConfigMap,
-            axios,
-            this.isMobileView
-          );
+      if (isTableToReload || !this.isTableLoadedFirstTime) {
+        deselectAllCheckbox();
+        this.previousTableState.loading = true;
+        this.setTableState({
+          ...this.previousTableState,
+          loading: !this.loading
+        });
+        this.requestTableData(
+          this.previousTableState.pageSize,
+          this.previousTableState.page,
+          this.previousTableState.sorted,
+          this.previousTableState.filters,
+          this.baseURL,
+          filterAndHeaderConfigMap,
+          axios,
+          this.isMobileView
+        );
+        return()=>{
+          console.log("removing switchMode Listener on unmount")
+          this.EE.removeListener('switchMode', this.onModeChange);
         }
-       
+      }
     }, []);
 
     return (
@@ -240,6 +280,6 @@ class GestioneKOSospesi extends BaseComponent {
   }
 }
 
-const gestioneKO = new GestioneKOSospesi();
+export const gestioneKO = new GestioneKOSospesi();
 
 export default gestioneKO.getComponent();
