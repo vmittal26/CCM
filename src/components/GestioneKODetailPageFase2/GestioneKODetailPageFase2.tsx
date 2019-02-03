@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import Collapsible from "react-collapsible";
 import BaseComponent from "../BaseComponent/BaseComponent";
 import DatiGeneraliPanelFase2 from "../Sharedcomponents/DatiGenaraliPanelFase2/DatiGenaraliPanelFase2";
@@ -10,6 +11,7 @@ import { dateFormat } from "../../Utils/DateFormat";
 import axios from "../../config/axiosKTMConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
+import { notification, Modal } from "antd";
 
 class GestioneKODetailPageFase2 extends BaseComponent {
 
@@ -19,7 +21,8 @@ class GestioneKODetailPageFase2 extends BaseComponent {
                                               tipoOrdine: Yup.string().required()
                                               })
 
-  private initialValues:any;                                  
+  private initialValues:any;
+  private errors:Array<string>;
 
   constructor() {
     super();
@@ -30,6 +33,9 @@ class GestioneKODetailPageFase2 extends BaseComponent {
       console.log(this.test);
       
   }
+  private setErrors(errors:Array<string>){
+    this.errors = errors;
+  }
 
   //Arrow function points this to current context 
   public gestioneKODetailPageFase2=(componentProps: any):JSX.Element=> {
@@ -37,6 +43,8 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     console.log(componentProps.history.location.state.data);
 
     const [detailPageData, setDetailPageData] = React.useState( componentProps.history.location.state.data);
+
+    const[showModal,setShowModal] = React.useState(false);
 
     const[loading,setLoading]= React.useState<boolean>(false);
 
@@ -92,28 +100,54 @@ class GestioneKODetailPageFase2 extends BaseComponent {
 
           (async()=>{
             setLoading(true);
+             try{
               const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
               console.log(response);
               componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:true})
+              notification.open({
+                message: 'Notifica',
+                description: 'I dati vengono salvati con successo',
+                duration: 2.5,
+              });
+             }catch(error){
+               console.log(error);
+               notification.open({
+                message: 'Notifica',
+                description: 'I dati vengono salvati con successo',
+                duration: 2.5
+              })
+             }
           })();
           
         
     }}
     validate={(values)=>{ 
-      let errors:any = {};
-      if (values.tipiOrdine && values.tipiOrdine.descrizione && values.tipiOrdine.descrizione.trim()==="")  {
-        errors.tipiOrdine.descrizione = 'Required';
-      } 
+      let errors:any = [];
+      if (!values.numerazioniPortate ||(values.numerazioniPortate && values.numerazioniPortate.trim()===""))  {
+        errors.push('Please Enter Numerazione');
+      }
+      // if (!values.dataInvioRichiesta ||(values.dataInvioRichiesta && values.dataInvioRichiesta.trim()===""))  {
+      //   errors.push('Please Enter Data Invio Richiesta');
+      // }
       console.log(errors);
+      this.setErrors(errors);
+      setShowModal(this.errors.length>0);
       return errors;
     }}
     //  validationSchema={this.validationSchema}
-  />);
+  />);  
 
     return (
       <>
       {loading?<><Backdrop show iswhite/><Spinner/></>:null}
       {form}
+      <Modal title="Errors" 
+             destroyOnClose 
+             centered visible={showModal} 
+             onOk={()=>setShowModal(false)} 
+             onCancel={()=>setShowModal(false)}>
+         {this.errors && this.errors.map((error:string)=><p className={"text-danger"}key ={error}>{error}</p>)}
+        </Modal>
       </>
     )
   }

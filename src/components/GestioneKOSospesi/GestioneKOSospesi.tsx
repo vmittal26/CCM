@@ -19,7 +19,7 @@ class GestioneKOSospesi extends BaseComponent {
   private page: number = 0;
   private defaultPageSize: number = 10;
   private pages: number = 0;
-  private pageSize: number = 10;
+  private pageSize: number = 20;
   private sorted: [] = [];
   private filters: Array<Filter> = [];
   private data: [] = [];
@@ -69,9 +69,7 @@ class GestioneKOSospesi extends BaseComponent {
   constructor() {
     super();
     console.log("GestioneKOSospesi constructor called");
-    deviceCheckConfig()
-      ? (this.isMobileView = true)
-      : (this.isMobileView = false);
+    deviceCheckConfig() ? (this.isMobileView = true) : (this.isMobileView = false);
   }
   public onModeChange = (checked: boolean) => {
     this.requestTableData(

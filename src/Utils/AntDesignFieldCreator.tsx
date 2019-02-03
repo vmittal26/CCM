@@ -35,7 +35,7 @@ const CreateAntField = (Component:any) => ({
         // validateStatus={submittedError || touchedError ? "error" : "success"}
       >
        <div className="Field">
-        <label className={ismandatory ?"Field__mandatoryLabel":"Field__label"} htmlFor="tipoAnomalia">
+        <label className={ismandatory ?"Field__mandatoryLabel":"Field__label"} htmlFor={field.name}>
                 {label}
         </label>
         <Component

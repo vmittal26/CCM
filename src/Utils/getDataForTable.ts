@@ -60,6 +60,8 @@ export default async (
       data: records,
       page,
       pageSize,
+      filters,
+      sorted,
       pages: totalPages,
       loading: false
     }

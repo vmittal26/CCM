@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Row, Col } from "antd";
-import { Field } from "formik";
+import { FastField } from "formik";
 import {
   AntDatePicker,
   AntInput,
@@ -15,28 +15,28 @@ export default function GestioneKOPanelFase2() {
     <div className="GestioneKOPanelFase2">
       <Row gutter={14} className="DetailPagePanel">
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             component={AntSelect}
             name="tipoAnomalia"
             label="Tipo Anomalia"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             component={AntSelect}
             name="classeLavorazione"
             label="Classe Lavorazione"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             component={AntSelect}
             name="statoLavorazione"
             label="Stato Lavorazione"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Apertura"
             component={AntDatePicker}
             name="dataAperturaSegnalazione"
@@ -44,7 +44,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Chiusura"
             component={AntDatePicker}
             name="dataChiusuraSegnalazione"
@@ -52,7 +52,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Lavorazione"
             component={AntDatePicker}
             name="dataLavorazione"
@@ -60,7 +60,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Fine Sospensione"
             component={AntDatePicker}
             name="dataFineSospensione"
@@ -68,7 +68,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Utente Ultima Modifica"
             component={AntInput}
             name="utenteUltimaModifica"
@@ -76,7 +76,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Gruppo"
             component={AntInput}
             name="gruppoUltimaModifica"
@@ -84,7 +84,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Mail OLO Donating"
             component={AntDatePicker}
             name="dataInvioMailOloDonatng"
@@ -92,7 +92,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
-          <Field
+          <FastField
             label="Data Risposta Mail OLO Donating"
             component={AntDatePicker}
             name="dataRispostaMailOpDonating"
@@ -100,7 +100,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={8} lg={12} md={12} sm={16} xs={24}>
-          <Field
+          <FastField
             label="Note Olo DOnating"
             component={AntTextArea}
             type="text"
@@ -108,7 +108,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={8} lg={12} md={12} sm={16} xs={24}>
-          <Field label="Note" component={AntTextArea} name="note" type="text" />
+          <FastField label="Note" component={AntTextArea} name="note" type="text" />
         </Col>
       </Row>
     </div>
