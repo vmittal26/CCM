@@ -28,6 +28,24 @@
         padding-top:28px;
     }
 }
+
+.ReactTable .rt-tbody{
+  @include respond(xs) {
+    min-height: 80vh !important;
+  }
+  @include respond(sm) {
+    min-height: 80vh !important;
+  }
+  @include respond(md) {
+    min-height: 80vh !important;
+  }
+  @include respond(lg) {
+    min-height: 60vh !important;
+  }
+  @include respond(xl) {
+    min-height: 60vh !important;
+  }
+}
 // .ReactTable .rt-th, .ReactTable .rt-td{
 //   padding:4px 5px;
 // }

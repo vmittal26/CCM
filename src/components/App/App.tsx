@@ -20,6 +20,7 @@ const Home = React.lazy(() => import("../Home/Home"));
 deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
 fontawesome();
 const AppRouter = () => (
+  
   <div className="App">
     <Header />
     <div className="App__main">
