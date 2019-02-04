@@ -1,35 +1,42 @@
 import * as React from "react";
 import { Switch, Route } from "react-router-dom";
-import Home from "../Home/Home";
+
 import Header from "../Header/Header";
 import fontawesome from "../../config/fontawesomeSVGConfig";
-import GestioneKOSospesi from "../GestioneKOSospesi/GestioneKOSospesi";
-import GestioneKO from "../GestioneKO/GestioneKO";
-import GestioneKOSegnlazione from "../GestioneKOSegnalazione/GestioneKOSegnlazione";
-import SospensioneVodafone from "../SospensioneVodafone/SospensioneVodafone";
-import CanaliVendita from "../CanaliVendita/CanaliVendita";
-import SegnalzioneEntita from "../SegnalazioniEntita/SegnalzioneEntita";
-import DetailPageWithFormik from "../DetailPageWithFormik/DetailPageWithFormik";
-import GestioneKODetailPageFase2 from "../GestioneKODetailPageFase2/GestioneKODetailPageFase2";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
+import Spinner from "../UI/Spinner/Spinner";
+import Backdrop from "../UI/Backdrop/Backdrop";
+
+const GestioneKO = React.lazy(() => import("../GestioneKO/GestioneKO"));
+const SospensioneVodafone = React.lazy(() => import("../SospensioneVodafone/SospensioneVodafone"));
+const CanaliVendita = React.lazy(() => import("../CanaliVendita/CanaliVendita"));
+const SegnalzioneEntita = React.lazy(() => import("../SegnalazioniEntita/SegnalzioneEntita"));
+
+
+const GestioneKOSospesi = React.lazy(() => import("../GestioneKOSospesi/GestioneKOSospesi"));
+const GestioneKODetailPageFase2 = React.lazy(() => import("../GestioneKODetailPageFase2/GestioneKODetailPageFase2"));
+const Home = React.lazy(() => import("../Home/Home"));
+
+deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
 fontawesome();
-
-deviceCheckConfig()?console.log("mobile"):console.log("desktop");
-
 const AppRouter = () => (
   <div className="App">
     <Header />
     <div className="App__main">
       <Switch>
-        <Route path="/"exact component={Home} />
-        <Route path="/gestioneKO" component={GestioneKO} />
+          <React.Suspense fallback={<><Backdrop show iswhite/><Spinner/></>}>
+            <Route path="/" exact component={(props:any) => <Home {...props} />}/>
+            <Route path="/gestioneKOSospesi" component={(props:any) => <GestioneKOSospesi {...props} />} />
+            <Route path="/detailPageFase2" component={(props:any) => <GestioneKODetailPageFase2 {...props} />} />
+          </React.Suspense>
+        {/* <Route path="/gestioneKO" component={GestioneKO} />
         <Route path="/gestioneKOSospesi" component={(GestioneKOSospesi)} />
         <Route path="/gestioneKOSegnalazione" component={GestioneKOSegnlazione} />
         <Route path="/sospensioniVodafone" component={SospensioneVodafone} />
         <Route path="/canaliVendita" component={CanaliVendita} />
         <Route path="/segnlazioneEntita" component={SegnalzioneEntita} />
         <Route path="/detailPageWithFormik" component={DetailPageWithFormik} />
-        <Route path="/detailPageFase2" component={GestioneKODetailPageFase2} />
+        <Route path="/detailPageFase2" component={GestioneKODetailPageFase2} /> */}
       </Switch>
     </div>
   </div>

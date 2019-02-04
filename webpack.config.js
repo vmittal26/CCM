@@ -3,21 +3,44 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 const globImporter = require("node-sass-glob-importer");
+const tsImportPluginFactory = require("ts-import-plugin");
 require("@babel/polyfill");
 
 module.exports = {
-  entry: ["@babel/polyfill","./src/index.tsx"],
+  entry: ["@babel/polyfill", "./src/index.tsx"],
   output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'index_bundle.js',
-    publicPath: '/'
-},
+    path: path.join(__dirname, "/dist"),
+    filename: "index_bundle.js",
+    publicPath: "/"
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "awesome-typescript-loader",
-        exclude: /node_modules/
+        use: [
+          {
+            loader: "awesome-typescript-loader",
+            options: {
+              getCustomTransformers: () => ({
+                before: [
+                  tsImportPluginFactory([
+                    {
+                      libraryName: "antd",
+                      libraryDirectory: "lib"
+                    },
+                    {
+                      style: false,
+                      libraryName: "lodash",
+                      libraryDirectory: null,
+                      camel2DashComponentName: false
+                    }
+                  ])
+                ]
+              }),
+              exclude: /node_modules/
+            }
+          }
+        ]
       },
       {
         test: /\.(s*)css$/,
@@ -33,7 +56,7 @@ module.exports = {
             options: {
               importer: globImporter(),
               includePaths: ["./node_modules"]
-            },
+            }
           }
         ]
       },

@@ -64,12 +64,12 @@ class GestioneKOSospesi extends BaseComponent {
     pageSize: this.pageSize,
     sorted: this.sorted,
     filters: this.filters,
-    loading: this.loading
+    loading: this.loading,
+    isMobileView:this.isMobileView
   };
   constructor() {
     super();
     console.log("GestioneKOSospesi constructor called");
-    deviceCheckConfig() ? (this.isMobileView = true) : (this.isMobileView = false);
   }
   public onModeChange = (checked: boolean) => {
     this.requestTableData(
