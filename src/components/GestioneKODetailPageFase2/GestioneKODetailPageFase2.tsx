@@ -23,6 +23,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
 
   private initialValues:any;
   private errors:Array<string>;
+  private setShowModal:Function;
 
   constructor() {
     super();
@@ -36,6 +37,21 @@ class GestioneKODetailPageFase2 extends BaseComponent {
   private setErrors(errors:Array<string>){
     this.errors = errors;
   }
+  
+  
+  private validate=(values:any):boolean=>{ 
+    let errors:any = [];
+    if (!values.numerazioniPortate ||(values.numerazioniPortate && values.numerazioniPortate.trim()===""))  {
+      errors.push('Please Enter Numerazione');
+    }
+    if (!values.note ||(values.note && values.note.trim()===""))  {
+      errors.push('Please Enter Note');
+    }
+    console.log(errors);
+    this.setErrors(errors);
+    this.setShowModal(this.errors.length>0);
+    return !(this.errors.length>0);
+  }
 
   //Arrow function points this to current context 
   public gestioneKODetailPageFase2=(componentProps: any):JSX.Element=> {
@@ -45,6 +61,8 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     const [detailPageData, setDetailPageData] = React.useState( componentProps.history.location.state.data);
 
     const[showModal,setShowModal] = React.useState(false);
+
+    this.setShowModal = setShowModal;
 
     const[loading,setLoading]= React.useState<boolean>(false);
 
@@ -84,56 +102,44 @@ class GestioneKODetailPageFase2 extends BaseComponent {
       )}
     onSubmit={(values,props)=>{
           console.log(values);
-          let detailPageData:any = {
-            ...values,
-            dataLavorazione: values.dataLavorazione ?values.dataLavorazione.format(dateFormat):null,
-            dataFineSospensione:values.dataFineSospensione?values.dataFineSospensione.format(dateFormat):null,
-            dataInvioRichiesta:values.dataInvioRichiesta?values.dataInvioRichiesta.format(dateFormat):null,
-            dataChiusuraSegnalazione:values.dataChiusuraSegnalazione?values.dataChiusuraSegnalazione.format(dateFormat):null,
-            dataAperturaSegnalazione:values.dataAperturaSegnalazione?values.dataAperturaSegnalazione.format(dateFormat):null,
-            dataRispostaMailOpDonating:values.dataRispostaMailOpDonating?values.dataRispostaMailOpDonating.format(dateFormat):null,
-            droTi:values.droTi?values.droTi.format(dateFormat):null,
-            dataInvioMailOloDonatng:values.dataInvioMailOloDonatng?values.dataInvioMailOloDonatng.format(dateFormat):null,
+          if(this.validate(values)){
+            let detailPageData:any = {
+              ...values,
+              dataLavorazione: values.dataLavorazione ?values.dataLavorazione.format(dateFormat):null,
+              dataFineSospensione:values.dataFineSospensione?values.dataFineSospensione.format(dateFormat):null,
+              dataInvioRichiesta:values.dataInvioRichiesta?values.dataInvioRichiesta.format(dateFormat):null,
+              dataChiusuraSegnalazione:values.dataChiusuraSegnalazione?values.dataChiusuraSegnalazione.format(dateFormat):null,
+              dataAperturaSegnalazione:values.dataAperturaSegnalazione?values.dataAperturaSegnalazione.format(dateFormat):null,
+              dataRispostaMailOpDonating:values.dataRispostaMailOpDonating?values.dataRispostaMailOpDonating.format(dateFormat):null,
+              droTi:values.droTi?values.droTi.format(dateFormat):null,
+              dataInvioMailOloDonatng:values.dataInvioMailOloDonatng?values.dataInvioMailOloDonatng.format(dateFormat):null,
+            }
+  
+            console.log(detailPageData);
+  
+            (async()=>{
+              setLoading(true);
+               try{
+                const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
+                console.log(response);
+                componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:true})
+                notification.open({
+                  message: 'Notifica',
+                  description: 'I dati vengono salvati con successo',
+                  duration: 2.5,
+                });
+               }catch(error){
+                 console.log(error);
+                 notification.open({
+                  message: 'Notifica',
+                  description: 'I dati vengono salvati con successo',
+                  duration: 2.5
+                })
+               }
+            })();
           }
-
-          console.log(detailPageData);
-
-          (async()=>{
-            setLoading(true);
-             try{
-              const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
-              console.log(response);
-              componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:true})
-              notification.open({
-                message: 'Notifica',
-                description: 'I dati vengono salvati con successo',
-                duration: 2.5,
-              });
-             }catch(error){
-               console.log(error);
-               notification.open({
-                message: 'Notifica',
-                description: 'I dati vengono salvati con successo',
-                duration: 2.5
-              })
-             }
-          })();
-          
-        
     }}
-    validate={(values)=>{ 
-      let errors:any = [];
-      if (!values.numerazioniPortate ||(values.numerazioniPortate && values.numerazioniPortate.trim()===""))  {
-        errors.push('Please Enter Numerazione');
-      }
-      // if (!values.dataInvioRichiesta ||(values.dataInvioRichiesta && values.dataInvioRichiesta.trim()===""))  {
-      //   errors.push('Please Enter Data Invio Richiesta');
-      // }
-      console.log(errors);
-      this.setErrors(errors);
-      setShowModal(this.errors.length>0);
-      return errors;
-    }}
+   
     //  validationSchema={this.validationSchema}
   />);  
 

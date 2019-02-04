@@ -108,7 +108,7 @@ export default function GestioneKOPanelFase2() {
           />
         </Col>
         <Col xl={8} lg={12} md={12} sm={16} xs={24}>
-          <FastField label="Note" component={AntTextArea} name="note" type="text" />
+          <FastField label="Note" component={AntTextArea} ismandatory="true" name="note" type="text" />
         </Col>
       </Row>
     </div>
