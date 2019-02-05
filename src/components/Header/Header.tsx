@@ -5,6 +5,7 @@ import { withRouter } from "react-router";
 import SwitchMode from "../UI/SwitchMode/SwitchMode";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 
+
 export  function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
   const onToogleSliderMenu = () => setIsHidden(!isHidden);

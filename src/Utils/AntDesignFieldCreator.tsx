@@ -2,6 +2,10 @@ import map from "lodash/map";
 import * as React from "react";
 import { DatePicker, Form, Input, TimePicker, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import 'antd/lib/input/style/index.css';
+import 'antd/lib/date-picker/style/index.css';
+import 'antd/lib/select/style/index.css';
+
 
 const FormItem = Form.Item;
 const { Option } = Select;

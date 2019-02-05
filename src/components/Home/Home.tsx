@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Row, Col } from "antd";
 
+
 export default()=>{
     return (<Row className="TileContainer" type="flex" >
       <Col xl={4} lg={6} md={8} sm={8} xs={12} className="TileContainer__item"><span>Gestione KO</span></Col>
