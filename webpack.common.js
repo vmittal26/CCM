@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 
 module.exports = {
@@ -110,8 +110,17 @@ module.exports = {
   // devServer: {
   //   historyApiFallback: true
   // }
-  // // optimization: {
-  // //   minimizer: [new UglifyJsPlugin()]
-  // // }
+  optimization: {
+    minimizer: [new TerserPlugin({
+      chunkFilter: (chunk) => {
+        // Exclude uglification for the `vendor` chunk
+        if (chunk.name === 'vendor') {
+          return false;
+        }
+
+        return true;
+      },
+    })],
+  },
 };
 
