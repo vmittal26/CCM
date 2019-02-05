@@ -20,12 +20,32 @@
     height: 28px;
   }
 
+  .DetailPagePanelContainer{
+    border: 1px solid #ccc;
+  }
+
   &__ButtonSection{
     display: flex;
     justify-content: space-between;
      
     @include respond(xs) {
       padding-top: 2rem;
+
+      button{
+        font-size:1.5rem;
+      }
+    }
+
+    @include respond(sm) {
+      button{
+        font-size:1.2rem;
+      }
+    }
+    @include respond(md) {
+
+      button{
+        font-size:1rem;
+      }
     }
 
     @include respond(lg) {

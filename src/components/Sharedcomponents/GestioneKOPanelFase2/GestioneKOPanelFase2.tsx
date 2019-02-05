@@ -12,7 +12,7 @@ import { dateFormat } from "../../../Utils/DateFormat";
 export default function GestioneKOPanelFase2() {
   const errorClassName = "text-left text-danger text-uppercase";
   return (
-    <div className="GestioneKOPanelFase2">
+    <div className="DetailPagePanelContainer">
       <Row gutter={14} className="DetailPagePanel">
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
           <FastField
