@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Row, Col } from "antd";
-
+import 'antd/lib/grid/style/index.css';
 
 export default()=>{
     return (<Row className="TileContainer" type="flex" >

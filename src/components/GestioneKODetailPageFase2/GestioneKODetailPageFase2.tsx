@@ -12,6 +12,8 @@ import axios from "../../config/axiosKTMConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import { notification, Modal } from "antd";
+import 'antd/lib/notification/style/index.css';
+import 'antd/lib/modal/style/index.css';
 
 class GestioneKODetailPageFase2 extends BaseComponent {
 

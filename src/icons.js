@@ -4,7 +4,6 @@ export {
 export {
     default as CheckOutline
 } from '@ant-design/icons/lib/outline/CheckOutline';
-
 export {
     default as CheckCircleOutline
 } from '@ant-design/icons/lib/outline/CheckCircleOutline';
@@ -94,3 +93,6 @@ export {
 // export {
 //     default as DeleteOutline
 // } from '@ant-design/icons/lib/outline/DeleteOutline';
+// export {
+//     default as MinusOutline
+// } from '@ant-design/icons/lib/outline/MinusOutline';

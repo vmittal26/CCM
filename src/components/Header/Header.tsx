@@ -5,7 +5,8 @@ import { withRouter } from "react-router";
 import SwitchMode from "../UI/SwitchMode/SwitchMode";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import { Icon } from "antd";
-
+import logoImage from '../../images/vodafone-logo.png';
+import 'antd/lib/switch/style/index.css';
 
 export  function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
@@ -16,9 +17,7 @@ export  function Header(props:any) {
       <div className="Header__left">
         <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
           <img
-            className="Header__logo"
-            src="./src/images/vodafone-logo.png"
-            alt="KTM"
+            src={logoImage}
           />
         </div>
         <h2 className={"ml-3 mt-2"}>KTM</h2>

@@ -2,24 +2,51 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== "production";
+const devMode = process.env.WEBPACK_MODE === 'production';
 const globImporter = require("node-sass-glob-importer");
 const tsImportPluginFactory = require("ts-import-plugin");
 // require("@babel/polyfill");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
+// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// const TerserPlugin = require('terser-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+console.log(devMode);
 
-module.exports = {
+module.exports = (env,args)=>{
+  console.log(env);
+
+  let isProductionMode = env.production;
+
+  let plugins =  [
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/),
+    new HtmlWebpackPlugin({ template: "./src/index.html" }),
+    new CompressionPlugin({test: /\.(png|woff|woff2|eot|ttf|svg)$/}),
+  
+    new BundleAnalyzerPlugin()
+  ]
+  if(isProductionMode){
+    plugins.push(new CleanWebpackPlugin(['dist']));
+    plugins.push(new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: "styles.css",
+      chunkFilename: "[id].css"
+    }));
+  }else{
+
+  }
+
+  return{
+  mode: env.production ? 'production' : 'development',
   // entry: ["@babel/polyfill", "./src/index.tsx"],
   entry: ["./src/index.tsx"],
   output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "index_bundle.js",
-    publicPath: "/"
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
   },
   module: {
     rules: [
@@ -54,7 +81,7 @@ module.exports = {
         test: /\.(sa|sc|c)ss$/,
         use: [
           {
-            loader:MiniCssExtractPlugin.loader
+            loader:isProductionMode ? MiniCssExtractPlugin.loader:"style-loader"
           },
           {
             loader: "css-loader"
@@ -73,7 +100,11 @@ module.exports = {
       //   loader: "url-loader?limit=100000"
       // },
       {
-        test: /\.(png|woff|woff2|eot|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: "file-loader"
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "file-loader"
       },
 
@@ -87,40 +118,12 @@ module.exports = {
        moment: `moment/moment.js` 
     }
   },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist")
-  },
-  plugins: [
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: "styles.css",
-      chunkFilename: "[id].css"
-    }),
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    // }),
-    new HtmlWebpackPlugin({ template: "./src/index.html" }),
-    new CompressionPlugin({test: /\.(png|woff|woff2|eot|ttf|svg)$/}),
-    new BundleAnalyzerPlugin()
-  ],
-  // // devtool: "source-map",
-  // devServer: {
-  //   historyApiFallback: true
-  // }
-  optimization: {
-    minimizer: [new TerserPlugin({
-      chunkFilter: (chunk) => {
-        // Exclude uglification for the `vendor` chunk
-        if (chunk.name === 'vendor') {
-          return false;
-        }
-
-        return true;
-      },
-    })],
-  },
-};
+  plugins,
+  devtool: isProductionMode?'source-map':'cheap-eval-source-map',
+  devServer: !isProductionMode?{
+    contentBase: path.join(__dirname, 'dist'),
+    historyApiFallback: true,
+    port: 8081
+   }:undefined
+}};
 

@@ -1,9 +1,9 @@
-import {Col, Row, Input, Select} from "antd";
+import {Col, Row} from "antd";
 import * as React from "react";
 import {FastField} from "formik";
 import {AntInput, AntDatePicker, AntSelect, AntTextArea} from "../../../Utils/AntDesignFieldCreator";
 import {dateFormat} from "../../../Utils/DateFormat";
-
+import 'antd/lib/grid/style/index.css';
 export default function DatiGeneraliPanelFase2() {
 
     return (

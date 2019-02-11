@@ -1,13 +1,11 @@
-@import '~antd/lib/grid/style/index.css';
-
-.TileContainer{
+.TileContainer {
   overflow-y: auto;
-  padding:0.5rem;
+  padding: 0.5rem;
 
   @include respond(xs) {
     height: 90vh;
   }
-  
+
   @include respond(sm) {
     height: 90vh;
   }
@@ -24,38 +22,41 @@
     height: 84vh;
   }
 
-  &__item{
-      min-height: 15rem;
-      background-color:darken(#e74c3c,5%);
-      border:1px solid #fff;
-      display: flex;
-      cursor: pointer;
-      @include respond(md) {
-        min-height: 10rem;
-      }
+  &__item {
+    min-height: 10rem !important;
+    background-color: darken(#e74c3c, 5%);
+    border: 1px solid #fff;
+   position: relative;
+    cursor: pointer;
+    @include respond(md) {
+      min-height: 10rem;
+    }
 
-      &:hover{
-        background-color:darken(#e74c3c,10%);
-      }
-     
-      span{
-            margin: auto;
-            color:#faf9f9;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            display:block;
-            padding:1.5rem;
-            font-weight: 500;
+    &:hover {
+      background-color: darken(#e74c3c, 10%);
+    }
 
-            @include respond(xs){
-                font-size: 1.4rem !important;
-            }
-            @include respond(sm){
-                font-size: 1.2rem !important;
-            }
-            @include respond(lg){
-                font-size:0.9rem !important;
-            }
+    span {
+      color: #faf9f9;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      position: absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      // display: block;
+      padding: 1.5rem;
+      font-weight: 500;
+
+      @include respond(xs) {
+        font-size: 1.4rem !important;
       }
+      @include respond(sm) {
+        font-size: 1.2rem !important;
+      }
+      @include respond(lg) {
+        font-size: 0.9rem !important;
+      }
+    }
   }
 }

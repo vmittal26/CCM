@@ -18,7 +18,7 @@ const GestioneKODetailPageFase2 = React.lazy(() => import("../GestioneKODetailPa
 const Home = React.lazy(() => import("../Home/Home"));
 
 deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
-// fontawesome();
+fontawesome();
 const AppRouter = () => (
   
   <div className="App">

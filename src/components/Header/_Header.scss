@@ -1,48 +1,43 @@
-@import '~antd/lib/switch/style/index.css';
+.Header {
+  padding: 1rem;
+  background-color: #fff;
+  display: flex;
+  color: $color-primary;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
-.Header{
-    padding:1rem;
-    background-color: #FFF;
+  button:active {
+    border: none;
+  }
+  &__logo {
+    cursor: pointer;
+  }
+  &__left {
     display: flex;
-    color:$color-primary;
-    position: fixed;
-    width: 100%;
-    top:0;
-    left:0;
-    z-index: 1;
-   
-    button:active{
-        border:none;
-    }
-    &__logo{
-        cursor: pointer;
-    }
-    &__left{
-        display: flex;
-        align-items: center;
-        flex-grow: 1;
+    align-items: center;
+    flex-grow: 1;
 
-        &__baricon{
-            margin-left: 0.5rem;
-            svg{
-                font-size: 2.5rem;
-                color:#333;
-            }
-        }
+    &__baricon {
+      margin-left: 0.5rem;
+      svg {
+        font-size: 2.5rem;
+        color: #333;
+      }
     }
-    &__right{
+  }
+  &__right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &__poweroff{
-            margin-left: 0.5rem;
-            svg{
-                font-size:1.5rem;
-            }
-           
-        }
+    &__poweroff {
+      margin-left: 0.5rem;
+      svg {
+        font-size: 1.5rem;
+      }
     }
+  }
 }
-
