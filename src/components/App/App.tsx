@@ -6,6 +6,7 @@ import fontawesome from "../../config/fontawesomeSVGConfig";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
+import "../../Utils/MasterDataContainer";
 
 const GestioneKO = React.lazy(() => import("../GestioneKO/GestioneKO"));
 const SospensioneVodafone = React.lazy(() => import("../SospensioneVodafone/SospensioneVodafone"));
@@ -19,6 +20,7 @@ const Home = React.lazy(() => import("../Home/Home"));
 
 deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
 fontawesome();
+
 const AppRouter = () => (
   
   <div className="App">

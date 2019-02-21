@@ -3,7 +3,7 @@ import ITableState from "../../model/ITableState";
 import axios from "../../config/axiosKTMConfig";
 import getTableData from "../../Utils/getTableData";
 import ReactTable, { Filter, SortingRule } from "react-table";
-import filterAndHeaderConfigMap from "./FilterAndHeaderConfigMap";
+import getHeaderConfigMap from "./FilterHeaderMapGenerator";
 import {
   onToggleSelectAllCheckBox,
   deselectAllCheckbox
@@ -46,7 +46,7 @@ class GestioneKO extends BaseComponent {
       getTableData(
         state,
         this.baseURL,
-        filterAndHeaderConfigMap,
+        getHeaderConfigMap(),
         axios,
         this.isMobileView
       ).then((tableData: ITableState) => {

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "outDir": "./dist/",
     "noImplicitAny": true,
     "removeComments": true,
@@ -9,8 +10,8 @@
     "jsx": "react",
     "moduleResolution": "node",
     "allowJs": true,
-    "lib": ["dom", "es2015.promise","es2015.collection", "es5"],
-    "experimentalDecorators": true
+    "lib": ["dom", "es2015.promise","es2015.collection", "es5",  "esnext.asynciterable","es2017"],
+    "experimentalDecorators": true,
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
 }

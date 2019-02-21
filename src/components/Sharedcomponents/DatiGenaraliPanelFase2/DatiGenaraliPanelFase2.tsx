@@ -4,6 +4,9 @@ import {FastField} from "formik";
 import {AntInput, AntDatePicker, AntSelect, AntTextArea} from "../../../Utils/AntDesignFieldCreator";
 import {dateFormat} from "../../../Utils/DateFormat";
 import 'antd/lib/grid/style/index.css';
+import getMasterDataFromMasterDataMap from "../../../Utils/MasterDataContainer";
+import MasterDataURLEnum from "../../../model/constants/MasterDataURLEnum";
+
 export default function DatiGeneraliPanelFase2() {
 
     return (
@@ -12,9 +15,10 @@ export default function DatiGeneraliPanelFase2() {
                 <Col xl={4} lg={6} md={6} sm={8} xs={12}>
                     <FastField
                         label="Tipo Ordine"
-                        component={AntInput}
+                        component={AntSelect}
                         name="tipiOrdine.descrizione"
-                        type="text"
+                        selectOptions={getMasterDataFromMasterDataMap(MasterDataURLEnum.TipiOrdineList)}
+                        // type="text"
                         />
                 </Col>
                 <Col xl={4} lg={6} md={6} sm={8} xs={12}>

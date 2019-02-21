@@ -2,8 +2,9 @@ import * as React from "react";
 import * as moment from "moment";
 import "react-dates/lib/css/_datepicker.css";
 import DateFilterComponent from "../UI/DateFilterComponent/DateFilterComponent";
+import IHeaderConfig from "../../model/IHeaderConfig";
 
-export default function createDateFilterComponent() {
+export default ():IHeaderConfig=>{
   return {
     minWidth: 240,
     headerClassName: "header",

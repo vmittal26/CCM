@@ -119,7 +119,7 @@ module.exports = (env,args)=>{
     }
   },
   plugins,
-  devtool: isProductionMode?'source-map':'cheap-eval-source-map',
+  devtool: 'source-map',
   devServer: !isProductionMode?{
     contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,

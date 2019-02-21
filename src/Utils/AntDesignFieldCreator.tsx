@@ -30,6 +30,7 @@ const CreateAntField = (Component:any) => ({
   const onChange = (value:any) => form.setFieldValue(field.name, value);
   const onBlur = () => form.setFieldTouched(field.name, true);
   const ismandatory = props.ismandatory && props.ismandatory;
+  console.log(selectOptions);
   return (
       <FormItem
         // hasFeedback={
@@ -48,8 +49,7 @@ const CreateAntField = (Component:any) => ({
           onBlur={onBlur}
           onChange={type ? onInputChange : onChange}
         >
-          {selectOptions &&
-            map((selectOptions:any, name:any) => <Option key={name}>{name}</Option>)}
+          {selectOptions && selectOptions.map((selectOption:any)=><Option key={selectOption.id}>{selectOption.descrizione}</Option>)}
         </Component>
         </div>
       </FormItem>

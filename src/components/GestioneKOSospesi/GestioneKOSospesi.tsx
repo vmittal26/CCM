@@ -2,7 +2,7 @@ import * as React from "react";
 import ITableState from "../../model/ITableState";
 import axios from "../../config/axiosKTMConfig";
 import ReactTable, { Filter, SortingRule } from "react-table";
-import filterAndHeaderConfigMap from "./FilterAndHeaderConfigMap";
+import getHeaderConfigMap from "./FilterHeaderMapGenerator";
 import {
   onToggleSelectAllCheckBox,
   deselectAllCheckbox
@@ -78,7 +78,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.previousTableState.sorted,
       this.previousTableState.filters,
       this.baseURL,
-      filterAndHeaderConfigMap,
+      getHeaderConfigMap(),
       axios,
       !this.previousTableState.isMobileView
     );
@@ -99,7 +99,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.previousTableState.sorted,
       this.previousTableState.filters,
       this.baseURL,
-      filterAndHeaderConfigMap,
+      getHeaderConfigMap(),
       axios,
       this.previousTableState.isMobileView
     );
@@ -112,7 +112,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.previousTableState.sorted,
       this.previousTableState.filters,
       this.baseURL,
-      filterAndHeaderConfigMap,
+      getHeaderConfigMap(),
       axios,
       this.previousTableState.isMobileView
     );
@@ -159,7 +159,7 @@ class GestioneKOSospesi extends BaseComponent {
       this.previousTableState.sorted,
       newFiltering,
       this.baseURL,
-      filterAndHeaderConfigMap,
+      getHeaderConfigMap(),
       axios,
       this.previousTableState.isMobileView
     );
@@ -235,7 +235,7 @@ class GestioneKOSospesi extends BaseComponent {
           this.previousTableState.sorted,
           this.previousTableState.filters,
           this.baseURL,
-          filterAndHeaderConfigMap,
+          getHeaderConfigMap(),
           axios,
           this.previousTableState.isMobileView
         );

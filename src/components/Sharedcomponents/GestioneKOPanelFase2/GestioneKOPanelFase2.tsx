@@ -7,7 +7,9 @@ import {
   AntSelect,
   AntTextArea
 } from "../../../Utils/AntDesignFieldCreator";
+import getMasterDataFromMasterDataMap from "../../../Utils/MasterDataContainer";
 import { dateFormat } from "../../../Utils/DateFormat";
+import MasterDataURLEnum from "../../../model/constants/MasterDataURLEnum";
 
 export default function GestioneKOPanelFase2() {
   const errorClassName = "text-left text-danger text-uppercase";
@@ -16,22 +18,24 @@ export default function GestioneKOPanelFase2() {
       <Row gutter={14} className="DetailPagePanel">
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
           <FastField
-            component={AntSelect}
-            name="tipoAnomalia"
-            label="Tipo Anomalia"
+           component={AntSelect}
+           name="tipiAnomalia.descrizione"
+           selectOptions={getMasterDataFromMasterDataMap(MasterDataURLEnum.TipiAnomaliaList)}
+           label="Tipo Anomalia"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
           <FastField
-            component={AntSelect}
-            name="classeLavorazione"
+            component={AntInput}
+            name="classeLavorazione."
             label="Classe Lavorazione"
           />
         </Col>
         <Col xl={4} lg={6} md={6} sm={8} xs={12}>
           <FastField
             component={AntSelect}
-            name="statoLavorazione"
+            selectOptions={getMasterDataFromMasterDataMap(MasterDataURLEnum.StatoLavorazioneList)}
+            name="statiLavorazione.descrizione"
             label="Stato Lavorazione"
           />
         </Col>
