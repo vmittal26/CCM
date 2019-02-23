@@ -121,7 +121,7 @@ module.exports = (env,args)=>{
   plugins,
   devtool: 'source-map',
   devServer: !isProductionMode?{
-    contentBase: path.join(__dirname, 'dist'),
+    // contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,
     port: 8081
    }:undefined

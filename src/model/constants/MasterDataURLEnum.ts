@@ -5,7 +5,8 @@ enum MasterDataURLEnum{
     TipiAnomaliaList  = "/tipiAnomaliaList/v1",
     TipiServizioList = "/tipiServizioList/v1",
     StatiIndirizzoList = "/statoIndirizzoList/v1",
-    StatoLavorazioneList = "/statiLavorazioneList/v1"
+    StatoLavorazioneList = "/statiLavorazioneList/v1",
+    ClasseServizioList ="/classeServizioList/v1",
 }
 
 export default MasterDataURLEnum;

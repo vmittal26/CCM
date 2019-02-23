@@ -24,14 +24,14 @@ class MasterDataContainer {
   public async getMasterData() {
     let i = 0;
     for await (let x of this.masterDataGenerator()) {
-      console.log(x);
+      // console.log(x);
       this.masterDataMap.set(this.masterDataArray[i++], x);
     }
   }
 
   public getMasterDataFromMasterDataMap = (url: string): IMasterData[] => {
-    console.log("getting master data for url " + url);
-    console.log(this.masterDataMap);
+    // console.log("getting master data for url " + url);
+    //console.log(this.masterDataMap);
     return this.masterDataMap.get(url).data;
   };
 }

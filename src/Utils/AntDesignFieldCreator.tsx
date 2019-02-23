@@ -2,10 +2,10 @@ import map from "lodash/map";
 import * as React from "react";
 import { DatePicker, Form, Input, TimePicker, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+//import 'antd/lib/style/index.css';
 import 'antd/lib/input/style/index.css';
 import 'antd/lib/date-picker/style/index.css';
 import 'antd/lib/select/style/index.css';
-
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -25,12 +25,11 @@ const CreateAntField = (Component:any) => ({
   const hasError = form.errors[field.name];
   const submittedError = hasError && submitted;
   const touchedError = hasError && touched;
-  const onInputChange = ({ target: { value } }:any) =>
-    form.setFieldValue(field.name, value);
-  const onChange = (value:any) => form.setFieldValue(field.name, value);
+  const onInputChange = ({ target: { value } }:any) => form.setFieldValue(field.name, value);
+  const onChange = (value:any) => { form.setFieldValue(field.name, value); props.onChange(value,form)} ;
   const onBlur = () => form.setFieldTouched(field.name, true);
   const ismandatory = props.ismandatory && props.ismandatory;
-  console.log(selectOptions);
+  // console.log(selectOptions);
   return (
       <FormItem
         // hasFeedback={

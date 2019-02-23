@@ -12,20 +12,34 @@ import axios from "../../config/axiosKTMConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import { notification, Modal } from "antd";
+import getMasterDataFromMasterDataMap from "../../Utils/MasterDataContainer";
+import MasterDataURLEnum from "../../model/constants/MasterDataURLEnum";
 import 'antd/lib/notification/style/index.css';
 import 'antd/lib/modal/style/index.css';
+import IMasterData from "../../model/IMasterData";
 
+interface IDetailPageState{
+  detailPageData:any,
+  tipiClienteSelectOptions:IMasterData[],
+  tipiOrdineSelectOptions:IMasterData[],
+  classeSerivizioOptions:IMasterData[],
+  isTipiClienteDropDownLoading:boolean,
+  isClasseSerivizioLoading:boolean
+}
 class GestioneKODetailPageFase2 extends BaseComponent {
 
   private test:string="test";
-
+  private setState:Function;
+  private state:IDetailPageState;
+  private setLoading:Function;
   private validationSchema=Yup.object().shape({
                                               tipoOrdine: Yup.string().required()
                                               })
 
-  private initialValues:any;
+  private detailPageDataOnLoad:any;
   private errors:Array<string>;
   private setShowModal:Function;
+  private history:any;
 
   constructor() {
     super();
@@ -39,6 +53,46 @@ class GestioneKODetailPageFase2 extends BaseComponent {
   private setErrors(errors:Array<string>){
     this.errors = errors;
   }
+
+  public onTipiOrdineChange = (value:any,form:any)=>{
+    
+    console.log(value);
+    console.log(form);
+    if(value==="3"){
+      console.log("test1");
+    }else{
+      console.log("test2")
+    }
+    this.setState({
+      ...this.state,
+      isTipiClienteDropDownLoading:true
+    })
+    setTimeout(()=>{
+      this.setState({
+        ...this.state,
+        isTipiClienteDropDownLoading:false,
+        tipiClienteSelectOptions:getMasterDataFromMasterDataMap(MasterDataURLEnum.TipiClienteList)
+      })
+    },1000)
+  }
+
+  public onTipiClienteChange = (value:any,form:any)=>{
+    console.log(value);
+    this.setState({
+      ...this.state,
+      isClasseSerivizioLoading:true
+    })
+    form.setFieldValue('numerazioniPortate', 'test');
+    setTimeout(()=>{
+      this.setState({
+        ...this.state,
+        isClasseSerivizioLoading:false,
+        classeSerivizioOptions:getMasterDataFromMasterDataMap(MasterDataURLEnum.ClasseServizioList)
+      });
+      console.log(this.state);
+    },1000)
+  }
+
   
   
   private validate=(values:any):boolean=>{ 
@@ -54,36 +108,87 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     this.setShowModal(this.errors.length>0);
     return !(this.errors.length>0);
   }
+  
+  public onSubmit =(values:any)=>{
+    console.log(values);
+    if(this.validate(values)){
+      let detailPageData:any = {
+        ...values,
+        dataLavorazione: values.dataLavorazione ?values.dataLavorazione.format(dateFormat):null,
+        dataFineSospensione:values.dataFineSospensione?values.dataFineSospensione.format(dateFormat):null,
+        dataInvioRichiesta:values.dataInvioRichiesta?values.dataInvioRichiesta.format(dateFormat):null,
+        dataChiusuraSegnalazione:values.dataChiusuraSegnalazione?values.dataChiusuraSegnalazione.format(dateFormat):null,
+        dataAperturaSegnalazione:values.dataAperturaSegnalazione?values.dataAperturaSegnalazione.format(dateFormat):null,
+        dataRispostaMailOpDonating:values.dataRispostaMailOpDonating?values.dataRispostaMailOpDonating.format(dateFormat):null,
+        droTi:values.droTi?values.droTi.format(dateFormat):null,
+        dataInvioMailOloDonatng:values.dataInvioMailOloDonatng?values.dataInvioMailOloDonatng.format(dateFormat):null,
+      }
+
+      console.log(detailPageData);
+
+      (async()=>{
+        this.setLoading(true);
+         try{
+          const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
+          console.log(response);
+          this.history.replace("/gestioneKOSospesi",{isTableToReload:true})
+          notification.open({
+            message: 'Notifica',
+            description: 'I dati vengono salvati con successo',
+            duration: 2.5,
+          });
+         }catch(error){
+           console.log(error);
+           notification.open({
+            message: 'Notifica',
+            description: 'I dati vengono salvati con successo',
+            duration: 2.5
+          })
+         }
+      })();
+    }
+  }
 
   //Arrow function points this to current context 
   public gestioneKODetailPageFase2=(componentProps: any):JSX.Element=> {
+    let detailPageDataOnLoad = componentProps.history.location.state.data;
 
-    console.log(componentProps.history.location.state.data);
+    const detailPageData={
+      ...detailPageDataOnLoad,
+      dataLavorazione: detailPageDataOnLoad.dataLavorazione ?moment(detailPageDataOnLoad.dataLavorazione,dateFormat):null,
+      dataFineSospensione:detailPageDataOnLoad.dataFineSospensione?moment(detailPageDataOnLoad.dataFineSospensione,dateFormat):null,
+      dataInvioRichiesta:detailPageDataOnLoad.dataInvioRichiesta?moment(detailPageDataOnLoad.dataInvioRichiesta,dateFormat):null,
+      dataChiusuraSegnalazione:detailPageDataOnLoad.dataChiusuraSegnalazione?moment(detailPageDataOnLoad.dataChiusuraSegnalazione,dateFormat):null,
+      dataAperturaSegnalazione:detailPageDataOnLoad.dataAperturaSegnalazione?moment(detailPageDataOnLoad.dataAperturaSegnalazione,dateFormat):null,
+      dataRispostaMailOpDonating:detailPageDataOnLoad.dataRispostaMailOpDonating?moment(detailPageDataOnLoad.dataRispostaMailOpDonating,dateFormat):null,
+      droTi:detailPageDataOnLoad.droTi?moment(detailPageDataOnLoad.droTi,dateFormat):null,
+      dataInvioMailOloDonatng:detailPageDataOnLoad.dataInvioMailOloDonatng?moment(detailPageDataOnLoad.dataInvioMailOloDonatng,dateFormat):null,
+    }
 
-    const [detailPageData, setDetailPageData] = React.useState( componentProps.history.location.state.data);
 
+    const detailPageState:IDetailPageState={
+      detailPageData,
+      tipiClienteSelectOptions:[],
+      tipiOrdineSelectOptions:getMasterDataFromMasterDataMap(MasterDataURLEnum.TipiOrdineList),
+      classeSerivizioOptions:[],
+      isTipiClienteDropDownLoading:false,
+      isClasseSerivizioLoading:false
+    }
+   
+    this.history = componentProps.history;
+    const [state, setState] = React.useState<IDetailPageState>(detailPageState);
     const[showModal,setShowModal] = React.useState(false);
-
-    this.setShowModal = setShowModal;
-
     const[loading,setLoading]= React.useState<boolean>(false);
 
-    this.initialValues = 
-              detailPageData ? {
-                ...detailPageData,
-                dataLavorazione: detailPageData.dataLavorazione ?moment(detailPageData.dataLavorazione,dateFormat):null,
-                dataFineSospensione:detailPageData.dataFineSospensione?moment(detailPageData.dataFineSospensione,dateFormat):null,
-                dataInvioRichiesta:detailPageData.dataInvioRichiesta?moment(detailPageData.dataInvioRichiesta,dateFormat):null,
-                dataChiusuraSegnalazione:detailPageData.dataChiusuraSegnalazione?moment(detailPageData.dataChiusuraSegnalazione,dateFormat):null,
-                dataAperturaSegnalazione:detailPageData.dataAperturaSegnalazione?moment(detailPageData.dataAperturaSegnalazione,dateFormat):null,
-                dataRispostaMailOpDonating:detailPageData.dataRispostaMailOpDonating?moment(detailPageData.dataRispostaMailOpDonating,dateFormat):null,
-                droTi:detailPageData.droTi?moment(detailPageData.droTi,dateFormat):null,
-                dataInvioMailOloDonatng:detailPageData.dataInvioMailOloDonatng?moment(detailPageData.dataInvioMailOloDonatng,dateFormat):null,
-              }:{}
-
+    this.setShowModal = setShowModal;
+    this.state = state;
+    this.setState = setState;
+    this.setLoading = setLoading;
+   
     let form = (
     <Formik
-    initialValues={this.initialValues}
+    enableReinitialize
+    initialValues={state.detailPageData}
     children={(
       <Form  className="DetailPagePanel">
         <div className="DetailPagePanel__ButtonSection"> 
@@ -93,7 +198,12 @@ class GestioneKODetailPageFase2 extends BaseComponent {
         <div>
         <div className="DetailPagePanel__PanelSection">
            <Collapsible trigger="Dati Generali" open>
-                <DatiGeneraliPanelFase2 />
+                <DatiGeneraliPanelFase2    
+                    isTipiClienteDropDownLoading={state.isTipiClienteDropDownLoading}
+                    tipoOrdineSelectOptions={state.tipiOrdineSelectOptions}
+                    tipoClienteSelectOptions={state.tipiClienteSelectOptions}
+                    classeSerivizioOptions={state.classeSerivizioOptions}
+                    isClasseSerivizioLoading={state.isClasseSerivizioLoading}/>
             </Collapsible>
             <Collapsible trigger="Gestione KO" open={false} onOpening={this.onToggleGestioneKO} > 
                 <GestioneKOPanelFase2 /> 
@@ -102,49 +212,22 @@ class GestioneKODetailPageFase2 extends BaseComponent {
         </div>
        </Form >
       )}
-    onSubmit={(values,props)=>{
-          console.log(values);
-          if(this.validate(values)){
-            let detailPageData:any = {
-              ...values,
-              dataLavorazione: values.dataLavorazione ?values.dataLavorazione.format(dateFormat):null,
-              dataFineSospensione:values.dataFineSospensione?values.dataFineSospensione.format(dateFormat):null,
-              dataInvioRichiesta:values.dataInvioRichiesta?values.dataInvioRichiesta.format(dateFormat):null,
-              dataChiusuraSegnalazione:values.dataChiusuraSegnalazione?values.dataChiusuraSegnalazione.format(dateFormat):null,
-              dataAperturaSegnalazione:values.dataAperturaSegnalazione?values.dataAperturaSegnalazione.format(dateFormat):null,
-              dataRispostaMailOpDonating:values.dataRispostaMailOpDonating?values.dataRispostaMailOpDonating.format(dateFormat):null,
-              droTi:values.droTi?values.droTi.format(dateFormat):null,
-              dataInvioMailOloDonatng:values.dataInvioMailOloDonatng?values.dataInvioMailOloDonatng.format(dateFormat):null,
-            }
-  
-            console.log(detailPageData);
-  
-            (async()=>{
-              setLoading(true);
-               try{
-                const response=  await axios.post("/gestioneko/v1/updateKO", detailPageData);
-                console.log(response);
-                componentProps.history.replace("/gestioneKOSospesi",{isTableToReload:true})
-                notification.open({
-                  message: 'Notifica',
-                  description: 'I dati vengono salvati con successo',
-                  duration: 2.5,
-                });
-               }catch(error){
-                 console.log(error);
-                 notification.open({
-                  message: 'Notifica',
-                  description: 'I dati vengono salvati con successo',
-                  duration: 2.5
-                })
-               }
-            })();
-          }
-    }}
+    onSubmit={this.onSubmit}
    
     //  validationSchema={this.validationSchema}
   />);  
 
+    React.useEffect(()=>{
+        this.EE.on("onTipiOrdineChange",this.onTipiOrdineChange);
+        this.EE.on("onTipiClienteChange",this.onTipiClienteChange);
+        return () => {
+          console.log("removing onTipiOrdineChange Listener on unmount");
+          this.EE.removeListener("onTipiOrdineChange", this.onTipiOrdineChange);
+          console.log("removing onTipiClienteChange Listener on unmount");
+          this.EE.removeListener("onTipiClienteChange", this.onTipiClienteChange);
+        };
+    }, []);
+    
     return (
       <>
       {loading?<><Backdrop show iswhite/><Spinner/></>:null}
@@ -158,6 +241,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
         </Modal>
       </>
     )
+    
   }
 
   public getComponent():React.FunctionComponent{
