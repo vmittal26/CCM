@@ -1,12 +1,23 @@
 .NodeTypeManagement{
-
+    display: flex;
     margin-top:0.5rem;
-    
+    font-size: 0.8rem;
+
+    &__NodeTypeContainer{
+        width:60%;
+        margin:auto;
+    }
+    &__Header{
+      display: flex;
+    }
+    thead{
+        font-size: 1rem;
+    }
     &__button-section{
-        text-align: right;
+      margin-left: auto;
     }
 
     &__NodeTypeTable{
-        width:40%;
+        border: 1px solid $color-grey-light-4;
     }
 }

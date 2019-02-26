@@ -1,0 +1,12 @@
+.AddNodeType {
+    display: flex;
+    &__Formsection {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__FormField{
+        display: flex;
+        justify-content: space-between;
+    }
+}

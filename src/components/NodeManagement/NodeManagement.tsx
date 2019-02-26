@@ -2,6 +2,7 @@ import * as React from "react";
 import BaseComponent from "../BaseComponent/BaseComponent";
 import NodeTypeManagement from "../NodeTypeManagement/NodeTypeManagement";
 import Collapsible from "react-collapsible";
+import NodeDetails from "../NodeDetails/NodeDetails";
 class NodeManagement extends BaseComponent {
   private setState: Function;
 
@@ -13,9 +14,8 @@ class NodeManagement extends BaseComponent {
   public nodeManagement = (componentProps: any): JSX.Element => {
     return (
       <div className="NodeManagement">
-        <Collapsible open trigger="Node Type">
           <NodeTypeManagement />
-        </Collapsible>
+          <NodeDetails/>
       </div>
     );
   };

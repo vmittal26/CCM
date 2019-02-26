@@ -7,9 +7,7 @@
 }
 
 html {
-
   font-size: 100%;
-
   @include respond(xs){
     font-size: 50%;
   }
@@ -45,7 +43,7 @@ svg {
 input[type="checkbox"] {
   -webkit-appearance: none;
   background-color: #fff;
-  border: 1px solid #333;
+  border: 1px solid $color-primary;
   width: 1.4rem;
   height: 1.4rem;
   display: inline-block;
@@ -54,8 +52,8 @@ input[type="checkbox"] {
 
   &:checked:after {
     content: "\2714";
-    border: 1px solid #333;
-    color: #333;
+    border: 1px solid $color-primary;
+    color: #fff;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -92,6 +90,5 @@ input[type="checkbox"] {
   right: 16px;
 }
 input[type="text"] {
-  border: 1px solid rgba(51, 51, 51, 0.623);
   padding: 0.2rem 0.75rem;
 }
