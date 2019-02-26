@@ -3,6 +3,7 @@ import BaseComponent from "../BaseComponent/BaseComponent";
 import NodeTypeManagement from "../NodeTypeManagement/NodeTypeManagement";
 import Collapsible from "react-collapsible";
 import NodeDetails from "../NodeDetails/NodeDetails";
+import 'antd/lib/button/style/index.css';
 class NodeManagement extends BaseComponent {
   private setState: Function;
 
@@ -15,7 +16,7 @@ class NodeManagement extends BaseComponent {
     return (
       <div className="NodeManagement">
           <NodeTypeManagement />
-          <NodeDetails/>
+          <NodeDetails/> 
       </div>
     );
   };

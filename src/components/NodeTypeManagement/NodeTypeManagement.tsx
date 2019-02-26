@@ -2,46 +2,68 @@ import * as React from "react";
 import { Modal } from "antd";
 import 'antd/lib/modal/style/index.css';
 import AddNodeType from "../AddNodeType/AddNodeType";
+import Spinner from "../UI/Spinner/Spinner";
+import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
+
 
 export default (props: any) => {
   const [state, setState] = React.useState({
     isDeleteButtonEnabled: false,
     checkboxArray:[],
-    isAddModalVisible:false
+    isAddModalVisible:false,
+    isBackDropVisible:false,
+    dummyNodeList:[
+      {
+        nodeId: "1",
+        nodeType: "SDP",
+        nodeDescription: "ABC"
+      },
+      {
+        nodeId: "2",
+        nodeType: "PQR",
+        nodeDescription: "XYZ"
+      },
+      {
+        nodeId: "3",
+        nodeType: "SDP",
+        nodeDescription: "ABC"
+      },
+      {
+        nodeId: "4",
+        nodeType: "PQR",
+        nodeDescription: "XYZ"
+      }
+    ]
   });
-  const dummNodeList = [
-    {
-      nodeId: "1",
-      nodeType: "SDP",
-      nodeDescription: "ABC"
-    },
-    {
-      nodeId: "2",
-      nodeType: "PQR",
-      nodeDescription: "XYZ"
-    },
-    {
-      nodeId: "3",
-      nodeType: "SDP",
-      nodeDescription: "ABC"
-    },
-    {
-      nodeId: "4",
-      nodeType: "PQR",
-      nodeDescription: "XYZ"
-    }
-  ];
+ 
+  let addNodeType=(
+                <AddNodeType onSubmit={(values:any, actions:any) => {
+                                  actions.setSubmitting(false);
+                                     setState({
+                                      ...state,
+                                      isBackDropVisible:true
+                                    })
+                                    setTimeout(() => {
+                                      state.dummyNodeList.push(values);
+                                      setState({
+                                        ...state,
+                                        isBackDropVisible:false,
+                                        isAddModalVisible:false,
+                                        dummyNodeList:state.dummyNodeList
+                                      })
+                            
+                          }, 2000);
+                }} onCancel={() => setState({...state,isAddModalVisible:false})}/>);
 
   return (
     <div className="NodeTypeManagement">
      <Modal
           title="Add Node Type"
           centered
+          footer={null}
           visible={state.isAddModalVisible}
-          onOk={() => setState({...state,isAddModalVisible:false})}
-          onCancel={() => setState({...state,isAddModalVisible:false})}
         >
-          <AddNodeType />
+          <div style={{position:"relative"}}>{state.isBackDropVisible?<><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
         </Modal>
       <div className="NodeTypeManagement__NodeTypeContainer">
         <div className="NodeTypeManagement__Header">
@@ -60,7 +82,7 @@ export default (props: any) => {
             </tr>
           </thead>
           <tbody>
-            {dummNodeList.map(row => {
+            {state.dummyNodeList.map(row => {
               return (
                 <tr key={row.nodeId}>
                   <td>
