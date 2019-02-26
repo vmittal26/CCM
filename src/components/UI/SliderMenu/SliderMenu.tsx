@@ -9,10 +9,11 @@ export default function SliderMenu(props: ISliderProps) {
   const classToggle = props.show ? "SliderMenu SliderMenu__Open" : " SliderMenu SliderMenu__Close";
 
   let slider = Object.keys(menuConfig).map((element: any) => {
+  console.log(menuConfig[element].caption);
     return (
-      <Collapsible key={element} trigger={element} open>
+      <Collapsible key={menuConfig[element].caption} trigger={menuConfig[element].caption} open>
         <ul className="SliderMenuList">
-          {menuConfig[element].map((e: any) => (
+          {menuConfig[element].subMenu.map((e: any) => (
             <li key={e.link}className="SliderMenuList__item">
               <Link to={e.link}>{e.caption}</Link>
             </li>

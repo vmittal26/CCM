@@ -1,0 +1,19 @@
+.Collapsible__trigger{
+    background-color: #f4f4f4d0;
+    border:1px solid #ccc;
+    padding:14px;
+    display: block;
+    
+    @include respond(xs){
+      font-size: 1.8rem !important;
+    }
+    @include respond(sm){
+      font-size: 1.6rem !important;
+    }
+    @include respond(lg){
+      font-size:0.9rem !important;
+    }
+    @include respond(xl){
+      font-size:0.9rem !important;
+    }
+  }

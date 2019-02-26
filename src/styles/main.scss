@@ -7,6 +7,7 @@
 @import "../../node_modules/bootstrap/scss/reboot";
 @import "../../node_modules/bootstrap/scss/type";
 @import "../../node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/tables";
 // @import '~antd/dist/antd.min.css';
 @import "./abstracts/mixins";
 @import "./base/base";
@@ -14,12 +15,14 @@
 @import "./components/ReactTable";
 @import "./components/AntIcon";
 @import "./components/DetailPagePanel";
+@import "./components/CCMPanel";
+@import "../components/NodeManagement/NodeManagement";
+@import "../components/NodeTypeManagement/NodeTypeManagement";
 @import "../components/UI/Spinner/Spinner";
 @import "../components/UI/DateFilterComponent/dateFilterComponent";
 @import "../components/App/App";
 @import "../components/Header/Header";
 @import "../components/UI/Backdrop/Backdrop";
 @import "../components/UI/SliderMenu/SliderMenu";
-@import "../components/SegnalazioniEntita/Segnalazione";
 @import "../components/Home/Home";
 @import "../components/GestioneKOSospesi/GestioneKOSospesi";

@@ -7,7 +7,7 @@ import deviceCheckConfig from "../../config/deviceCheckConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import "../../Utils/MasterDataContainer";
-
+import NodeManagement from "../NodeManagement/NodeManagement";
 const GestioneKOSospesi = React.lazy(() => import("../GestioneKOSospesi/GestioneKOSospesi"));
 const GestioneKODetailPageFase2 = React.lazy(() => import("../GestioneKODetailPageFase2/GestioneKODetailPageFase2"));
 const Home = React.lazy(() => import("../Home/Home"));
@@ -24,6 +24,7 @@ const AppRouter = () => (
           <React.Suspense fallback={<><Backdrop show iswhite/><Spinner/></>}>
             <Route path="/" exact component={(props:any) => <Home {...props} />}/>
             <Route path="/gestioneKOSospesi" component={(props:any) => <GestioneKOSospesi {...props} />} />
+            <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />
             <Route path="/detailPageFase2" component={(props:any) => <GestioneKODetailPageFase2 {...props} />} />
           </React.Suspense>
       </Switch>
