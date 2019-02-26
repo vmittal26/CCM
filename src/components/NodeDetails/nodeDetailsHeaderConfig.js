@@ -1,16 +1,24 @@
 export default {
   headerConfig: [
     {
-      Header: "First Name",
-      accessor: "firstName"
+      Header: "Node Name",
+      accessor: "nodeName"
     },
     {
-      Header: "Last Name",
-      id: "lastName"
+      Header: "Node IP",
+      id: "nodeIp"
     },
     {
-      Header: "Age",
-      accessor: "age"
+      Header: "Username",
+      accessor: "userName"
+    },
+    {
+      Header: "Segment",
+      accessor: "segment"
+    },
+    {
+      Header: "Node Type",
+      accessor: "nodeType"
     }
   ]
 };

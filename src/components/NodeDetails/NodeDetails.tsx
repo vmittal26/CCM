@@ -21,8 +21,9 @@ export default(props:any)=>{
                     </Select>
                     </div>
                     <div className="NodeDetails__button-section">
-                      <button className="btn btn-primary" onClick={()=>{}}>Add</button>
-                      <button className="btn btn-primary ml-3" disabled>Delete </button>
+                        <button className="btn btn-primary" onClick={()=>{}}>Add Node</button>
+                        <button className="btn btn-primary ml-3" onClick={()=>{}}>Modify Node</button>
+                        <button className="btn btn-primary ml-3" disabled >Delete Node </button>
                     </div>
                 </div>
                 
