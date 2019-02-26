@@ -45,7 +45,7 @@ export default (props: any) => {
         </Modal>
       <div className="NodeTypeManagement__NodeTypeContainer">
         <div className="NodeTypeManagement__Header">
-          <h3>Node Type</h3>
+          <h4>Node Type</h4>
           <div className="NodeTypeManagement__button-section">
           <button className="btn btn-primary" onClick={()=>{setState({...state,isAddModalVisible:true})}}>Add</button>
           <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} >Delete </button>

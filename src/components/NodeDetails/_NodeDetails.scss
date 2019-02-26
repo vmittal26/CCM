@@ -1,10 +1,15 @@
 .NodeDetails{
     margin-top:0.5rem;
     font-size: 0.8rem;
-    width:60%;
+    width:70%;
     margin:auto;
+    height: 100px;
 
-    &__Section{
-        display: block;
+    &__Header{
+        display: flex;
+    }
+  
+    &__button-section{
+        margin-left: auto;
     }
 }
