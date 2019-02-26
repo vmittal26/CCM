@@ -12,6 +12,8 @@
   font-size: 0.9rem;
   overflow-y: auto;
   height: 90vh;
+  color: $color-grey-dark-1
+  ;
 
   @include respond(xs) {
     width: 40vw;

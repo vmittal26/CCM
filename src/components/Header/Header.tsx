@@ -15,12 +15,12 @@ export  function Header(props:any) {
   return (
     <div className="Header">
       <div className="Header__left">
-        <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
+        {/* <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
           <img
             src={logoImage}
           />
-        </div>
-        <h2 className={"ml-3 mt-2"}>KTM</h2>
+        </div> */}
+        <h2 className={"Header__App"}>CCM</h2>
         {/* <button  className="btn" onClick={() => onToogleSliderMenu()}> */}
         <Icon className="Header__left__baricon" onClick={() => onToogleSliderMenu()} type="bars" ></Icon>
           {/* <FontAwesomeIcon
@@ -32,7 +32,7 @@ export  function Header(props:any) {
       <div className="Header__right">
         {/* <span>Username</span>
         <span>RoleName</span> */}
-        <SwitchMode isMobileView={deviceCheckConfig() ? true : false}/>
+        {/* <SwitchMode isMobileView={deviceCheckConfig() ? true : false}/> */}
         <Icon className="Header__right__poweroff"type="poweroff"></Icon>
         {/* <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon="power-off" /> */}
       </div>

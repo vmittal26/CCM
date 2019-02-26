@@ -16,7 +16,7 @@ function DateFilterComponent(props: any) {
   <div className="d-flex justify-content-center align-items-center ml-4 mr-4">
   <div style={{marginLeft:"15px",marginTop:"-6px"}}> 
     <select style={{fontSize:"0.9rem",marginRight:"2px"}}value={month.month()} onChange={(e) => onMonthSelect(month, e.target.value)} >
-        {moment.months().map((label, value) => (
+        {moment.months().map((label:any, value:any) => (
           <option key = {value}value={value}>{label}</option>
         ))}
       </select>
