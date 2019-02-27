@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Modal } from "antd";
+import { notification,Modal } from "antd";
 import 'antd/lib/modal/style/index.css';
 import AddNodeType from "../AddNodeType/AddNodeType";
-import Spinner from "../UI/Spinner/Spinner";
 import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
+import 'antd/lib/notification/style/index.css';
 
 
 export default (props: any) => {
@@ -47,6 +47,11 @@ export default (props: any) => {
                                                   isAddModalVisible:false,
                                                   dummyNodeList:state.dummyNodeList
                                                 })
+                                                notification.open({
+                                                  message: 'Add Node Type',
+                                                  description: 'Node Type Is Saved Sucessfully',
+                                                  duration: 2,
+                                                });
                                             actions.setSubmitting(false);
                                      }, 2000);
                 }} onCancel={() => setState({...state,isAddModalVisible:false})}/>);
