@@ -6,6 +6,7 @@ import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import 'antd/lib/notification/style/index.css';
 import axios from "../../config/axiosKTMConfig";
+import Spinner from "../UI/Spinner/Spinner";
 
 const dataFromBackend=[ {
   nodeId: "1",
@@ -172,7 +173,7 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
           visible={state.isAddModalVisible}
           onCancel={()=>{setState({...state,isAddModalVisible:false})}}
         >
-          <div style={{position:"relative"}}>{state.isBackDropVisible?<><Backdrop show iswhite/><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
+         <div style={{position:"relative"}}>{state.isBackDropVisible?<><Backdrop show iswhite/><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
         </Modal>
       <div className="NodeTypeManagement__NodeTypeContainer">
         <div className="NodeTypeManagement__Header">
@@ -182,7 +183,7 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
           <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} >Delete </button>
        </div>
       </div>
-      {state.isNodeTypeDataLoading?<><Backdrop /><CoverSpinner/>{emptytable}</>:actualTable}
+      {state.isNodeTypeDataLoading?<><Spinner/>{emptytable}</>:actualTable}
       </div>
     </div>
   );

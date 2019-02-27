@@ -40,8 +40,8 @@ export default(props:any)=>{
                 <div className="NodeDetails__Header">
                     <div className="NodeDetails__SelectNodeType">
                     <Select placeholder ="Select Node Type" style={{ width: 150 }} onChange={()=>{}}>
-                        <Option value="a">ABC</Option>
-                        <Option value="x">Lucy</Option>
+                        <Option value="S">SDP</Option>
+                        <Option value="T">TAD</Option>
                     </Select>
                     </div>
                     <div className="NodeDetails__button-section">
