@@ -25,7 +25,18 @@ export default (props: any) => {
                                               setState({
                                                 ...state,
                                                 isBackDropVisible:true
-                                              })
+                                              });
+                                              
+                                              // (async()=>{
+                                              //       const response = await axios.post("api/node-inventory/v1/addNodeType/",values);
+                                              //       console.log(response);
+                                              //     //   setState({
+                                              //     //   ...state,
+                                              //     //   isNodeTypeDataLoading:false,
+                                              //     //   dummyNodeList:[...response.data,...state.dummyNodeList]
+                                              //     // });
+                                              // })();
+                                              
                                               setTimeout(() => {
                                                 state.dummyNodeList.push(values);
                                                 setState({
