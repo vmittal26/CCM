@@ -1,17 +1,15 @@
 import * as React from "react";
 import { Formik, Field } from "formik";
 import { Col, Row } from "antd";
-import 'antd/lib/grid/style/index.css';
 import * as Yup from "yup";
 
-let currentValues={ nodeId:"", nodeType: "" , nodeDescription:""};
+let initialValues={ nodeId:"", nodeType: "" , nodeDescription:""};
 export default (props: any) => {
   return (
     <div className="AddNodeType">
       <Formik
-      enableReinitialize
-        initialValues={currentValues}
-        onSubmit={(values,action)=>{currentValues=values;props.onSubmit(values,action)}}
+        initialValues={initialValues}
+        onSubmit={props.onSubmit}
         validationSchema={Yup.object().shape({
                     nodeType: Yup.string().required("Plese Enter Node Type"),
                     nodeDescription:Yup.string().max(3000, 'Description can not contain more then 3000 characters!')

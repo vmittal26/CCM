@@ -4,6 +4,7 @@ import NodeTypeManagement from "../NodeTypeManagement/NodeTypeManagement";
 import Collapsible from "react-collapsible";
 import NodeDetails from "../NodeDetails/NodeDetails";
 import 'antd/lib/button/style/index.css';
+import 'antd/lib/grid/style/index.css';
 class NodeManagement extends BaseComponent {
   private setState: Function;
 
