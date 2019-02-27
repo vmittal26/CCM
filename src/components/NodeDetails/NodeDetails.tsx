@@ -21,7 +21,8 @@ export default(props:any)=>{
         data:[]
       });
     let addNodeDetail=(
-        <AddNodeDetail onSubmit={(values:any)=>console.log(values)}/>
+        <AddNodeDetail onSubmit={(values:any)=>console.log(values)} 
+                       onCancel={() => setState({...state,isAddModalVisible:false})}/>
     );
     return(
             <div className="NodeDetails">
