@@ -23,23 +23,24 @@ let initialValues:INodeDetails = {
   nodepassword: "",
   nodesegment:[]
 };
-export default (props: any) => {
+export default (componentprops: any) => {
   return (
     <div className="AddNodeDetail">
       <Formik
         initialValues={initialValues}
-        onSubmit={props.onSubmit}
-        // validationSchema={Yup.object().shape({
-        //             nodeName: Yup.string().required("Plese Enter Node Name"),
-        // })}
-        children={
-          <Form>
+        onSubmit={componentprops.onSubmit}
+        validationSchema={Yup.object().shape({
+          nodename: Yup.string().required("Plese Enter Node Name"),
+        })}
+        children={props => 
+          (<Form>
             <Field
               label="Enter Node Name"
               component={AntInputInline}
               name="nodename"
               type="text"
             />
+            {props.touched.nodename && props.errors.nodename && <div >{<span className="text-danger">{props.errors.nodename}</span>}</div>}
             <Field
               label="Enter Node IP"
               component={AntInputInline}
@@ -70,9 +71,9 @@ export default (props: any) => {
             />
              <div style={{textAlign:"center"}}>
               <button type="submit" className="btn btn-primary mt-1"> Save </button>
-              <button type="button" className="btn btn-primary mt-1 ml-1" onClick={props.onCancel}> Cancel </button>
+              <button type="button" className="btn btn-primary mt-1 ml-1" onClick={componentprops.onCancel}> Cancel </button>
             </div>
-          </Form>
+          </Form>)
         }
       />
     </div>

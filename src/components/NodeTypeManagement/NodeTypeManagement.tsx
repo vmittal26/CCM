@@ -5,7 +5,9 @@ import AddNodeType from "../AddNodeType/AddNodeType";
 import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import 'antd/lib/notification/style/index.css';
+import axios from "../../config/axiosKTMConfig";
 
+const dataFromBackend=[]
 
 export default (props: any) => {
   const [state, setState] = React.useState({
@@ -13,23 +15,8 @@ export default (props: any) => {
     checkboxArray:[],
     isAddModalVisible:false,
     isBackDropVisible:false,
-    dummyNodeList:[
-      {
-        nodeId: "1",
-        nodeType: "SDP",
-        nodeDescription: "ABC"
-      },
-      {
-        nodeId: "2",
-        nodeType: "PQR",
-        nodeDescription: "XYZ"
-      },
-      {
-        nodeId: "3",
-        nodeType: "SDP",
-        nodeDescription: "ABC"
-      }
-    ]
+    isNodeTypeDataLoading:true,
+    dummyNodeList:[]
   });
  
   let addNodeType=(
@@ -45,17 +32,93 @@ export default (props: any) => {
                                                   ...state,
                                                   isBackDropVisible:false,
                                                   isAddModalVisible:false,
-                                                  dummyNodeList:state.dummyNodeList
+                                                  dummyNodeList:[...state.dummyNodeList]
                                                 })
                                                 notification.open({
                                                   message: 'Add Node Type',
-                                                  description: 'Node Type Is Saved Sucessfully',
+                                                  description: 'Node Type is saved sucessfully',
                                                   duration: 2,
                                                 });
                                             actions.setSubmitting(false);
                                      }, 2000);
                 }} onCancel={() => setState({...state,isAddModalVisible:false})}/>);
 
+  let emptytable=(
+    <table className="NodeTypeManagement__NodeTypeTable table table-hover">
+      <thead><tr>
+              <th>#</th>
+              <th>Node Type</th>
+              <th>Description</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+    </table>
+  )
+  let tableBody = (<tbody >
+  {state.dummyNodeList.map(row => {
+    return (
+      <tr key={row.nodeid}>
+        <td>
+          <input
+            className="checkbox"
+            type="checkbox"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              
+              if(e.target.checked){
+                state.checkboxArray.push(row.nodeId);
+                setState({
+                  ...state,
+                  isDeleteButtonEnabled: state.checkboxArray.length===1
+                });
+              }else{
+                var index =  state.checkboxArray.indexOf(row.nodeId);
+                index > -1 ? state.checkboxArray.splice(index, 1):state.checkboxArray
+                setState({
+                  ...state,
+                  isDeleteButtonEnabled: state.checkboxArray.length===1
+                });
+              }
+            }}
+          />
+        </td>
+        <td>{row.nodetype}</td>
+        <td>{row.nodedescription}</td>
+      </tr>
+    );
+  })}
+</tbody>);
+let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table-hover">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Node Type</th>
+    <th>Description</th>
+  </tr>
+</thead>
+{tableBody}
+</table>
+
+  React.useEffect(()=>{
+
+    (async()=>{
+         const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+         console.log(response);
+         setState({
+          ...state,
+          isNodeTypeDataLoading:false,
+          dummyNodeList:[...response.data,...state.dummyNodeList]
+        });
+    })();
+   
+    return () => {
+      console.log("removing switchMode Listener on unmount");
+    };
+  },[]);
   return (
     <div className="NodeTypeManagement">
      <Modal
@@ -72,50 +135,9 @@ export default (props: any) => {
           <div className="NodeTypeManagement__button-section">
           <button className="btn btn-primary" onClick={()=>{setState({...state,isAddModalVisible:true})}}>Add</button>
           <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} >Delete </button>
+       </div>
       </div>
-      </div>
-        <table className="NodeTypeManagement__NodeTypeTable table table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Node Type</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {state.dummyNodeList.map(row => {
-              return (
-                <tr key={row.nodeId}>
-                  <td>
-                    <input
-                      className="checkbox"
-                      type="checkbox"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        
-                        if(e.target.checked){
-                          state.checkboxArray.push(row.nodeId);
-                          setState({
-                            ...state,
-                            isDeleteButtonEnabled: state.checkboxArray.length===1
-                          });
-                        }else{
-                          var index =  state.checkboxArray.indexOf(row.nodeId);
-                          index > -1 ? state.checkboxArray.splice(index, 1):state.checkboxArray
-                          setState({
-                            ...state,
-                            isDeleteButtonEnabled: state.checkboxArray.length===1
-                          });
-                        }
-                      }}
-                    />
-                  </td>
-                  <td>{row.nodeType}</td>
-                  <td>{row.nodeDescription}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      {state.isNodeTypeDataLoading?<><Backdrop /><CoverSpinner/>{emptytable}</>:actualTable}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import fontawesome from "../../config/fontawesomeSVGConfig";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
-import "../../Utils/MasterDataContainer";
+// import "../../Utils/MasterDataContainer";
 import NodeManagement from "../NodeManagement/NodeManagement";
 const GestioneKOSospesi = React.lazy(() => import("../GestioneKOSospesi/GestioneKOSospesi"));
 const GestioneKODetailPageFase2 = React.lazy(() => import("../GestioneKODetailPageFase2/GestioneKODetailPageFase2"));
