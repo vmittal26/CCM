@@ -4,6 +4,7 @@ import 'antd/lib/modal/style/index.css';
 import AddNodeType from "../AddNodeType/AddNodeType";
 import Spinner from "../UI/Spinner/Spinner";
 import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
+import Backdrop from "../UI/Backdrop/Backdrop";
 
 
 export default (props: any) => {
@@ -27,32 +28,27 @@ export default (props: any) => {
         nodeId: "3",
         nodeType: "SDP",
         nodeDescription: "ABC"
-      },
-      {
-        nodeId: "4",
-        nodeType: "PQR",
-        nodeDescription: "XYZ"
       }
     ]
   });
  
   let addNodeType=(
                 <AddNodeType onSubmit={(values:any, actions:any) => {
-                                  actions.setSubmitting(false);
-                                     setState({
-                                      ...state,
-                                      isBackDropVisible:true
-                                    })
-                                    setTimeout(() => {
-                                      state.dummyNodeList.push(values);
-                                      setState({
-                                        ...state,
-                                        isBackDropVisible:false,
-                                        isAddModalVisible:false,
-                                        dummyNodeList:state.dummyNodeList
-                                      })
-                            
-                          }, 2000);
+                                            actions.setSubmitting(true);
+                                              setState({
+                                                ...state,
+                                                isBackDropVisible:true
+                                              })
+                                              setTimeout(() => {
+                                                state.dummyNodeList.push(values);
+                                                setState({
+                                                  ...state,
+                                                  isBackDropVisible:false,
+                                                  isAddModalVisible:false,
+                                                  dummyNodeList:state.dummyNodeList
+                                                })
+                                            actions.setSubmitting(false);
+                                     }, 2000);
                 }} onCancel={() => setState({...state,isAddModalVisible:false})}/>);
 
   return (
@@ -63,7 +59,7 @@ export default (props: any) => {
           footer={null}
           visible={state.isAddModalVisible}
         >
-          <div style={{position:"relative"}}>{state.isBackDropVisible?<><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
+          <div style={{position:"relative"}}>{state.isBackDropVisible?<><Backdrop show iswhite/><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
         </Modal>
       <div className="NodeTypeManagement__NodeTypeContainer">
         <div className="NodeTypeManagement__Header">
