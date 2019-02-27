@@ -7,7 +7,26 @@ import Backdrop from "../UI/Backdrop/Backdrop";
 import 'antd/lib/notification/style/index.css';
 import axios from "../../config/axiosKTMConfig";
 
-const dataFromBackend=[]
+const dataFromBackend=[ {
+  nodeId: "1",
+  nodetype: "SDP",
+  nodedescription: "ABC"
+},
+{
+  nodeId: "2",
+  nodetype: "PQR",
+  nodedescription: "XYZ"
+},
+{
+  nodeId: "3",
+  nodetype: "SDP",
+  nodedescription: "ABC"
+},
+{
+  nodeId: "4",
+  nodetype: "PQR",
+  nodedescription: "XYZ"
+}]
 
 export default (props: any) => {
   const [state, setState] = React.useState({
@@ -27,15 +46,21 @@ export default (props: any) => {
                                                 isBackDropVisible:true
                                               });
                                               
-                                              // (async()=>{
-                                              //       const response = await axios.post("api/node-inventory/v1/addNodeType/",values);
-                                              //       console.log(response);
-                                              //     //   setState({
-                                              //     //   ...state,
-                                              //     //   isNodeTypeDataLoading:false,
-                                              //     //   dummyNodeList:[...response.data,...state.dummyNodeList]
-                                              //     // });
-                                              // })();
+                                              const data={
+                                                nodeName:values.nodetype,
+                                                nodeDescription:values.nodedescription
+                                              };
+                                              console.log(data);
+
+                                              (async()=>{
+                                                    const response = await axios.post("api/node-inventory/v1/addNodeType/",data);
+                                                    console.log(response);
+                                                  //   setState({
+                                                  //   ...state,
+                                                  //   isNodeTypeDataLoading:false,
+                                                  //   dummyNodeList:[...response.data,...state.dummyNodeList]
+                                                  // });
+                                              })();
                                               
                                               setTimeout(() => {
                                                 state.dummyNodeList.push(values);
@@ -73,7 +98,7 @@ export default (props: any) => {
   let tableBody = (<tbody >
   {state.dummyNodeList.map(row => {
     return (
-      <tr key={row.nodeid}>
+      <tr key={row.nodeId}>
         <td>
           <input
             className="checkbox"
@@ -115,17 +140,25 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
 </table>
 
   React.useEffect(()=>{
-
-    (async()=>{
-         const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
-         console.log(response);
-         setState({
+      /** Actual Data Code
+        (async()=>{
+              const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+              console.log(response);
+            setState({
+              ...state,
+              isNodeTypeDataLoading:false,
+              dummyNodeList:[...response.data,...state.dummyNodeList]
+            });
+        })();
+      */
+      setTimeout(()=>{
+        setState({
           ...state,
           isNodeTypeDataLoading:false,
-          dummyNodeList:[...response.data,...state.dummyNodeList]
+          dummyNodeList:dataFromBackend
         });
-    })();
-   
+      },1000)
+    
     return () => {
       console.log("removing switchMode Listener on unmount");
     };
@@ -137,6 +170,7 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
           centered
           footer={null}
           visible={state.isAddModalVisible}
+          onCancel={()=>{setState({...state,isAddModalVisible:false})}}
         >
           <div style={{position:"relative"}}>{state.isBackDropVisible?<><Backdrop show iswhite/><CoverSpinner/>{addNodeType}</>:addNodeType}</div>
         </Modal>

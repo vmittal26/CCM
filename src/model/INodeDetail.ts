@@ -1,7 +1,7 @@
 export interface INodeDetails{
-    nodename: string,
-    nodeip: string,
-    nodeusername: string,
-    nodepassword: string,
-    nodesegment:[]
+    node: string,
+    nodeIp: string,
+    nodeUsername: string,
+    nodePassword: string,
+    nodeSegment:[]
 }

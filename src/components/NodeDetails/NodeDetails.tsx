@@ -30,6 +30,7 @@ export default(props:any)=>{
                 title="Add Node Detail"
                 centered
                 footer={null}
+                onCancel={()=>{setState({...state,isAddModalVisible:false})}}
                 visible={state.isAddModalVisible}
             >
             <div style={{position:"relative"}}>{state.isBackDropVisible?<><Backdrop show iswhite/><CoverSpinner/>{addNodeDetail}</>:addNodeDetail}</div>
@@ -38,7 +39,7 @@ export default(props:any)=>{
              <div className="NodeDetails_NodeTable">
                 <div className="NodeDetails__Header">
                     <div className="NodeDetails__SelectNodeType">
-                    <Select placeholder ="Select" style={{ width: 120 }} onChange={()=>{}}>
+                    <Select placeholder ="Select Node Type" style={{ width: 150 }} onChange={()=>{}}>
                         <Option value="a">ABC</Option>
                         <Option value="x">Lucy</Option>
                     </Select>

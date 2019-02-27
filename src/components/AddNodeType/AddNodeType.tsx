@@ -3,7 +3,7 @@ import { Formik, Field } from "formik";
 import { Col, Row } from "antd";
 import * as Yup from "yup";
 
-let initialValues={ nodeid:"", nodetype: "" , nodedescription:""};
+let initialValues={ nodeId:"", nodeType: "" , nodeDescription:""};
 export default (props: any) => {
   return (
     <div className="Addnodetype">
@@ -11,8 +11,8 @@ export default (props: any) => {
         initialValues={initialValues}
         onSubmit={props.onSubmit}
         validationSchema={Yup.object().shape({
-                    nodetype: Yup.string().required("Plese Enter Node Type"),
-                    nodedescription:Yup.string().max(3000, 'Description can not contain more then 3000 characters!')
+                    nodeType: Yup.string().required("Plese Enter Node Type"),
+                    nodeDescription:Yup.string().max(3000, 'Description can not contain more then 3000 characters!')
         })}
         render={({
           handleSubmit,
@@ -27,30 +27,30 @@ export default (props: any) => {
             <form  onSubmit={handleSubmit}>
              <Row gutter={16} >
                 <Col xl={24} lg={24} md={6} sm={8} xs={12}>
-                    <label htmlFor={"nodetype"}>Node Type </label>
+                    <label htmlFor={"nodeType"}>Node Type </label>
                 </Col>
                 <Col xl={24} lg={24} md={6} sm={8} xs={12}>
-                {touched.nodetype && errors.nodetype && <div >{<span className="text-danger">{errors.nodetype}</span>}</div>}
+                {touched.nodeType && errors.nodeType && <div >{<span className="text-danger">{errors.nodeType}</span>}</div>}
                 <Field  type="text"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.nodetype}
-                        name="nodetype"
+                        value={values.nodeType}
+                        name="nodeType"
                         className="form-control"/>
                 </Col>
                 <Col xl={24} lg={24} md={6} sm={8} xs={24}>
                     <label htmlFor={"nodedescription"}>Node Description</label>
                 </Col>
                 <Col xl={24} lg={24} md={6} sm={8} xs={24}>
-                {touched.nodedescription && errors.nodedescription && <div >{<span className="text-danger">{errors.nodedescription}</span>}</div>}
+                {touched.nodeDescription && errors.nodeDescription && <div >{<span className="text-danger">{errors.nodeDescription}</span>}</div>}
                 <Field
                         component={"textarea"}
                         rows={5}
                         cols={50}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.nodedescription}
-                        name="nodedescription"
+                        value={values.nodeDescription}
+                        name="nodeDescription"
                         className="form-control"/>
                 </Col>
                 </Row>

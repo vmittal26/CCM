@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import SwitchMode from "../UI/SwitchMode/SwitchMode";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import { Icon } from "antd";
-import logoImage from '../../images/vodafone-logo.png';
+import logoImage from '../../images/ericsson_econ.png';
 import 'antd/lib/switch/style/index.css';
 
 export  function Header(props:any) {
@@ -15,12 +15,12 @@ export  function Header(props:any) {
   return (
     <div className="Header">
       <div className="Header__left">
-        {/* <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
+        <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
           <img
             src={logoImage}
           />
-        </div> */}
-        <h2 className={"Header__App"}>CCM</h2>
+        </div>
+        <h2 className={"ml-2 mt-2 Header__App"}>CCM</h2>
         {/* <button  className="btn" onClick={() => onToogleSliderMenu()}> */}
         <Icon className="Header__left__baricon" onClick={() => onToogleSliderMenu()} type="bars" ></Icon>
           {/* <FontAwesomeIcon

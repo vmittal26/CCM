@@ -11,17 +11,17 @@ import { INodeDetails } from "../../model/INodeDetail";
 const selectOptions=[
       {
         id:"1",
-        description:"abc"
+        description:"SDP"
       },
       { id:"2",
-      description:"xyz"}
+      description:"ABS"}
 ]
 let initialValues:INodeDetails = {
-  nodename:"",
-  nodeip: "",
-  nodeusername: "",
-  nodepassword: "",
-  nodesegment:[]
+  node:"",
+  nodeIp: "",
+  nodeUsername: "",
+  nodePassword: "",
+  nodeSegment:[]
 };
 export default (componentprops: any) => {
   return (
@@ -30,17 +30,17 @@ export default (componentprops: any) => {
         initialValues={initialValues}
         onSubmit={componentprops.onSubmit}
         validationSchema={Yup.object().shape({
-          nodename: Yup.string().required("Plese Enter Node Name"),
+                node: Yup.string().required("Plese Enter Node Name"),
         })}
         children={props => 
           (<Form>
             <Field
               label="Enter Node Name"
               component={AntInputInline}
-              name="nodename"
+              name="node"
               type="text"
             />
-            {props.touched.nodename && props.errors.nodename && <div >{<span className="text-danger">{props.errors.nodename}</span>}</div>}
+            {props.touched.node && props.errors.node && <div >{<span className="text-danger">{props.errors.node}</span>}</div>}
             <Field
               label="Enter Node IP"
               component={AntInputInline}
