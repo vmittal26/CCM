@@ -4,6 +4,7 @@
   text-indent: -9999em;
   width: 5rem;
   height: 5rem;
+  top:30%;
   left:45%;
   border-radius: 50%;
   background: #ffffff;
@@ -12,7 +13,7 @@
   background: -o-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
   background: -ms-linear-gradient(left, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
   background: linear-gradient(to right, #ffffff 10%, rgba(255, 255, 255, 0) 42%);
-  position: fixed;
+  position: absolute;
   -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
   -webkit-transform: translateZ(0);

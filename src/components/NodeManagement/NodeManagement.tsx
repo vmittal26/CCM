@@ -8,6 +8,7 @@ import 'antd/lib/grid/style/index.css';
 import 'antd/lib/modal/style/index.css';
 import 'antd/lib/notification/style/index.css';
 import NodeTypeManagementComponent from "../NodeTypeManagementComponent/NodeTypeManagementComponent";
+import NodeDetailsManangement from "../NodeDetailManagementComponent/NodeDetailsManangement";
 class NodeManagement extends BaseComponent {
   private setState: Function;
 
@@ -20,7 +21,7 @@ class NodeManagement extends BaseComponent {
     return (
       <div className="NodeManagement">
           <NodeTypeManagementComponent />
-          <NodeDetails/> 
+          <NodeDetailsManangement/> 
       </div>
     );
   };

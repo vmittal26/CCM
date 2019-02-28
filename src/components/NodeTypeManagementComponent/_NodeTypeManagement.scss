@@ -1,5 +1,4 @@
 .NodeTypeManagement{
-    display: flex;
     margin-top:0.5rem;
     font-size: 0.8rem;
     
@@ -19,6 +18,7 @@
 
     &__NodeTypeTable{
 
+       
       .ReactTable .rt-tbody{
         min-height: 15rem !important;
         max-height: 15rem !important;

@@ -7,6 +7,7 @@ import AddnodeType from "../AddnodeType/AddnodeType";
 import axios from "../../config/axiosKTMConfig";
 import { notification, Modal } from "antd";
 import ReactTable from "react-table";
+import Spinner from "../UI/Spinner/Spinner";
 const dataFromBackend = [
   {
     nodeId: "1",
@@ -31,7 +32,22 @@ const dataFromBackend = [
 ];
 class NodeTypeManagementContainer extends BaseComponent {
   private addNodeType: JSX.Element;
-
+  private nodeTypeColumnHeaders:Array<{}>=[
+    {
+        Header: "Node Type",
+        accessor: "nodeType", // String-based value accessors!
+        headerClassName:"header",
+        className: "cell",
+        minWidth:200,
+      },
+      {
+        Header: "Description",
+        accessor: "nodeDescription",
+        headerClassName:"header",
+        className: "cell",
+        minWidth:200,
+      }
+  ]
   private setState: Function;
   private state: any;
   constructor() {
@@ -51,15 +67,48 @@ class NodeTypeManagementContainer extends BaseComponent {
         <input
           className="checkbox"
           type="checkbox"
-          onChange={()=>{}}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              
+            if(e.target.checked){
+              this.state.checkboxArray.push(row.nodeId);
+              this.setState({
+                ...this.state,
+                isDeleteButtonEnabled: this.state.checkboxArray.length===1
+              });
+            }else{
+              var index =  this.state.checkboxArray.indexOf(row.nodeId);
+              index > -1 ? this.state.checkboxArray.splice(index, 1):this.state.checkboxArray
+              this.setState({
+                ...this.state,
+                isDeleteButtonEnabled: this.state.checkboxArray.length===1
+              });
+            }
+          }}
         />
       );
     }
   };
+
   public onCancelModal=()=>{
     this.setState({ ...this.state, isAddModalVisible: false })
   }
-
+  public fetchData =()=>{
+        (async()=>{
+            const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+            console.log(response);
+            this.setState({
+            ...this.state,
+            isNodeTypeDataLoading:false,
+            data:[...response.data,...this.state.data]
+            });
+        })();
+  
+    //   setTimeout(()=>this.setState({
+    //       ...this.state,
+    //       isNodeTypeDataLoading:false,
+    //       data:dataFromBackend
+    //   }),2000);
+  }
   public onSubmitAddNodeType = (values: any, actions: any) => {
     actions.setSubmitting(true);
     this.setState({
@@ -68,12 +117,12 @@ class NodeTypeManagementContainer extends BaseComponent {
     });
 
     setTimeout(() => {
-      this.state.dummyNodeList.push(values);
+      this.state.data.push(values);
       this.setState({
         ...this.state,
         isBackDropVisible: false,
         isAddModalVisible: false,
-        dummyNodeList: [...this.state.dummyNodeList]
+        data: [...this.state.data]
       });
       notification.open({
         message: "Add Node Type",
@@ -91,11 +140,22 @@ class NodeTypeManagementContainer extends BaseComponent {
       isAddModalVisible: false,
       isBackDropVisible: false,
       isNodeTypeDataLoading: true,
-      dummyNodeList: []
+      data: []
     });
 
     this.state = state;
     this.setState = setState;
+
+    let nodeTypeTable =(<ReactTable
+                    columns={[this.checkboxHeader,...this.nodeTypeColumnHeaders]}
+                    showPagination={true}
+                    loading={state.isNodeTypeDataLoading}
+                    showPaginationTop={true}
+                    showPaginationBottom={false}
+                    defaultPageSize={5}
+                    onFetchData={this.fetchData}
+                    data={state.data}
+                    />)
     return (
       <div className="NodeTypeManagement">
         <Modal
@@ -105,8 +165,7 @@ class NodeTypeManagementContainer extends BaseComponent {
           visible={state.isAddModalVisible}
           onCancel={() => {
             setState({ ...state, isAddModalVisible: false });
-          }}
-        >
+          }}>
           <div style={{ position: "relative" }}>
             {state.isBackDropVisible ? (
               <> <Backdrop show iswhite /> <CoverSpinner /> {this.addNodeType} </> ) : ( this.addNodeType )}
@@ -123,30 +182,7 @@ class NodeTypeManagementContainer extends BaseComponent {
             </div>
           </div>
           <div className="NodeTypeManagement__NodeTypeTable">
-            <ReactTable
-              columns={[
-                this.checkboxHeader,
-                {
-                  Header: "Node Type",
-                  accessor: "nodeType", // String-based value accessors!
-                  headerClassName:"header",
-                  className: "cell",
-                  minWidth:200,
-                },
-                {
-                  Header: "Description",
-                  accessor: "nodeDescription",
-                  headerClassName:"header",
-                  className: "cell",
-                  minWidth:200,
-                }
-              ]}
-              showPagination={true}
-              showPaginationTop={true}
-              showPaginationBottom={false}
-              defaultPageSize={5}
-              data={dataFromBackend}
-            />
+          <div style={{position:"relative"}}>{state.isNodeTypeDataLoading?<><Spinner/>{nodeTypeTable}</>:nodeTypeTable}</div>
           </div>
         </div>
       </div>

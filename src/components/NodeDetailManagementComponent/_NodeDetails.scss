@@ -12,4 +12,12 @@
     &__button-section{
         margin-left: auto;
     }
+
+    &__NodeDetailsTable{
+       
+        .ReactTable .rt-tbody{
+          min-height: 15rem !important;
+          max-height: 15rem !important;
+        }
+      }
 }
