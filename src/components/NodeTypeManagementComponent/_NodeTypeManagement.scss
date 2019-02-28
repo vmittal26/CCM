@@ -18,6 +18,10 @@
     }
 
     &__NodeTypeTable{
-        border: 1px solid $color-grey-light-4;
+
+      .ReactTable .rt-tbody{
+        min-height: 15rem !important;
+        max-height: 15rem !important;
+      }
     }
 }
