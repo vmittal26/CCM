@@ -7,10 +7,11 @@ import deviceCheckConfig from "../../config/deviceCheckConfig";
 import { Icon } from "antd";
 import logoImage from '../../images/ericsson_econ.png';
 import 'antd/lib/switch/style/index.css';
+import EE from "../../EventEmitter";
 
 export  function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
-  const onToogleSliderMenu = () => setIsHidden(!isHidden);
+  const onToogleSliderMenu = () => EE.emit("onToggleSlider");
 
   return (
     <div className="Header">

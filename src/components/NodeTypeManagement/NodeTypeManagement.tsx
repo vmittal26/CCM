@@ -10,23 +10,23 @@ import Spinner from "../UI/Spinner/Spinner";
 
 const dataFromBackend=[ {
   nodeId: "1",
-  nodetype: "SDP",
-  nodedescription: "ABC"
+  nodeType: "SDP",
+  nodeDescription: "ABC"
 },
 {
   nodeId: "2",
-  nodetype: "PQR",
-  nodedescription: "XYZ"
+  nodeType: "PQR",
+  nodeDescription: "XYZ"
 },
 {
   nodeId: "3",
-  nodetype: "SDP",
-  nodedescription: "ABC"
+  nodeType: "SDP",
+  nodeDescription: "ABC"
 },
 {
   nodeId: "4",
-  nodetype: "PQR",
-  nodedescription: "XYZ"
+  nodeType: "PQR",
+  nodeDescription: "XYZ"
 }]
 
 export default (props: any) => {
@@ -46,15 +46,8 @@ export default (props: any) => {
                                                 ...state,
                                                 isBackDropVisible:true
                                               });
-                                              
-                                              const data={
-                                                nodeName:values.nodetype,
-                                                nodeDescription:values.nodedescription
-                                              };
-                                              console.log(data);
-
-                                              (async()=>{
-                                                    const response = await axios.post("api/node-inventory/v1/addNodeType/",data);
+                                             (async()=>{
+                                                    const response = await axios.post("api/node-inventory/v1/addNodeType/",values);
                                                     console.log(response);
                                                   //   setState({
                                                   //   ...state,
@@ -123,8 +116,8 @@ export default (props: any) => {
             }}
           />
         </td>
-        <td>{row.nodetype}</td>
-        <td>{row.nodedescription}</td>
+        <td>{row.nodeType}</td>
+        <td>{row.nodeDescription}</td>
       </tr>
     );
   })}
@@ -141,7 +134,7 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
 </table>
 
   React.useEffect(()=>{
-      /** Actual Data Code
+      //Actual Data Code
         (async()=>{
               const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
               console.log(response);
@@ -151,14 +144,14 @@ let actualTable= <table className="NodeTypeManagement__NodeTypeTable table table
               dummyNodeList:[...response.data,...state.dummyNodeList]
             });
         })();
-      */
-      setTimeout(()=>{
-        setState({
-          ...state,
-          isNodeTypeDataLoading:false,
-          dummyNodeList:dataFromBackend
-        });
-      },1000)
+       
+      // setTimeout(()=>{
+      //   setState({
+      //     ...state,
+      //     isNodeTypeDataLoading:false,
+      //     dummyNodeList:dataFromBackend
+      //   });
+      // },1000)
     
     return () => {
       console.log("removing switchMode Listener on unmount");
