@@ -2,7 +2,7 @@ export default {
   headerConfig: [
     {
       Header: "Node Name",
-      accessor: "nodeName"
+      accessor: "nodeDetailName"
     },
     {
       Header: "Node IP",

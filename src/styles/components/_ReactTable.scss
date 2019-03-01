@@ -84,5 +84,5 @@
 }
 
 .rowColorHighlight {
-  background-color: $color-secondary !important;
+  background-color: lighten($color-primary ,4%)!important;
 }

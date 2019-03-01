@@ -11,37 +11,76 @@ import Backdrop from '../UI/Backdrop/Backdrop';
 import CoverSpinner from '../UI/CoverSpinner/CoverSpinner';
 import BaseComponent from '../BaseComponent/BaseComponent';
 import Spinner from '../UI/Spinner/Spinner';
-
+import highlightRowOnChangeCheckbox from '../../Utils/highlightRowOnChangeCheckbox';
+import { deselectAllCheckbox } from '../../Utils/TableRowSelectionsUtil';
+import axios from '../../config/axiosKTMConfig';
+const nodeDetailDummyData = [
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+  {
+    nodeDetailName: "SDP",
+    nodeIp:"192.168.1.0",
+    userName: "username1",
+    segment:"",
+    nodeType: "ABC"
+  },
+];
 class NodeDetailContainer extends BaseComponent{
     private addNodeDetail: JSX.Element;
     private setState: Function;
     private state: any;
-
-    private nodeTypeColumnHeaders:Array<{}>=
-        [
-            {
-              Header: "Node Name",
-              accessor: "nodeDetailName"
-            },
-            {
-              Header: "Node IP",
-              id: "nodeIp"
-            },
-            {
-              Header: "Username",
-              accessor: "userName"
-            },
-            {
-              Header: "Segment",
-              accessor: "segment"
-            },
-            {
-              Header: "Node Type",
-              accessor: "nodeType"
-            }
-          ]
-      
-
+    private nodeTypeColumnHeaders:Array<{}>=columns.headerConfig;
+    private isTableHasToReload: boolean = false;
+    private isLoadedForFirstTime:boolean = false;
+    private setTableState:Function;
+    private tableState:any;
     private checkboxHeader = {
         Header: "#",
         minWidth: 50,
@@ -53,7 +92,8 @@ class NodeDetailContainer extends BaseComponent{
               className="checkbox"
               type="checkbox"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  
+                let checkbox = event.target;
+                highlightRowOnChangeCheckbox(checkbox);
                 if(e.target.checked){
                   this.state.checkboxArray.push(row.nodeId);
                   this.setState({
@@ -96,13 +136,33 @@ class NodeDetailContainer extends BaseComponent{
           actions.setSubmitting(false);
         }, 2000);
       };
-    public fetchData =()=>{
+        public fetchData =(state:any,instance:any)=>{
+            deselectAllCheckbox();
+            setTimeout(()=>this.setState({
+                ...this.state,
+                isNodeDetailDataLoading:false,
+                data:nodeDetailDummyData
+            }),2000);
 
-        setTimeout(()=>this.setState({
-            ...this.state,
-            isNodeDetailDataLoading:false,
-            data:[]
-        }),2000);
+          // deselectAllCheckbox();
+          // if(this.isTableHasToReload || !this.isLoadedForFirstTime) {
+          //   this.setTableState({
+          //     ...this.tableState,
+          //       loading:true,
+          //   })
+          //   console.log("inside fetchdata");
+          //   (async()=>{
+          //     const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+          //     console.log(response);
+          //     this.setTableState({
+          //       ...this.tableState,
+          //          loading:false,
+          //          data:response.data
+          //     })
+          //     this.isTableHasToReload = false;
+          //     this.isLoadedForFirstTime ? this.isLoadedForFirstTime : this.isLoadedForFirstTime=true;
+          //  })();
+          // }
     }
     public onCancelModal=()=>{
         this.setState({ ...this.state, isAddModalVisible: false })
@@ -114,10 +174,13 @@ class NodeDetailContainer extends BaseComponent{
           );
     }
 
+    public onNodeTypeSelect=(id:string)=>{
+        console.log("Inside NodeDetails"+id);
+    }
     public nodeDetailsManagement = (props: any): JSX.Element => {
         const [state, setState] = React.useState({
             isDeleteButtonEnabled: false,
-            isNodeDetailDataLoading:false,
+            isNodeDetailDataLoading:true,
             checkboxArray:[],
             isAddModalVisible:false,
             isBackDropVisible:false,
@@ -138,7 +201,15 @@ class NodeDetailContainer extends BaseComponent{
             onFetchData={this.fetchData}
             data={state.data}
             />);
+        React.useEffect(()=>{
 
+          this.EE.on("onNodeTypeSelect",this.onNodeTypeSelect);
+
+          return () => {
+            console.log("removing onNodeTypeSelect Listener on unmount");
+            this.EE.removeListener("onNodeTypeSelect", this.onNodeTypeSelect);
+          };
+        },[])
         return(      
         
         <div className="NodeDetails">
@@ -154,28 +225,28 @@ class NodeDetailContainer extends BaseComponent{
             {state.isBackDropVisible ? (
               <> <Backdrop show iswhite /> <CoverSpinner /> {this.addNodeDetail} </> ) : ( this.addNodeDetail )}
           </div>
-        </Modal>
-        <h4 className="mb-3">Node Details</h4>
-        <div className="NodeDetails_NodeTable">
-        <div className="NodeDetails__Header">
-            {/* <div className="NodeDetails__SelectNodeType">
-            <Select placeholder ="Select Node Type" style={{ width: 150 }} onChange={()=>{}}>
-                <Option value="S">SDP</Option>
-                <Option value="T">TAD</Option>
-            </Select>
-            </div> */}
+            </Modal>
+            <h4 className="mb-3">Node Details</h4>
+            <div className="NodeDetails_NodeTable">
+            <div className="NodeDetails__Header">
+                {/* <div className="NodeDetails__SelectNodeType">
+                <Select placeholder ="Select Node Type" style={{ width: 150 }} onChange={()=>{}}>
+                    <Option value="S">SDP</Option>
+                    <Option value="T">TAD</Option>
+                </Select>
+                </div> */}
             <div className="NodeDetails__button-section">
                 <button className="btn btn-primary" onClick={()=>setState({...state,isAddModalVisible:true})}>Add Node</button>
                 <button className="btn btn-primary ml-3" onClick={()=>{}}>Modify Node</button>
                 <button className="btn btn-primary ml-3" disabled >Delete Node </button>
             </div>
-        </div>
-          <div className="NodeDetails__NodeDetailsTable">
-          <div style={{position:"relative"}}>{state.isNodeDetailDataLoading?<><Spinner/>{nodeDetailsTable}</>:nodeDetailsTable}</div>
-          </div>
-        </div>
+            </div>
+              <div className="NodeDetails__NodeDetailsTable">
+              <div style={{position:"relative"}}>{state.isNodeDetailDataLoading?<><Spinner/>{nodeDetailsTable}</>:nodeDetailsTable}</div>
+              </div>
+            </div>
       </div>
-        );
+      );
     }
 
     public getComponent(): React.FunctionComponent {

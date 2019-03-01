@@ -32,6 +32,7 @@ export default (props: any) => {
                 <Col xl={24} lg={24} md={6} sm={8} xs={12}>
                 {touched.nodeType && errors.nodeType && <div >{<span className="text-danger">{errors.nodeType}</span>}</div>}
                 <Field  type="text"
+                        style={{borderLeft:"5px inset red"}}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.nodeType}

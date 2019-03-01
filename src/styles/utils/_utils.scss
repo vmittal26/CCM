@@ -1,0 +1,9 @@
+.mandatoryLabel{
+    position: relative;
+    &:after{
+        content:'\002A';
+        color:red;
+        position: absolute;
+        right:0;
+    }
+}
