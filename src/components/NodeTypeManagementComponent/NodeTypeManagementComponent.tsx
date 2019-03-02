@@ -137,16 +137,44 @@ class NodeTypeManagementContainer extends BaseComponent {
           duration: 2
         });
         // this.isTableHasToReload = true;
-        if(response.data.nodeType){
-          this.setTableState({
-            ...this.tableState,
-             data: [...this.tableState.data, response.data.nodeType]
-           })
-        }
+        this.setTableState({
+          ...this.tableState,
+         loading:true
+        });
+        setTimeout(()=>{
+          if(response.data.nodeType){
+            this.setTableState({
+              ...this.tableState,
+              loading:false,
+               data: [...this.tableState.data, response.data.nodeType]
+             })
+          };
+        },500)
+       
         actions.setSubmitting(false);
       })();
   };
 
+  public onDeleteNodeType=()=>{
+    
+    deselectAllCheckbox();
+    var selectedNode = this.state.checkboxArray[ this.state.checkboxArray.length-1];
+    let newData = this.tableState.data
+                                 .filter((element:INodeType)=>element.nodeId!== selectedNode);
+    var index =  this.state.checkboxArray.indexOf(selectedNode);
+    this.state.checkboxArray.splice(index, 1);
+    this.setTableState({
+      ...this.tableState,
+     loading:true
+    });
+    setTimeout(()=>{
+        this.setTableState({
+          ...this.tableState,
+          loading:false,
+          data: newData
+        });
+      },500)
+    }
   public nodeTypeManagement = (props: any): JSX.Element => {
     const [state, setState] = React.useState<INodeTypeManagement>({
       isDeleteButtonEnabled: false,
@@ -226,7 +254,7 @@ class NodeTypeManagementContainer extends BaseComponent {
               <button className="btn btn-primary ml-3" onClick={() => { setState({ ...state, isAddModalVisible: true }); }} >
                 Add
               </button>
-              <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} > Delete</button>
+              <button className="btn btn-primary ml-3" onClick ={this.onDeleteNodeType} disabled={!state.isDeleteButtonEnabled} > Delete</button>
             </div>
           </div>
           <div className="NodeTypeManagement__NodeTypeTable">

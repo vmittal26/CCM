@@ -17,64 +17,8 @@ import axios from '../../config/axiosKTMConfig';
 import INodeTypeTableState from '../../model/INodeTypeTableState';
 import ITableState from '../../model/ITableState';
 import INodeDetail from '../../model/INodeDetail';
-const nodeDetailDummyData = [
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-  {
-    nodeDetailName: "SDP",
-    nodeIp:"192.168.1.0",
-    userName: "username1",
-    segment:"",
-    nodeType: "ABC"
-  },
-];
+import INodeDetailTableState from '../../model/INodeDetailTableState';
+
 class NodeDetailContainer extends BaseComponent{
     private addNodeDetail: JSX.Element;
     private setState: Function;
@@ -84,9 +28,11 @@ class NodeDetailContainer extends BaseComponent{
     private selectedNodeDetailIdArray:Array<string>=[];
     private isTableHasToReload: boolean = false;
     private isLoadedForFirstTime:boolean = false;
-    private tableState:INodeTypeTableState;
+    private tableState:INodeDetailTableState;
     private setTableState:Function;
     private nodeDetailsList:Array<INodeDetail>;
+    private nodeDetailsToBeUpdated:INodeDetail;
+
     private checkboxHeader = {
         Header: "#",
         minWidth: 50,
@@ -100,6 +46,8 @@ class NodeDetailContainer extends BaseComponent{
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 let checkbox = event.target;
                 highlightRowOnChangeCheckbox(checkbox);
+                this.nodeDetailsToBeUpdated =  {...row.original};
+                console.log( this.nodeDetailsToBeUpdated );
                 if(e.target.checked){
                   this.state.checkboxArray.push(row.nodeId);
                   this.setState({
@@ -156,24 +104,26 @@ class NodeDetailContainer extends BaseComponent{
       };
       public fetchData =(state:any,instance:any)=>{
             deselectAllCheckbox();
-            setTimeout(()=>this.setState({
-                ...this.state,
-                isNodeDetailDataLoading:false,
-                data:nodeDetailDummyData
-            }),2000);
+           
       }
-    public onCancelModal=()=>{
-        this.setState({ ...this.state, isAddModalVisible: false })
+
+      public onUpdateNodeDetail=()=>{
+
       }
+      public onCancelModal=()=>{
+        this.setState({ ...this.state, isModalVisible: false }) 
+      }
+
+    public showNodeDetail=()=>{
+      this.setState({...this.state,nodeDetailsToBeUpdated:null,isUpdateModal:false,isModalVisible:true})
+    }
     constructor(){
         super();
-        this.addNodeDetail = (<AddNodeDetail onSubmit={this.onSubmitAddNodeDetail} onCancel={this.onCancelModal} />);
+      
     }
 
     public onGetNodeDetails=(id:string)=>{
         console.log("Inside onGetNodeDetails "+id);
-
-     
         this.setTableState({
           ...this.tableState,
           loading:true
@@ -209,14 +159,21 @@ class NodeDetailContainer extends BaseComponent{
        });
     }
     }
+
+    public showUpdateNodeDetail=()=>{
+        this.setState({...this.state,nodeDetailsToBeUpdated : this.nodeDetailsToBeUpdated ,isUpdateModal:true,isModalVisible:true})
+    }
     public nodeDetailsManagement = (props: any): JSX.Element => {
         const [state, setState] = React.useState({
             isAddNodeDetailButtonEnabled: false,
             checkboxArray:[],
-            isAddModalVisible:false,
+            isModalVisible:false,
+            isUpdateModal:false,
             isBackDropVisible:false,
+            isDeleteButtonEnabled:false,
+            nodeDetailsToBeUpdated:{}
           });
-        const[tableState,setTableState] = React.useState<INodeTypeTableState>({
+        const[tableState,setTableState] = React.useState<INodeDetailTableState>({
             loading:false,
             page:0,
             pages:null,
@@ -248,28 +205,32 @@ class NodeDetailContainer extends BaseComponent{
             this.EE.removeListener("onNodeTypeSelect", this.onNodeTypeSelect);
           };
         },[])
+
+        let addNodeDetail =  !state.isUpdateModal ?(<AddNodeDetail initialValues = {state.nodeDetailsToBeUpdated} onSubmit={this.onSubmitAddNodeDetail} onCancel={this.onCancelModal} />):null;
+
+        let updateNodeDetail = state.isUpdateModal ? (<AddNodeDetail initialValues = {state.nodeDetailsToBeUpdated} onSubmit={this.onUpdateNodeDetail} onCancel={this.onCancelModal} />):null;
         return(      
         
         <div className="NodeDetails">
         <Modal
-          title="Add Node Detail"
+          title={state.isUpdateModal?"Update Node Detail":"Add Node Detail"}
           centered
           footer={null}
-          visible={state.isAddModalVisible}
+          visible={state.isModalVisible}
           onCancel={() => {
-            setState({ ...state, isAddModalVisible: false });
+            setState({ ...state, isModalVisible: false });
           }}>
           <div style={{ position: "relative" }}>
             {state.isBackDropVisible ? (
-              <> <Backdrop show iswhite /> <CoverSpinner /> {this.addNodeDetail} </> ) : ( this.addNodeDetail )}
+              <> <Backdrop show iswhite /> <CoverSpinner /> {null} </> ) : ( state.isUpdateModal ? updateNodeDetail:addNodeDetail)}
           </div>
             </Modal>
             <div className="NodeDetails_NodeDetails">
             <div className="NodeDetails__Header">
             <h4 className="mb-3">Node Details</h4>
             <div className="NodeDetails__button-section">
-                <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={()=>setState({...state,isAddModalVisible:true})}>Add Node Detail</button>
-                <button className="btn btn-primary ml-3" onClick={()=>{}}>Modify Node</button>
+                <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={this.showNodeDetail}>Add Node Detail</button>
+                <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} onClick={this.showUpdateNodeDetail}>Modify Node</button>
                 <button className="btn btn-primary ml-3" >Delete Node </button>
             </div>
             </div>

@@ -16,19 +16,12 @@ const selectOptions=[
       { id:"2",
       description:"ABS"}
 ]
-let initialValues:INodeDetail = {
-  nodeDetailName:"",
-  nodeIp: "",
-  nodeTypeId:"",
-  nodeDetailUserName: "",
-  nodePassword: "",
-  nodeSegment:[]
-};
 export default (componentprops: any) => {
   return (
     <div className="AddNodeDetail">
       <Formik
-        initialValues={initialValues}
+       enableReinitialize
+        initialValues={componentprops.initialValues}
         onSubmit={componentprops.onSubmit}
         validationSchema={Yup.object().shape({
           nodeDetailName: Yup.string().required("Plese Enter Node Name"),
