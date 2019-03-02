@@ -45,6 +45,7 @@ const CreateAntField = (Component:any) => ({
         <Component
           {...field}
           {...props}
+          type={type}
           onBlur={onBlur}
           onChange={type ? onInputChange : onChange}
         >

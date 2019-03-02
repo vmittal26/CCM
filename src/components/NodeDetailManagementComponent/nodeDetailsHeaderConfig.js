@@ -2,23 +2,31 @@ export default {
   headerConfig: [
     {
       Header: "Node Name",
-      accessor: "nodeDetailName"
+      accessor: "nodeDetailName",
+      headerClassName:"header",
+      className: "cell",
+      minWidth:200,
     },
     {
       Header: "Node IP",
-      id: "nodeIp"
+      accessor: "nodeIp",
+      headerClassName:"header",
+      className: "cell",
+      minWidth:200,
     },
     {
       Header: "Username",
-      accessor: "userName"
-    },
-    {
-      Header: "Segment",
-      accessor: "segment"
+      accessor: "nodeDetailUserName",
+      headerClassName:"header",
+      className: "cell",
+      minWidth:200,
     },
     {
       Header: "Node Type",
-      accessor: "nodeType"
+      accessor: "nodeTypeName",
+      headerClassName:"header",
+      className: "cell",
+      minWidth:200,
     }
   ]
 };

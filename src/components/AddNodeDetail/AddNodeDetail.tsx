@@ -6,7 +6,7 @@ import {
   AntInputInline,
   AntSelectInline
 } from "../../Utils/InlineAntDesignFieldCreator";
-import { INodeDetails } from "../../model/INodeDetail";
+import INodeDetail from "../../model/INodeDetail";
 
 const selectOptions=[
       {
@@ -16,10 +16,11 @@ const selectOptions=[
       { id:"2",
       description:"ABS"}
 ]
-let initialValues:INodeDetails = {
-  node:"",
+let initialValues:INodeDetail = {
+  nodeDetailName:"",
   nodeIp: "",
-  nodeUsername: "",
+  nodeTypeId:"",
+  nodeDetailUserName: "",
   nodePassword: "",
   nodeSegment:[]
 };
@@ -30,7 +31,7 @@ export default (componentprops: any) => {
         initialValues={initialValues}
         onSubmit={componentprops.onSubmit}
         validationSchema={Yup.object().shape({
-                node: Yup.string().required("Plese Enter Node Name"),
+          nodeDetailName: Yup.string().required("Plese Enter Node Name"),
         })}
         children={props => 
           (<Form>
@@ -38,30 +39,30 @@ export default (componentprops: any) => {
               style={{borderLeft:"2px inset #e74c3c"}}
               label="Enter Node Name"
               component={AntInputInline}
-              name="node"
+              name="nodeDetailName"
               type="text"
             />
-            {props.touched.node && props.errors.node && <div >{<span className="text-danger">{props.errors.node}</span>}</div>}
+            {props.touched.nodeDetailName && props.errors.nodeDetailName && <div >{<span className="text-danger">{props.errors.nodeDetailName}</span>}</div>}
             <Field
               label="Enter Node IP"
               component={AntInputInline}
-              name="nodeip"
+              name="nodeIp"
               type="text"
               onChange={() => {}}
             />
             <Field
               label="Enter Node Username"
               component={AntInputInline}
-              name="nodeusername"
+              name="nodeDetailUserName"
               type="text"
             />
             <Field
               label="Enter Node Password"
               component={AntInputInline}
-              name="nodepassword"
+              name="nodePassword"
               type="password"
             />
-            <Field
+            {/* <Field
               mode="multiple"
               label="Select Segment"
               style={{ width: "100%" }}
@@ -69,7 +70,7 @@ export default (componentprops: any) => {
               name="nodesegment"
               selectOptions={selectOptions}
               onChange={() => {}}
-            />
+            /> */}
              <div style={{textAlign:"center"}}>
               <button type="submit" className="btn btn-primary mt-1"> Save </button>
               <button type="button" className="btn btn-primary mt-1 ml-1" onClick={componentprops.onCancel}> Cancel </button>

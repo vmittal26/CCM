@@ -13,44 +13,7 @@ import { deselectAllCheckbox } from "../../Utils/TableRowSelectionsUtil";
 import highlightRowOnChangeCheckbox from "../../Utils/highlightRowOnChangeCheckbox";
 import { INodeType } from "../../model/INodeType";
 
-const dataFromBackend = [
-  {
-    nodeId: "1",
-    nodeType: "SDP",
-    nodeDescription: "ABC"
-  },
-  {
-    nodeId: "2",
-    nodeType: "PQR",
-    nodeDescription: "XYZ"
-  },
-  {
-    nodeId: "3",
-    nodeType: "SDP",
-    nodeDescription: "ABC"
-  },
-  {
-    nodeId: "4",
-    nodeType: "PQR",
-    nodeDescription: "XYZ"
-  },
-  {
-    nodeId: "4",
-    nodeType: "PQR",
-    nodeDescription: "XYZ"
-  },
-  {
-    nodeId: "4",
-    nodeType: "PQR",
-    nodeDescription: "XYZ"
-  }
-];
 
-const dummyData={
-    nodeId: "4",
-    nodeType: "PQR",
-    nodeDescription: "XYZ"
-}
 class NodeTypeManagementContainer extends BaseComponent {
   private addNodeType: JSX.Element;
   private isTableHasToReload: boolean = false;
@@ -99,15 +62,17 @@ class NodeTypeManagementContainer extends BaseComponent {
             let checkbox = event.target;
             highlightRowOnChangeCheckbox(checkbox);
             console.log(row.original.nodeId);
+
+            this.EE.emit("onNodeTypeSelect",row.original.nodeId , e.target.checked);
             
             if(e.target.checked){
-              this.state.checkboxArray.push(row.nodeId);
+              this.state.checkboxArray.push(row.original.nodeId);
               this.setState({
                 ...this.state,
                 isDeleteButtonEnabled: this.state.checkboxArray.length===1
               });
             }else{
-              var index =  this.state.checkboxArray.indexOf(row.nodeId);
+              var index =  this.state.checkboxArray.indexOf(row.original.nodeId);
               index > -1 ? this.state.checkboxArray.splice(index, 1):this.state.checkboxArray
               this.setState({
                 ...this.state,
@@ -157,36 +122,10 @@ class NodeTypeManagementContainer extends BaseComponent {
       ...this.state,
       isBackDropVisible: true
     });
- 
-  //   this.setTableState({
-  //     ...this.tableState,
-  //     isNodeTypeDataLoading:true,
-  // });
-    // setTimeout(() => {
-    //   this.state.data.push(values);
-    //   this.setState({
-    //     ...this.state,
-    //     isBackDropVisible: false,
-    //     isAddModalVisible: false,
-    //     data: [...this.state.data]
-    //   });
-    //   notification.open({
-    //     message: "Add Node Type",
-    //     description: "Node Type is saved sucessfully",
-    //     duration: 2
-    //   });
-    //   actions.setSubmitting(false);
-    // }, 2000);
-
-
     (async()=>{
       const response = await axios.post("api/node-inventory/v1/addNodeType/",values);
       console.log(response);
-      //   setState({
-      //   ...state,
-      //   isNodeTypeDataLoading:false,
-      //   dummyNodeList:[...response.data,...state.dummyNodeList]
-      // });
+
         this.setState({
           ...this.state,
           isBackDropVisible: false,
@@ -281,7 +220,7 @@ class NodeTypeManagementContainer extends BaseComponent {
           <div className="NodeTypeManagement__Header">
             <h4>Node Type</h4>
             <div className="NodeTypeManagement__button-section">
-            <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onNodeTypeSelect",state.checkboxArray.pop())}disabled={!state.isDeleteButtonEnabled} >
+            <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onGetNodeDetails",state.checkboxArray[state.checkboxArray.length-1])} disabled={!state.isDeleteButtonEnabled} >
                 Node Detail
               </button>
               <button className="btn btn-primary ml-3" onClick={() => { setState({ ...state, isAddModalVisible: true }); }} >
