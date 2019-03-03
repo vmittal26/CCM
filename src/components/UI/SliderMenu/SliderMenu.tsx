@@ -24,6 +24,7 @@ class SliderMenuContainer extends BaseComponent{
    }
 
    onHideSlider=()=>{
+     console.log("on hide");
     this.show=false;
     this.setShow(this.show);
    }

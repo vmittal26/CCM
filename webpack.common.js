@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.WEBPACK_MODE === 'production';
 const globImporter = require("node-sass-glob-importer");
 const tsImportPluginFactory = require("ts-import-plugin");
-// require("@babel/polyfill");
+require("@babel/polyfill");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
@@ -42,8 +42,8 @@ module.exports = (env,args)=>{
 
   return{
   mode: env.production ? 'production' : 'development',
-  // entry: ["@babel/polyfill", "./src/index.tsx"],
-  entry: ["./src/index.tsx"],
+  entry: ["@babel/polyfill", "./src/index.tsx"],
+  // entry: ["./src/index.tsx"],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")

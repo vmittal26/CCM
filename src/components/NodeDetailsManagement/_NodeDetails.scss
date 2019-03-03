@@ -1,15 +1,20 @@
 .NodeDetails{
-    margin-top:1rem;
+    margin-top:2rem;
     font-size: 0.8rem;
     max-width:70%;
     margin:auto;
 
+    &__NodeDetails{
+      margin-top:1rem;
+    }
     &__Header{
         display: flex;
     }
   
     &__button-section{
         margin-left: auto;
+        display: flex;
+        align-items: center;
     }
 
     &__NodeDetailsTable{

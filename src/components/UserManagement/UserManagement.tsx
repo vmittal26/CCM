@@ -8,7 +8,7 @@ import 'antd/lib/grid/style/index.css';
 import 'antd/lib/modal/style/index.css';
 import 'antd/lib/notification/style/index.css';
 import NodeDetailsManangement from "../NodeDetailsManagement/NodeDetailsManangement";
-class NodeManagement extends BaseComponent {
+class UserMangementContainer  extends BaseComponent {
   private setState: Function;
 
   constructor() {
@@ -16,24 +16,23 @@ class NodeManagement extends BaseComponent {
     console.log("NodeManagement constructor");
   }
 
-  public nodeManagement = (componentProps: any): JSX.Element => {
+  public userManagement = (componentProps: any): JSX.Element => {
 
     React.useEffect(()=>{
-      this.EE.emit("onNavigation",[{breadCrumbName:"Home",breadCrumbLink:"/"},{breadCrumbName:"House Keeping"},{breadCrumbName:"Node Management"}]);
+      this.EE.emit("onNavigation",[{breadCrumbName:"Home",breadCrumbLink:"/"},{breadCrumbName:"House Keeping"},{breadCrumbName:"User Management"}]);
     },[]);
     return (
-      <div className="NodeManagement">
-          <NodeTypeManagement />
-          <NodeDetailsManangement/> 
+      <div className="UserManagement">
+          <h4>User Management</h4>
       </div>
     );
   };
 
   public getComponent(): React.FunctionComponent {
-    return this.nodeManagement;
+    return this.userManagement;
   }
 }
 
-const nodeManagement = new NodeManagement();
+const userManagement = new UserMangementContainer();
 
-export default nodeManagement.getComponent();
+export default userManagement.getComponent();

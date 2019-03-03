@@ -148,8 +148,13 @@ class NodeTypeManagementContainer extends BaseComponent {
               loading:false,
                data: [...this.tableState.data, response.data.nodeType]
              })
-          };
-        },500)
+          }else{
+            this.setTableState({
+              ...this.tableState,
+              loading:false
+             });
+          }
+        },500);
        
         actions.setSubmitting(false);
       })();

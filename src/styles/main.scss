@@ -22,12 +22,14 @@
 @import "./utils/utils";
 @import "../components/App/App";
 @import "../components/Header/Header";
+@import "../components/Navigation/Navigation";
 @import "../components/UI/Backdrop/Backdrop";
 @import "../components/UI/SliderMenu/SliderMenu";
 @import "../components/Home/Home";
 @import "./components/CCMPanel";
 @import "../components/NodeManagement/NodeManagement";
-@import "../components/NodeTypeManagementComponent/NodeTypeManagement";
-@import "../components/NodeDetailManagementComponent/NodeDetails";
+@import "../components/UserManagement/UserManagement";
+@import "../components/NodeTypeManagement/NodeTypeManagement";
+@import "../components/NodeDetailsManagement/NodeDetails";
 @import "../components/AddNodeType/AddNodeType";
 @import "../components/GestioneKOSospesi/GestioneKOSospesi";

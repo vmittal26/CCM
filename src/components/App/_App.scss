@@ -3,6 +3,8 @@
     position: relative;
     top: 6rem;
     left: 0;
+    height: 90vh;
+    overflow: scroll;
     z-index: 0;
     @include respond(xs) {
       top: 9rem;

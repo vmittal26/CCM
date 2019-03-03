@@ -5,7 +5,8 @@ import { withRouter } from "react-router";
 import SwitchMode from "../UI/SwitchMode/SwitchMode";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import { Icon } from "antd";
-import logoImage from '../../images/ericsson_econ.png';
+import ReactSVG from 'react-svg';
+import logoImage from '../../images/elogo.svg';
 import 'antd/lib/switch/style/index.css';
 import EE from "../../EventEmitter";
 
@@ -17,9 +18,7 @@ export  function Header(props:any) {
     <div className="Header">
       <div className="Header__left">
         <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
-          <img
-            src={logoImage}
-          />
+            <ReactSVG src="../../src/images/elogo.svg" />
         </div>
         <h2 className={"ml-2 mt-2 Header__App"}>CCM</h2>
         {/* <button  className="btn" onClick={() => onToogleSliderMenu()}> */}

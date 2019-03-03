@@ -7,11 +7,12 @@ import deviceCheckConfig from "../../config/deviceCheckConfig";
 import Spinner from "../UI/Spinner/Spinner";
 import Backdrop from "../UI/Backdrop/Backdrop";
 // import "../../Utils/MasterDataContainer";
-import NodeManagement from "../NodeManagement/NodeManagement";
-const GestioneKOSospesi = React.lazy(() => import("../GestioneKOSospesi/GestioneKOSospesi"));
-const GestioneKODetailPageFase2 = React.lazy(() => import("../GestioneKODetailPageFase2/GestioneKODetailPageFase2"));
-const Home = React.lazy(() => import("../Home/Home"));
 import EE from "../../EventEmitter";
+import Navigation from "../Navigation/Navigation";
+
+const NodeManagement = React.lazy(()=>import("../NodeManagement/NodeManagement"));
+const UserManagement = React.lazy(()=>import("../UserManagement/UserManagement"));
+const Home = React.lazy(() => import("../Home/Home"));
 
 deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
 fontawesome();
@@ -20,17 +21,19 @@ const AppRouter = () => (
   
   <div className="App">
     <Header />
-    <div className="App__main" onClick={()=>EE.emit("onHideSlider")}>
+    <div className="App__main" onClick={()=>{console.log("on click"); EE.emit("onHideSlider")}}>
+    <Navigation />
       <Switch>
           <React.Suspense fallback={<><Backdrop show iswhite/><Spinner/></>}>
             <Route path="/" exact component={(props:any) => <Home {...props} />}/>
-            <Route path="/gestioneKOSospesi" component={(props:any) => <GestioneKOSospesi {...props} />} />
+            {/* <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} /> */}
             <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />
-            <Route path="/detailPageFase2" component={(props:any) => <GestioneKODetailPageFase2 {...props} />} />
+            <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} />
           </React.Suspense>
       </Switch>
     </div>
   </div>
+
 );
 
 export default AppRouter;

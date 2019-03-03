@@ -32,6 +32,7 @@ class NodeDetailContainer extends BaseComponent{
     private setTableState:Function;
     private nodeDetailsList:Array<INodeDetail>;
     private nodeDetailsToBeUpdated:INodeDetail;
+    private nodeDetailSelectedArray:Array<INodeDetail>=[];
 
     private checkboxHeader = {
         Header: "#",
@@ -46,16 +47,17 @@ class NodeDetailContainer extends BaseComponent{
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 let checkbox = event.target;
                 highlightRowOnChangeCheckbox(checkbox);
-                this.nodeDetailsToBeUpdated =  {...row.original};
-                console.log( this.nodeDetailsToBeUpdated );
+                console.log(row);
                 if(e.target.checked){
-                  this.state.checkboxArray.push(row.nodeId);
+                  this.nodeDetailSelectedArray.push({...row.original});
+                  this.state.checkboxArray.push(row.original.nodeDetailsId);
                   this.setState({
                     ...this.state,
                     isDeleteButtonEnabled: this.state.checkboxArray.length===1
                   });
                 }else{
-                  var index =  this.state.checkboxArray.indexOf(row.nodeId);
+                  this.nodeDetailSelectedArray.filter((nodeDetail:INodeDetail)=>nodeDetail.nodeDetailsId!==row.original.nodeDetailsId);
+                  var index =  this.state.checkboxArray.indexOf(row.original.nodeDetailsId);
                   index > -1 ? this.state.checkboxArray.splice(index, 1):this.state.checkboxArray
                   this.setState({
                     ...this.state,
@@ -85,7 +87,7 @@ class NodeDetailContainer extends BaseComponent{
             this.setState({
               ...this.state,
               isBackDropVisible: false,
-              isAddModalVisible: false,
+              isModalVisible: false,
             });
             notification.open({
               message: "Add Node Detail",
@@ -104,17 +106,16 @@ class NodeDetailContainer extends BaseComponent{
       };
       public fetchData =(state:any,instance:any)=>{
             deselectAllCheckbox();
-           
       }
 
       public onUpdateNodeDetail=()=>{
-
+          console.log("Inside Update Node detail");
       }
       public onCancelModal=()=>{
         this.setState({ ...this.state, isModalVisible: false }) 
       }
 
-    public showNodeDetail=()=>{
+    public showAddNodeDetail=()=>{
       this.setState({...this.state,nodeDetailsToBeUpdated:null,isUpdateModal:false,isModalVisible:true})
     }
     constructor(){
@@ -161,7 +162,7 @@ class NodeDetailContainer extends BaseComponent{
     }
 
     public showUpdateNodeDetail=()=>{
-        this.setState({...this.state,nodeDetailsToBeUpdated : this.nodeDetailsToBeUpdated ,isUpdateModal:true,isModalVisible:true})
+        this.setState({...this.state,nodeDetailsToBeUpdated :  this.nodeDetailSelectedArray[this.nodeDetailSelectedArray.length-1] ,isUpdateModal:true,isModalVisible:true})
     }
     public nodeDetailsManagement = (props: any): JSX.Element => {
         const [state, setState] = React.useState({
@@ -192,8 +193,11 @@ class NodeDetailContainer extends BaseComponent{
             loading={tableState.loading}
             showPaginationTop={true}
             showPaginationBottom={false}
+            filterable
             defaultPageSize={5}
-            onFetchData={this.fetchData}
+            onPageSizeChange={()=>deselectAllCheckbox()}
+            onPageChange={()=>deselectAllCheckbox()}
+            // onFetchData={this.fetchData}
             data={tableState.data}
             />);
         React.useEffect(()=>{
@@ -206,9 +210,11 @@ class NodeDetailContainer extends BaseComponent{
           };
         },[])
 
-        let addNodeDetail =  !state.isUpdateModal ?(<AddNodeDetail initialValues = {state.nodeDetailsToBeUpdated} onSubmit={this.onSubmitAddNodeDetail} onCancel={this.onCancelModal} />):null;
+        let nodeDetailForm =  <AddNodeDetail  
+                                  initialValues = {state.nodeDetailsToBeUpdated} 
+                                  onSubmit={state.isUpdateModal?this.onUpdateNodeDetail:this.onSubmitAddNodeDetail} 
+                                  onCancel={this.onCancelModal} />;
 
-        let updateNodeDetail = state.isUpdateModal ? (<AddNodeDetail initialValues = {state.nodeDetailsToBeUpdated} onSubmit={this.onUpdateNodeDetail} onCancel={this.onCancelModal} />):null;
         return(      
         
         <div className="NodeDetails">
@@ -222,14 +228,14 @@ class NodeDetailContainer extends BaseComponent{
           }}>
           <div style={{ position: "relative" }}>
             {state.isBackDropVisible ? (
-              <> <Backdrop show iswhite /> <CoverSpinner /> {null} </> ) : ( state.isUpdateModal ? updateNodeDetail:addNodeDetail)}
+              <> <Backdrop show iswhite /> <CoverSpinner /> {nodeDetailForm} </> ) : ( nodeDetailForm)}
           </div>
             </Modal>
-            <div className="NodeDetails_NodeDetails">
+            <div className="NodeDetails__NodeDetails">
             <div className="NodeDetails__Header">
-            <h4 className="mb-3">Node Details</h4>
+            <h4 >Node Details</h4>
             <div className="NodeDetails__button-section">
-                <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={this.showNodeDetail}>Add Node Detail</button>
+                <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={this.showAddNodeDetail}>Add Node Detail</button>
                 <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} onClick={this.showUpdateNodeDetail}>Modify Node</button>
                 <button className="btn btn-primary ml-3" >Delete Node </button>
             </div>

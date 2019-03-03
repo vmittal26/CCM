@@ -5,7 +5,7 @@
   min-height: 100vh;
   transition: all 0.3s;
   position: absolute;
-  top: 4.5rem;
+  top: 3.9rem;
   left: 0;
   background-color: #fff;
   z-index: 200;
@@ -84,7 +84,7 @@
     a {
       color: #333;
       &:hover {
-        color: $color-primary;
+        color: darken($color-primary,10%);
       }
     }
 
@@ -93,7 +93,7 @@
     }
 
     &:hover{
-        background-color: $color-grey-light-2;
+        background-color: $color-grey-light-1;
     }
     &::before {
       content: "";

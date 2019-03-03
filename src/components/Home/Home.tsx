@@ -3,7 +3,13 @@ import { Row, Col } from "antd";
 import 'antd/lib/grid/style/index.css';
 import 'antd/lib/button/style/index.css';
 
+import EE from "../../EventEmitter";
+
 export default()=>{
+
+  EE.emit("onNavigation",[{breadCrumbLink:"/",breadCrumbName:"Home"}]);
+  
+    
     return (<Row className="TileContainer" type="flex" >
       {/* <Col xl={4} lg={6} md={8} sm={8} xs={12} className="TileContainer__item"><span>Gestione KO</span></Col>
       <Col xl={4} lg={6} md={8} sm={8} xs={12} className="TileContainer__item"><span>Gestione KO Sospesi</span></Col>

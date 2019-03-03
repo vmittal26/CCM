@@ -220,6 +220,7 @@ class GestioneKODetailPageFase2 extends BaseComponent {
     React.useEffect(()=>{
         this.EE.on("onTipiOrdineChange",this.onTipiOrdineChange);
         this.EE.on("onTipiClienteChange",this.onTipiClienteChange);
+        this.EE.emit("onNavigation",[{breadCrumbName:"House Keeping"},{breadCrumbName:"User Management"}]);
         return () => {
           console.log("removing onTipiOrdineChange Listener on unmount");
           this.EE.removeListener("onTipiOrdineChange", this.onTipiOrdineChange);

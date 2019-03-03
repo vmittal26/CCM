@@ -1,8 +1,11 @@
 .Header {
-  padding: 0.6rem;
-  background-color:$color-grey-dark-1;
+  padding: 0.1rem;
+  background-color:$color-grey-light-2;
+  background: $color-primary; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, $color-primary,$color-secondary); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right,$color-primary-light,$color-primary); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: flex;
-  color: $color-grey-light-1;
+  color:#fff;
   position: fixed;
   width: 100%;
   top: 0;
@@ -25,10 +28,9 @@
     flex-grow: 1;
 
     &__baricon {
-      margin-left: 4rem;
+      margin-left: 5rem;
       svg {
         font-size: 2.5rem;
-      
       }
     }
   }
