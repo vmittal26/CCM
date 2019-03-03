@@ -25,7 +25,7 @@ class NodeTypeManagementContainer extends BaseComponent {
         accessor: "nodeType", // String-based value accessors!
         headerClassName:"header",
         className: "cell",
-        minWidth:200,
+        minWidth:50,
       },
       {
         Header: "Description",
@@ -86,17 +86,17 @@ class NodeTypeManagementContainer extends BaseComponent {
   };
 
   public onPageSizeChange = ()=>{
-    deselectAllCheckbox();
+    deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
   }
 
   public onPageChange =()=>{
-    deselectAllCheckbox();
+    deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
   }
   public onCancelModal=()=>{
     this.setState({ ...this.state, isAddModalVisible: false })
   }
   public fetchData =(state:any,instance:any)=>{
-    deselectAllCheckbox();
+    deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
     if(this.isTableHasToReload || !this.isLoadedForFirstTime) {
       this.setTableState({
         ...this.tableState,
@@ -162,7 +162,7 @@ class NodeTypeManagementContainer extends BaseComponent {
 
   public onDeleteNodeType=()=>{
     
-    deselectAllCheckbox();
+    deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
     var selectedNode = this.state.checkboxArray[ this.state.checkboxArray.length-1];
     let newData = this.tableState.data
                                  .filter((element:INodeType)=>element.nodeId!== selectedNode);

@@ -105,7 +105,7 @@ class NodeDetailContainer extends BaseComponent{
           })();
       };
       public fetchData =(state:any,instance:any)=>{
-            deselectAllCheckbox();
+            deselectAllCheckbox("NodeDetails__NodeDetailsTable");
       }
 
       public onUpdateNodeDetail=()=>{
@@ -125,6 +125,7 @@ class NodeDetailContainer extends BaseComponent{
 
     public onGetNodeDetails=(id:string)=>{
         console.log("Inside onGetNodeDetails "+id);
+        deselectAllCheckbox("NodeDetails__NodeDetailsTable");
         this.setTableState({
           ...this.tableState,
           loading:true
@@ -195,8 +196,8 @@ class NodeDetailContainer extends BaseComponent{
             showPaginationBottom={false}
             filterable
             defaultPageSize={5}
-            onPageSizeChange={()=>deselectAllCheckbox()}
-            onPageChange={()=>deselectAllCheckbox()}
+            onPageSizeChange={()=>deselectAllCheckbox("NodeDetails__NodeDetailsTable")}
+            onPageChange={()=>deselectAllCheckbox("NodeDetails__NodeDetailsTable")}
             // onFetchData={this.fetchData}
             data={tableState.data}
             />);

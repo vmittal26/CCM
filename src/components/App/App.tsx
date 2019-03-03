@@ -9,6 +9,7 @@ import Backdrop from "../UI/Backdrop/Backdrop";
 // import "../../Utils/MasterDataContainer";
 import EE from "../../EventEmitter";
 import Navigation from "../Navigation/Navigation";
+import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 
 const NodeManagement = React.lazy(()=>import("../NodeManagement/NodeManagement"));
 const UserManagement = React.lazy(()=>import("../UserManagement/UserManagement"));
@@ -24,7 +25,7 @@ const AppRouter = () => (
     <div className="App__main" onClick={()=>{console.log("on click"); EE.emit("onHideSlider")}}>
     <Navigation />
       <Switch>
-          <React.Suspense fallback={<><Backdrop show iswhite/><Spinner/></>}>
+          <React.Suspense fallback={<><Backdrop show iswhite/><CoverSpinner/></>}>
             <Route path="/" exact component={(props:any) => <Home {...props} />}/>
             {/* <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} /> */}
             <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />

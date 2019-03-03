@@ -15,9 +15,9 @@ export function onToggleSelectAllCheckBox(isChecked:boolean) {
     }
   });
 }
-export function deselectAllCheckbox(){
+export function deselectAllCheckbox(containerClass?:string){
 
-  let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  let checkboxes =containerClass ? document.querySelectorAll(`.${containerClass} input[type="checkbox"]:checked`):document.querySelectorAll('input[type="checkbox"]:checked');
 
   Array.prototype.forEach.call(checkboxes,(checkbox: any)=>{
     if (checkbox.checked) {

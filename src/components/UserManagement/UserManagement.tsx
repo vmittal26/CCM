@@ -1,13 +1,5 @@
 import * as React from "react";
 import BaseComponent from "../BaseComponent/BaseComponent";
-import NodeTypeManagement from "../NodeTypeManagement/NodeTypeManagement";
-import Collapsible from "react-collapsible";
-import NodeDetails from "../NodeDetails/NodeDetails";
-import 'antd/lib/button/style/index.css';
-import 'antd/lib/grid/style/index.css';
-import 'antd/lib/modal/style/index.css';
-import 'antd/lib/notification/style/index.css';
-import NodeDetailsManangement from "../NodeDetailsManagement/NodeDetailsManangement";
 class UserMangementContainer  extends BaseComponent {
   private setState: Function;
 
