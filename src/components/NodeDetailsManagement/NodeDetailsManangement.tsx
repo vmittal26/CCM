@@ -122,20 +122,22 @@ class NodeDetailContainer extends BaseComponent{
         super();
     }
 
-    public onPageChange =()=>{
-      deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+    public resetSelectionAndButtonState =()=>{
+      this.nodeDetailSelectedArray=[];
+      this.state.checkboxArray =[];
       this.setState({
         ...this.state,
         isDeleteButtonEnabled:false,
       });
     }
+    public onPageChange =()=>{
+      deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+      this.resetSelectionAndButtonState();
+    }
 
     public onPageSizeChange =()=>{
       deselectAllCheckbox("NodeDetails__NodeDetailsTable");
-      this.setState({
-        ...this.state,
-        isDeleteButtonEnabled:false,
-      });
+      this.resetSelectionAndButtonState();
     }
 
     public onGetNodeDetails=(id:string)=>{
