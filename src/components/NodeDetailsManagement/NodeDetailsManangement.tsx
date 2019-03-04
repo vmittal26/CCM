@@ -46,7 +46,7 @@ class NodeDetailContainer extends BaseComponent{
               type="checkbox"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 let checkbox = event.target;
-                highlightRowOnChangeCheckbox(checkbox);
+                // highlightRowOnChangeCheckbox(checkbox);
                 console.log(row);
                 if(e.target.checked){
                   this.nodeDetailSelectedArray.push({...row.original});
@@ -120,12 +120,33 @@ class NodeDetailContainer extends BaseComponent{
     }
     constructor(){
         super();
-      
+    }
+
+    public onPageChange =()=>{
+      deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+      this.setState({
+        ...this.state,
+        isDeleteButtonEnabled:false,
+      });
+    }
+
+    public onPageSizeChange =()=>{
+      deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+      this.setState({
+        ...this.state,
+        isDeleteButtonEnabled:false,
+      });
     }
 
     public onGetNodeDetails=(id:string)=>{
         console.log("Inside onGetNodeDetails "+id);
         deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+        this.nodeDetailSelectedArray =[];
+        this.state.checkboxArray=[];
+        this.setState({
+          ...this.state,
+          isDeleteButtonEnabled:false
+        });
         this.setTableState({
           ...this.tableState,
           loading:true
@@ -145,7 +166,9 @@ class NodeDetailContainer extends BaseComponent{
     }
     public onNodeTypeSelect=(id:string, selected:boolean)=>{
       console.log("Inside onNodeTypeSelect "+id);
-      
+      if(id===null){
+        this.selectedNodeDetailIdArray = [];
+      }
       if(selected){
         this.selectedNodeDetailIdArray.push(id);
         this.setState({
@@ -196,8 +219,8 @@ class NodeDetailContainer extends BaseComponent{
             showPaginationBottom={false}
             filterable
             defaultPageSize={5}
-            onPageSizeChange={()=>deselectAllCheckbox("NodeDetails__NodeDetailsTable")}
-            onPageChange={()=>deselectAllCheckbox("NodeDetails__NodeDetailsTable")}
+            onPageSizeChange={this.onPageSizeChange}
+            onPageChange={this.onPageChange}
             // onFetchData={this.fetchData}
             data={tableState.data}
             />);
@@ -238,7 +261,7 @@ class NodeDetailContainer extends BaseComponent{
             <div className="NodeDetails__button-section">
                 <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={this.showAddNodeDetail}>Add Node Detail</button>
                 <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} onClick={this.showUpdateNodeDetail}>Modify Node</button>
-                <button className="btn btn-primary ml-3" >Delete Node </button>
+                <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} >Delete Node </button>
             </div>
             </div>
               <div className="NodeDetails__NodeDetailsTable">

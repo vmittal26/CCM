@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 // import { polyfill } from 'es6-promise'; 
 // import assign  from 'es6-object-assign';
+// import 'core-js/es6/symbol'; 
 import "react-table/react-table.css";
 import 'react-dates/lib/css/_datepicker.css';
 import 'typeface-roboto';

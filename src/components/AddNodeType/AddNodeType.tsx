@@ -27,7 +27,7 @@ export default (props: any) => {
             <form  onSubmit={handleSubmit}>
              <Row gutter={16} >
                 <Col xl={24} lg={24} md={6} sm={8} xs={12}>
-                    <label htmlFor={"nodeType"}>Node Type </label>
+                    <label className="mandatory-label" htmlFor={"nodeType"}>Node Type </label>
                 </Col>
                 <Col xl={24} lg={24} md={6} sm={8} xs={12}>
                 {touched.nodeType && errors.nodeType && <div >{<span className="text-danger">{errors.nodeType}</span>}</div>}

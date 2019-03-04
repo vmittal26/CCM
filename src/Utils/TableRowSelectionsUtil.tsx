@@ -4,12 +4,12 @@ export function onToggleSelectAllCheckBox(isChecked:boolean) {
 
   Array.prototype.forEach.call(checkboxes,(checkbox: any) => {
     if (isChecked) {
-      let row = getClosestElement(checkbox, "rt-tr");
+      let row =  getClosestElement(checkbox, "role","row");
       checkbox.checked = isChecked;
       row.classList.add('rowColorHighlight');
     }
     else {
-      let row = getClosestElement(checkbox, "rt-tr");
+      let row = getClosestElement(checkbox, "role","row");
       checkbox.checked = isChecked;
       row.classList.remove('rowColorHighlight');
     }
@@ -21,7 +21,7 @@ export function deselectAllCheckbox(containerClass?:string){
 
   Array.prototype.forEach.call(checkboxes,(checkbox: any)=>{
     if (checkbox.checked) {
-      let row = getClosestElement(checkbox, "rt-tr");
+      let row =  getClosestElement(checkbox, "role","row");
       checkbox.checked = false;
       row.classList.remove('rowColorHighlight');
     }

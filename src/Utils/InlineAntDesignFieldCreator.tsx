@@ -39,7 +39,7 @@ const CreateAntField = (Component:any) => ({
       >
        <div className="form-group">
         <Col xl={12} lg={12} md={6} sm={8} xs={12}>
-        <label htmlFor={field.name}> {label} </label>
+        <label className={ismandatory?"mandatory-label":""} htmlFor={field.name}> {label} </label>
         </Col>
         <Col xl={12} lg={12} md={6} sm={8} xs={12}>
         <Component

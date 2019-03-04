@@ -44,7 +44,7 @@ input[type="checkbox"] {
   -webkit-appearance: none;
   background-color: #fff;
   border: 1px solid $color-primary;
-  width: 1.2rem;
+  width: 1.25rem;
   height: 1.25rem;
   display: inline-block;
   position: relative;
@@ -59,7 +59,7 @@ input[type="checkbox"] {
     left: 0px;
     padding-left:1px;
     padding-bottom:2px;
-    width: 1.2rem;
+    width: 1.25rem;
     height: 1.25rem;
     display: inline-block;
     background-color: $color-primary;
@@ -93,7 +93,22 @@ input[type="checkbox"] {
 input[type="text"] {
   padding: 0.2rem 0.75rem;
 }
-
+.field-is-mandatory{
+      border:1px inset red;
+      &:focus{
+        box-shadow: none;
+        border-color:red;
+      }
+}
+.mandatory-label{
+  &:after{
+    content:'\002A';
+    color:red;
+    position: absolute;
+    right:8px;
+    top:0;
+}
+}
 .btn{
   padding:0.25rem 0.7rem;
   border-radius: 0;

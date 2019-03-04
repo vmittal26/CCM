@@ -1,4 +1,4 @@
-export default (element:any,className:string)=>{
-    while ((element = element.parentElement) && !element.classList.contains(className));
-        return element;
+export default (element:any,attributeName:string,attributeValue:string)=>{
+    while ((element = element.parentElement) && element.getAttribute(attributeName)!==attributeValue);
+    return element;
 }

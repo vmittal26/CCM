@@ -50,7 +50,7 @@ class NodeTypeManagementContainer extends BaseComponent {
 
   private checkboxHeader = {
     Header: "#",
-    minWidth: 50,
+    minWidth: 20,
     className: "cell",
     headerClassName: "header",
     Cell: (row: any) => {
@@ -60,7 +60,7 @@ class NodeTypeManagementContainer extends BaseComponent {
           type="checkbox"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             let checkbox = event.target;
-            highlightRowOnChangeCheckbox(checkbox);
+            // highlightRowOnChangeCheckbox(checkbox);
             console.log(row.original.nodeId);
 
             this.EE.emit("onNodeTypeSelect",row.original.nodeId , e.target.checked);
@@ -85,12 +85,22 @@ class NodeTypeManagementContainer extends BaseComponent {
     }
   };
 
+  public resetCheckBoxSelectionsAndButtonsState =()=>{
+    this.state.checkboxArray = [];
+    this.setState({
+      ...this.state,
+      isDeleteButtonEnabled: false
+    });
+    this.EE.emit("onNodeTypeSelect",null , false);
+  }
   public onPageSizeChange = ()=>{
     deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
+    this.resetCheckBoxSelectionsAndButtonsState();
   }
 
   public onPageChange =()=>{
     deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
+    this.resetCheckBoxSelectionsAndButtonsState();
   }
   public onCancelModal=()=>{
     this.setState({ ...this.state, isAddModalVisible: false })
