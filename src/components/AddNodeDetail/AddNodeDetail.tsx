@@ -20,7 +20,7 @@ export default (componentprops: any) => {
   return (
     <div className="AddNodeDetail">
       <Formik
-       enableReinitialize
+        enableReinitialize
         initialValues={componentprops.initialValues}
         onSubmit={componentprops.onSubmit}
         validationSchema={Yup.object().shape({

@@ -143,12 +143,7 @@ class NodeDetailContainer extends BaseComponent{
     public onGetNodeDetails=(id:string)=>{
         console.log("Inside onGetNodeDetails "+id);
         deselectAllCheckbox("NodeDetails__NodeDetailsTable");
-        this.nodeDetailSelectedArray =[];
-        this.state.checkboxArray=[];
-        this.setState({
-          ...this.state,
-          isDeleteButtonEnabled:false
-        });
+        this.resetSelectionAndButtonState();
         this.setTableState({
           ...this.tableState,
           loading:true

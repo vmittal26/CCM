@@ -7,7 +7,7 @@ import EE from "../../EventEmitter";
 
 export default()=>{
 
-  EE.emit("onNavigation",[{breadCrumbLink:"/",breadCrumbName:"Home"}]);
+  EE.emit("onNavigation",[{breadCrumbLink:"/home",breadCrumbName:"Home"}]);
   
     
     return (<Row className="TileContainer" type="flex" >

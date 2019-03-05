@@ -56,7 +56,7 @@ class SliderMenuContainer extends BaseComponent{
       });
     
       React.useEffect(()=>{
-     
+        EE.on("onToggleSlider",this.onToggleSlider);
         return () => {
           console.log("removing onToggleSlider Listener on unmount");
           EE.removeListener("onToggleSlider",this.onToggleSlider);

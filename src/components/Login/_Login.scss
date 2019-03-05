@@ -1,0 +1,17 @@
+.Login{
+    background-color: #fff;
+    padding:10rem;
+
+    &__Header{
+      margin-bottom: 2rem;
+    }
+    &__form{
+       display: flex;
+       justify-content: space-between;
+       width: 50%;
+    } 
+
+    .form-control{
+        width:auto;
+    }
+}

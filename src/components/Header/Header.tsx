@@ -1,12 +1,12 @@
 import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SliderMenu from "../UI/SliderMenu/SliderMenu";
 import { withRouter } from "react-router";
 import SwitchMode from "../UI/SwitchMode/SwitchMode";
 import deviceCheckConfig from "../../config/deviceCheckConfig";
 import { Icon } from "antd";
 import ReactSVG from 'react-svg';
-import logoImage from '../../images/elogo.svg';
+// import logoImage from '../../images/elogo.svg';
 import 'antd/lib/switch/style/index.css';
 import EE from "../../EventEmitter";
 
@@ -33,7 +33,7 @@ export  function Header(props:any) {
         {/* <span>Username</span>
         <span>RoleName</span> */}
         {/* <SwitchMode isMobileView={deviceCheckConfig() ? true : false}/> */}
-        <Icon className="Header__right__poweroff"type="poweroff"></Icon>
+        <Icon className="Header__right__poweroff" onClick={()=> EE.emit("onSucessFullAuthentication",false)}type="poweroff"></Icon>
         {/* <FontAwesomeIcon style={{ fontSize: "1.25rem" }} icon="power-off" /> */}
       </div>
       <SliderMenu show={isHidden} onClick={onToogleSliderMenu} />

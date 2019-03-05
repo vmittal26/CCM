@@ -25,7 +25,7 @@ class NodeTypeManagementContainer extends BaseComponent {
         accessor: "nodeType", // String-based value accessors!
         headerClassName:"header",
         className: "cell",
-        minWidth:50,
+        minWidth:40,
       },
       {
         Header: "Description",
