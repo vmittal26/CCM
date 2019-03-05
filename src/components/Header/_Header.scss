@@ -1,5 +1,4 @@
 .Header {
-  padding: 0.1rem;
   background-color:$color-grey-dark-1;
   // background: $color-primary; /* fallback for old browsers */
   // background: -webkit-linear-gradient(to right, $color-primary,$color-secondary); /* Chrome 10-25, Safari 5.1-6 */
@@ -15,12 +14,17 @@
   button:active {
     border: none;
   }
-  &__logo {
+  &__logo-box {
     cursor: pointer;
+    flex-basis: 5%;
+    min-height:4rem;
+    background-size: 3.5rem;
+    background-position: 20px 20px;
+    background: url('../images/elogo.svg') 1rem 1rem no-repeat;
   }
 
   &__App{
-    // color:$color-grey-light-1;
+    flex-basis: 5%;
   }
   &__left {
     display: flex;

@@ -18,7 +18,7 @@ export  function Header(props:any) {
     <div className="Header">
       <div className="Header__left">
         <div className="Header__logo-box" onClick={()=>{props.history.replace("/")}}>
-            <ReactSVG src="../../src/images/elogo.svg" />
+            {/* <ReactSVG src="../../src/images/elogo.svg" /> */}
         </div>
         <h2 className={"ml-2 mt-2 Header__App"}>CCM</h2>
         {/* <button  className="btn" onClick={() => onToogleSliderMenu()}> */}
