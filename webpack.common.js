@@ -99,13 +99,16 @@ module.exports = (env,args)=>{
       //   test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       //   loader: "url-loader?limit=100000"
       // },
+      // {
+      //   test: /\.(png|svg|jpg|gif)$/,
+      //   loader: "file-loader"
+      // },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        loader: "file-loader"
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader"
+        test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader",
+        options: {
+          name: '[path][name].[ext]',
+        },
       },
 
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }

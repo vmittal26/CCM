@@ -1,14 +1,20 @@
 .Login{
     background-color: #fff;
-    padding:10rem;
-
     &__Header{
-      margin-bottom: 2rem;
+      padding:1rem 2rem;
+      min-height: 5rem;
+      background-size: 3.5rem;
+      background-position: 20px 20px;
+      background: url('../images/ericssonLogo_blue.svg') 1rem 1rem no-repeat;
     }
-    &__form{
+    &__FormContainer{
+        padding:2rem 1rem;
+    }
+    &__Form{
        display: flex;
        justify-content: space-between;
-       width: 50%;
+       width: 40vw;
+       width:40%;
     } 
 
     .form-control{

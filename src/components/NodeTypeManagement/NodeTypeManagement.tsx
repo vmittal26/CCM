@@ -173,22 +173,53 @@ class NodeTypeManagementContainer extends BaseComponent {
   public onDeleteNodeType=()=>{
     
     deselectAllCheckbox("NodeTypeManagement__NodeTypeTable");
-    var selectedNode = this.state.checkboxArray[ this.state.checkboxArray.length-1];
-    let newData = this.tableState.data
-                                 .filter((element:INodeType)=>element.nodeId!== selectedNode);
-    var index =  this.state.checkboxArray.indexOf(selectedNode);
-    this.state.checkboxArray.splice(index, 1);
     this.setTableState({
       ...this.tableState,
      loading:true
     });
-    setTimeout(()=>{
+
+    (async()=>{
+      let selectedNode = this.state.checkboxArray[ this.state.checkboxArray.length-1];
+      console.log(selectedNode);
+      const response = await axios.get('api/node-inventory/v1/deleteNodeType/'+selectedNode);
+      let message:string = response.data;
+      let newData = null;
+      if(message==="success"){
+            newData = this.tableState.data.filter((element:INodeType)=>element.nodeId!==selectedNode);
+            var index =  this.state.checkboxArray.indexOf(selectedNode);
+            this.state.checkboxArray.splice(index, 1);
+            notification.open({
+              message: "Add Node Type",
+              description: "Node type deleted successfully",
+              duration: 2
+            });
+            this.setTableState({
+              ...this.tableState,
+                 loading:false,
+                 data:newData
+            });
+      }else{
+        notification.open({
+          message: "Add Node Type",
+          description: message,
+          duration: 2
+        });
         this.setTableState({
           ...this.tableState,
-          loading:false,
-          data: newData
+             loading:false,
         });
-      },500)
+      }
+      this.resetCheckBoxSelectionsAndButtonsState();
+      this.isTableHasToReload = false;
+   })();
+
+    // setTimeout(()=>{
+    //     this.setTableState({
+    //       ...this.tableState,
+    //       loading:false,
+    //       data: newData
+    //     });
+    //   },500)
     }
   public nodeTypeManagement = (props: any): JSX.Element => {
     const [state, setState] = React.useState<INodeTypeManagement>({

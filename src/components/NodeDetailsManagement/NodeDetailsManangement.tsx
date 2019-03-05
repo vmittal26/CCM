@@ -122,6 +122,9 @@ class NodeDetailContainer extends BaseComponent{
         super();
     }
 
+    public getSelectedNodeDetail=():string=>{
+        return this.state.checkboxArray[this.state.checkboxArray.length-1];
+    }
     public resetSelectionAndButtonState =()=>{
       this.nodeDetailSelectedArray=[];
       this.state.checkboxArray =[];
@@ -143,14 +146,12 @@ class NodeDetailContainer extends BaseComponent{
     public onGetNodeDetails=(id:string)=>{
         console.log("Inside onGetNodeDetails "+id);
         deselectAllCheckbox("NodeDetails__NodeDetailsTable");
-        this.resetSelectionAndButtonState();
         this.setTableState({
           ...this.tableState,
           loading:true
         });
-
         (async()=>{
-          const response = await axios.get("/api/node-inventory/v1/getNodeDetails/"+this.selectedNodeDetailIdArray[this.selectedNodeDetailIdArray.length-1]);
+          const response = await axios.get("/api/node-inventory/v1/getNodeDetails/"+id);
           console.log(response);
           this.nodeDetailsList = response.data;
           this.setTableState({
@@ -158,7 +159,9 @@ class NodeDetailContainer extends BaseComponent{
             loading:false,
             data:this.nodeDetailsList
           });
-          this.isLoadedForFirstTime ? this.isLoadedForFirstTime : this.isLoadedForFirstTime=true;
+          this.resetSelectionAndButtonState();
+          // this.isLoadedForFirstTime ? this.isLoadedForFirstTime : this.isLoadedForFirstTime=true;
+          this.isTableHasToReload=false;
       })();
     }
     public onNodeTypeSelect=(id:string, selected:boolean)=>{
@@ -182,6 +185,48 @@ class NodeDetailContainer extends BaseComponent{
     }
     }
 
+    public onDeleteNodeDetail=()=>{
+      console.log("Inside onDeleteNodeDetail "+this.getSelectedNodeDetail());
+      deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+      this.setTableState({
+        ...this.tableState,
+        loading:true
+      });
+      (async()=>{
+        console.log(this.getSelectedNodeDetail());
+        const response = await axios.get("/api/node-inventory/v1/deleteNodeDetails/"+this.getSelectedNodeDetail());
+        let message:string = response.data;
+        let newData = null;
+        if(message==="success"){
+          newData = this.tableState.data.filter((element:INodeDetail)=>element.nodeDetailsId!==this.getSelectedNodeDetail());
+          var index =  this.state.checkboxArray.indexOf(this.getSelectedNodeDetail());
+          this.state.checkboxArray.splice(index, 1);
+          notification.open({
+            message: "Delete Node Detail",
+            description: "Node Detail deleted successfully",
+            duration: 2
+          });
+          this.setTableState({
+            ...this.tableState,
+               loading:false,
+               data:newData
+          });
+          }else{
+            notification.open({
+              message: "Delete Node Detail",
+              description: message,
+              duration: 2
+            });
+            this.setTableState({
+              ...this.tableState,
+                loading:false,
+            });
+          }
+          this.resetSelectionAndButtonState();
+          this.isTableHasToReload = false;
+    })();
+   
+    }
     public showUpdateNodeDetail=()=>{
         this.setState({...this.state,nodeDetailsToBeUpdated :  this.nodeDetailSelectedArray[this.nodeDetailSelectedArray.length-1] ,isUpdateModal:true,isModalVisible:true})
     }
@@ -258,7 +303,7 @@ class NodeDetailContainer extends BaseComponent{
             <div className="NodeDetails__button-section">
                 <button className="btn btn-primary"  disabled={!state.isAddNodeDetailButtonEnabled} onClick={this.showAddNodeDetail}>Add Node Detail</button>
                 <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} onClick={this.showUpdateNodeDetail}>Modify Node</button>
-                <button className="btn btn-primary ml-3" disabled={!state.isDeleteButtonEnabled} >Delete Node </button>
+                <button className="btn btn-primary ml-3" onClick={this.onDeleteNodeDetail} disabled={!state.isDeleteButtonEnabled} >Delete Node </button>
             </div>
             </div>
               <div className="NodeDetails__NodeDetailsTable">
