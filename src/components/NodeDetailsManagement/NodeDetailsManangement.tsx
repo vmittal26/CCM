@@ -25,7 +25,8 @@ class NodeDetailContainer extends BaseComponent{
     private state: any;
     private nodeDetailsColumnHeaders:Array<{}>=columns.headerConfig;
     private selectedNodeTypeId:string;
-    private selectedNodeDetailIdArray:Array<string>=[];
+    private selectedNodeIdArray:Array<string>=[];
+    private selectedNodeType:string;
     private isTableHasToReload: boolean = false;
     private isLoadedForFirstTime:boolean = false;
     private tableState:INodeDetailTableState;
@@ -33,6 +34,7 @@ class NodeDetailContainer extends BaseComponent{
     private nodeDetailsList:Array<INodeDetail>;
     private nodeDetailsToBeUpdated:INodeDetail;
     private nodeDetailSelectedArray:Array<INodeDetail>=[];
+    private nodeTypeMap = new Map<string, string>();
 
     private checkboxHeader = {
         Header: "#",
@@ -79,7 +81,7 @@ class NodeDetailContainer extends BaseComponent{
         (async()=>{
           const data = {
             ...values,
-            nodeTypeId:this.selectedNodeDetailIdArray[this.selectedNodeDetailIdArray.length-1]
+            nodeTypeId:this.selectedNodeIdArray[this.selectedNodeIdArray.length-1]
           }
           const response = await axios.post("api/node-inventory/v1/addNodeDetails/",data);
           console.log(response);
@@ -116,7 +118,7 @@ class NodeDetailContainer extends BaseComponent{
       }
 
     public showAddNodeDetail=()=>{
-      this.setState({...this.state,nodeDetailsToBeUpdated:null,isUpdateModal:false,isModalVisible:true})
+      this.setState({...this.state,nodeDetailsToBeUpdated:{nodeType: this.nodeTypeMap.get(this.getSelectNodeTypeId())},isUpdateModal:false,isModalVisible:true})
     }
     constructor(){
         super();
@@ -124,6 +126,9 @@ class NodeDetailContainer extends BaseComponent{
 
     public getSelectedNodeDetail=():string=>{
         return this.state.checkboxArray[this.state.checkboxArray.length-1];
+    }
+    public getSelectNodeTypeId =():string=>{
+     return this.selectedNodeIdArray[this.selectedNodeIdArray.length-1];
     }
     public resetSelectionAndButtonState =()=>{
       this.nodeDetailSelectedArray=[];
@@ -144,14 +149,16 @@ class NodeDetailContainer extends BaseComponent{
     }
 
     public onGetNodeDetails=(id:string)=>{
-        console.log("Inside onGetNodeDetails "+id);
+       
+        let nodeTypeIds = {nodeTypeIds:[...this.nodeTypeMap.keys()]}
+        console.log("Inside onGetNodeDetails "+ nodeTypeIds);
         deselectAllCheckbox("NodeDetails__NodeDetailsTable");
         this.setTableState({
           ...this.tableState,
           loading:true
         });
         (async()=>{
-          const response = await axios.get("/api/node-inventory/v1/getNodeDetails/"+id);
+          const response = await axios.post("/api/node-inventory/v1/getNodeDetails/",nodeTypeIds);
           console.log(response);
           this.nodeDetailsList = response.data;
           this.setTableState({
@@ -164,23 +171,26 @@ class NodeDetailContainer extends BaseComponent{
           this.isTableHasToReload=false;
       })();
     }
-    public onNodeTypeSelect=(id:string, selected:boolean)=>{
-      console.log("Inside onNodeTypeSelect "+id);
-      if(id===null){
-        this.selectedNodeDetailIdArray = [];
+    public onNodeTypeSelect=(nodeTypeName:string, nodeTypeId:string,selected:boolean)=>{
+      console.log("Inside onNodeTypeSelect "+nodeTypeId ,nodeTypeName);
+      if(nodeTypeId===null){
+        this.selectedNodeIdArray = [];
       }
       if(selected){
-        this.selectedNodeDetailIdArray.push(id);
+        this.selectedNodeType = nodeTypeName;
+        this.nodeTypeMap.set(nodeTypeId,nodeTypeName);
+        this.selectedNodeIdArray.push(nodeTypeId);
         this.setState({
           ...this.state,
-          isAddNodeDetailButtonEnabled: this.selectedNodeDetailIdArray.length===1
+          isAddNodeDetailButtonEnabled: this.selectedNodeIdArray.length===1
         });
       }else{
-        var index =  this.selectedNodeDetailIdArray.indexOf(id);
-        index > -1 ? this.selectedNodeDetailIdArray.splice(index, 1):this.selectedNodeDetailIdArray
+        this.nodeTypeMap.delete(nodeTypeId);
+        var index =  this.selectedNodeIdArray.indexOf(nodeTypeId);
+        index > -1 ? this.selectedNodeIdArray.splice(index, 1):this.selectedNodeIdArray
         this.setState({
           ...this.state,
-          isAddNodeDetailButtonEnabled: this.selectedNodeDetailIdArray.length===1
+          isAddNodeDetailButtonEnabled: this.selectedNodeIdArray.length===1
        });
     }
     }
@@ -267,11 +277,15 @@ class NodeDetailContainer extends BaseComponent{
             data={tableState.data}
             />);
         React.useEffect(()=>{
-
+          console.log("In useffect of Nodedetails");
           this.EE.on("onGetNodeDetails",this.onGetNodeDetails);
           this.EE.on("onNodeTypeSelect",this.onNodeTypeSelect);
+          
           return () => {
             console.log("removing onNodeTypeSelect Listener on unmount");
+            this.resetSelectionAndButtonState();
+            this.selectedNodeIdArray=[];
+            this.EE.removeListener("onGetNodeDetails",this.onGetNodeDetails);
             this.EE.removeListener("onNodeTypeSelect", this.onNodeTypeSelect);
           };
         },[])

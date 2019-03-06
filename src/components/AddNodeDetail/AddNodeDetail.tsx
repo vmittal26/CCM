@@ -28,6 +28,14 @@ export default (componentprops: any) => {
         })}
         children={props => 
           (<Form>
+             <Field
+              // style={{borderLeft:"2px inset #e74c3c"}}
+              disabled
+              label="Node Type"
+              component={AntInputInline}
+              name="nodeType"
+              type="text"
+            />
             <Field
               // style={{borderLeft:"2px inset #e74c3c"}}
               label="Enter Node Name"

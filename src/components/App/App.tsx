@@ -58,7 +58,7 @@ class AppContainer extends BaseComponent{
         <Navigation />
           <Switch>
               <React.Suspense fallback={<><Backdrop show iswhite/><CoverSpinner/></>}>
-                <Route path="/home" component={(props:any) => <Home {...props} />}/>
+                <Route path="/" exact component={(props:any) => <Home {...props} />}/>
                 {/* <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} /> */}
                 <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />
                 <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} />

@@ -63,12 +63,13 @@ class NodeTypeManagementContainer extends BaseComponent {
             // highlightRowOnChangeCheckbox(checkbox);
             console.log(row.original.nodeId);
 
-            this.EE.emit("onNodeTypeSelect",row.original.nodeId , e.target.checked);
+            this.EE.emit("onNodeTypeSelect",row.original.nodeType,row.original.nodeId , e.target.checked);
             
             if(e.target.checked){
               this.state.checkboxArray.push(row.original.nodeId);
               this.setState({
                 ...this.state,
+                isNodeDetailButtonDisabled :this.state.checkboxArray.length>=1,
                 isDeleteButtonEnabled: this.state.checkboxArray.length===1
               });
             }else{
@@ -76,6 +77,7 @@ class NodeTypeManagementContainer extends BaseComponent {
               index > -1 ? this.state.checkboxArray.splice(index, 1):this.state.checkboxArray
               this.setState({
                 ...this.state,
+                isNodeDetailButtonDisabled :this.state.checkboxArray.length>=1,
                 isDeleteButtonEnabled: this.state.checkboxArray.length===1
               });
             }
@@ -89,6 +91,7 @@ class NodeTypeManagementContainer extends BaseComponent {
     this.state.checkboxArray = [];
     this.setState({
       ...this.state,
+      isNodeDetailButtonDisabled:false,
       isDeleteButtonEnabled: false
     });
     this.EE.emit("onNodeTypeSelect",null , false);
@@ -226,6 +229,7 @@ class NodeTypeManagementContainer extends BaseComponent {
       isDeleteButtonEnabled: false,
       checkboxArray: [],
       isAddModalVisible: false,
+      isNodeDetailButtonDisabled:false,
       isBackDropVisible: false,
     });
 
@@ -294,7 +298,7 @@ class NodeTypeManagementContainer extends BaseComponent {
           <div className="NodeTypeManagement__Header">
             <h4>Node Type</h4>
             <div className="NodeTypeManagement__button-section">
-            <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onGetNodeDetails",state.checkboxArray[state.checkboxArray.length-1])} disabled={!state.isDeleteButtonEnabled} >
+            <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onGetNodeDetails",state.checkboxArray[state.checkboxArray.length-1])} disabled={!state.isNodeDetailButtonDisabled} >
                 Node Detail
               </button>
               <button className="btn btn-primary ml-3" onClick={() => { setState({ ...state, isAddModalVisible: true }); }} >
