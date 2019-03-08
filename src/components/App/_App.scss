@@ -9,8 +9,5 @@
     height: 100vh;
     // overflow: scroll;
     z-index: 0;
-    @include respond(xs) {
-      top: 9rem;
-    }
   }
 }

@@ -298,9 +298,9 @@ class NodeTypeManagementContainer extends BaseComponent {
           <div className="NodeTypeManagement__Header">
             <h4>Node Type</h4>
             <div className="NodeTypeManagement__button-section">
-            <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onGetNodeDetails",state.checkboxArray[state.checkboxArray.length-1])} disabled={!state.isNodeDetailButtonDisabled} >
+            {/* <button className="btn btn-primary ml-3" onClick ={()=>this.EE.emit("onGetNodeDetails",state.checkboxArray[state.checkboxArray.length-1])} disabled={!state.isNodeDetailButtonDisabled} >
                 Node Detail
-              </button>
+              </button> */}
               <button className="btn btn-primary ml-3" onClick={() => { setState({ ...state, isAddModalVisible: true }); }} >
                 Add
               </button>

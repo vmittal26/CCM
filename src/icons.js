@@ -54,6 +54,10 @@ export {
 export {
     default as LoadingOutline
 } from '@ant-design/icons/lib/outline/LoadingOutline';
+export {
+    default as SwitcherTwoTone
+} from '@ant-design/icons/lib/twotone/SwitcherTwoTone';
+
 // export {
 //     default as ExclamationCircleOutline
 // } from '@ant-design/icons/lib/outline/ExclamationCircleOutline';

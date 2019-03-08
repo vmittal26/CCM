@@ -148,28 +148,41 @@ class NodeDetailContainer extends BaseComponent{
       this.resetSelectionAndButtonState();
     }
 
-    public onGetNodeDetails=(id:string)=>{
+    public populateNodeDetailsTable=()=>{
        
-        let nodeTypeIds = {nodeTypeIds:[...this.nodeTypeMap.keys()]}
-        console.log("Inside onGetNodeDetails "+ nodeTypeIds);
-        deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+      this.setTableState({
+        ...this.tableState,
+        loading:true
+      });
+      if(this.nodeTypeMap.size>0){
+            let nodeTypeIds = {nodeTypeIds:[...this.nodeTypeMap.keys()]}
+            console.log("Inside populateNodeDetailsTable "+ nodeTypeIds);
+            deselectAllCheckbox("NodeDetails__NodeDetailsTable");
+            this.setTableState({
+              ...this.tableState,
+              loading:true
+            });
+            (async()=>{
+              const response = await axios.post("/api/node-inventory/v1/getNodeDetails/",nodeTypeIds);
+              console.log(response);
+              this.nodeDetailsList = response.data;
+              this.setTableState({
+                ...this.tableState,
+                loading:false,
+                data:this.nodeDetailsList
+              });
+              this.resetSelectionAndButtonState();
+              // this.isLoadedForFirstTime ? this.isLoadedForFirstTime : this.isLoadedForFirstTime=true;
+              this.isTableHasToReload=false;
+          })();
+      }else{
+        this.resetSelectionAndButtonState();
         this.setTableState({
           ...this.tableState,
-          loading:true
+          data:[],
+          loading:false
         });
-        (async()=>{
-          const response = await axios.post("/api/node-inventory/v1/getNodeDetails/",nodeTypeIds);
-          console.log(response);
-          this.nodeDetailsList = response.data;
-          this.setTableState({
-            ...this.tableState,
-            loading:false,
-            data:this.nodeDetailsList
-          });
-          this.resetSelectionAndButtonState();
-          // this.isLoadedForFirstTime ? this.isLoadedForFirstTime : this.isLoadedForFirstTime=true;
-          this.isTableHasToReload=false;
-      })();
+      }
     }
     public onNodeTypeSelect=(nodeTypeName:string, nodeTypeId:string,selected:boolean)=>{
       console.log("Inside onNodeTypeSelect "+nodeTypeId ,nodeTypeName);
@@ -193,6 +206,7 @@ class NodeDetailContainer extends BaseComponent{
           isAddNodeDetailButtonEnabled: this.selectedNodeIdArray.length===1
        });
     }
+    this.populateNodeDetailsTable();
     }
 
     public onDeleteNodeDetail=()=>{
@@ -238,7 +252,7 @@ class NodeDetailContainer extends BaseComponent{
    
     }
     public showUpdateNodeDetail=()=>{
-        this.setState({...this.state,nodeDetailsToBeUpdated :  this.nodeDetailSelectedArray[this.nodeDetailSelectedArray.length-1] ,isUpdateModal:true,isModalVisible:true})
+        this.setState({...this.state,nodeDetailsToBeUpdated : {nodeType: this.nodeTypeMap.get(this.getSelectNodeTypeId()) ,...this.nodeDetailSelectedArray[this.nodeDetailSelectedArray.length-1] } ,isUpdateModal:true,isModalVisible:true})
     }
     public nodeDetailsManagement = (props: any): JSX.Element => {
         const [state, setState] = React.useState({
@@ -278,14 +292,14 @@ class NodeDetailContainer extends BaseComponent{
             />);
         React.useEffect(()=>{
           console.log("In useffect of Nodedetails");
-          this.EE.on("onGetNodeDetails",this.onGetNodeDetails);
+          // this.EE.on("onGetNodeDetails",this.onGetNodeDetails);
           this.EE.on("onNodeTypeSelect",this.onNodeTypeSelect);
           
           return () => {
             console.log("removing onNodeTypeSelect Listener on unmount");
             this.resetSelectionAndButtonState();
             this.selectedNodeIdArray=[];
-            this.EE.removeListener("onGetNodeDetails",this.onGetNodeDetails);
+            // this.EE.removeListener("onGetNodeDetails",this.onGetNodeDetails);
             this.EE.removeListener("onNodeTypeSelect", this.onNodeTypeSelect);
           };
         },[])

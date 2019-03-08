@@ -18,17 +18,6 @@
 .ReactTable .rt-tr-group{
   flex:none;
 }
-.ReactTable .-pagination .-previous, .ReactTable .-pagination .-next{
-    @include respond(xs) {
-        flex:none;
-    }
-}
-.ReactTable .-pagination{
-    @include respond(xs) {
-        padding-top:28px;
-    }
-}
-
 // .ReactTable .rt-tbody{
 //   @include respond(xs) {
 //     min-height: 80vh !important;
@@ -52,22 +41,6 @@
 .ReactKTMTable {
   font-size: 0.75rem;
   font-family: sans-serif;
-
-  @include respond(xs) {
-    font-size: 1.2rem;
-  }
-  @include respond(sm) {
-    font-size: 1rem;
-  }
-  @include respond(md) {
-    font-size: 0.8rem;
-  }
-  @include respond(lg) {
-    font-size: 0.8rem;
-  }
-  @include respond(xl) {
-    font-size: 0.75rem;
-  }
 }
 
 .ReactTable .rt-tbody {

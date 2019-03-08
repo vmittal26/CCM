@@ -117,7 +117,7 @@ module.exports = (env,args)=>{
   resolve: {
     extensions: ["*", ".ts", ".tsx", ".mjs", ".js", ".jsx"],
     alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js"),
+      // "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js"),
        moment: `moment/moment.js` 
     }
   },

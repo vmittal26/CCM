@@ -16,10 +16,10 @@ import BaseComponent from "../BaseComponent/BaseComponent";
 const NodeManagement = React.lazy(()=>import("../NodeManagement/NodeManagement"));
 const UserManagement = React.lazy(()=>import("../UserManagement/UserManagement"));
 const Home = React.lazy(() => import("../Home/Home"));
+const BaseLineManagement = React.lazy(() => import("../BaseLineManagement/BaselineManagement"));
 
 
-deviceCheckConfig() ? console.log("mobile") : console.log("desktop");
-fontawesome();
+// fontawesome();
 
 class AppContainer extends BaseComponent{
 
@@ -62,6 +62,7 @@ class AppContainer extends BaseComponent{
                 {/* <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} /> */}
                 <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />
                 <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} />
+                <Route path="/baseLineManagement" component={(props:any) => <BaseLineManagement {...props} />} />
               </React.Suspense>
           </Switch>
          </div>
