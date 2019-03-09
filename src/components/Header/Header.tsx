@@ -6,6 +6,7 @@ import { Icon } from "antd";
 // import logoImage from '../../images/elogo.svg';
 import 'antd/lib/switch/style/index.css';
 import EE from "../../EventEmitter";
+import Navigation from "../Navigation/Navigation";
 
 export  function Header(props:any) {
   const [isHidden, setIsHidden] = React.useState<boolean>(false);
@@ -20,7 +21,7 @@ export  function Header(props:any) {
         <h2 className={"ml-2 mt-2 Header__App"}>CCM</h2>
         {/* <button  className="btn" onClick={() => onToogleSliderMenu()}> */}
         <Icon className="Header__left__baricon" onClick={() => onToogleSliderMenu()} type="bars" ></Icon>
-        
+        <Navigation />
       </div>
       <div className="Header__right">
     

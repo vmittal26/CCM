@@ -1,0 +1,57 @@
+.BaseLineManagement{
+    margin-left:10%;
+    max-width: 85%;
+    font-size: 0.7rem;
+    padding: 1rem 0rem;
+    .ReactTable .rt-tbody{
+        max-height: 12rem;
+        min-height:12rem;
+    }
+
+    &__Right{
+        border: 1px solid #ccc;
+        height: auto;
+       
+        .Collapsible__trigger{
+            background-color: $color-primary;
+            color:#fff;
+            font-size: 0.9rem;
+            padding:0.6rem;
+
+            &::after{
+                content: '\002B';
+                position: absolute;
+                left:95%;
+                font-size: 1.2rem;
+                color:white;
+            }
+
+            &.is-open {
+                &:after {
+                    content: '\2212';
+                    position: absolute;
+                    font-size: 1.2rem;
+                    left:95%;
+                    color:white;
+                }
+              }
+        }
+    }
+
+    &_Left{
+        
+    }
+    &__SegmentTable{
+
+    }
+
+    &__IndividualTable{
+    }
+
+
+    &__CommonBaseLineConfiguration{
+        border: 1px solid #ccc;
+        height: 100vh;
+        padding:1rem;
+    }
+}

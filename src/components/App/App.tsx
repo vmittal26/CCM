@@ -55,7 +55,7 @@ class AppContainer extends BaseComponent{
         App = <div className="App">
          <Header />
          <div className="App__main" onClick={()=>{console.log("on click"); EE.emit("onHideSlider")}}>
-        <Navigation />
+        {/* <Navigation /> */}
           <Switch>
               <React.Suspense fallback={<><Backdrop show iswhite/><CoverSpinner/></>}>
                 <Route path="/" exact component={(props:any) => <Home {...props} />}/>
