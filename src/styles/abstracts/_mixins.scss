@@ -2,7 +2,7 @@
     &::after {
         content: "\002B";
         position: absolute;
-        top:20%;
+        top:10%;
         right: 1%;
         font-size: 1.5rem;
         color: $color-secondary;
@@ -13,7 +13,7 @@
           content: "\2212";
           position: absolute;
           font-size: 1.5rem;
-          top:20%;
+          top:10%;
           right: 1%;
           color: $color-secondary;
         }
