@@ -104,14 +104,48 @@ class NodeDetailContainer extends BaseComponent{
             //    })
             // }
             actions.setSubmitting(false);
+            this.populateNodeDetailsTable();
           })();
       };
       public fetchData =(state:any,instance:any)=>{
             deselectAllCheckbox("NodeDetails__NodeDetailsTable");
       }
 
-      public onUpdateNodeDetail=()=>{
-          console.log("Inside Update Node detail");
+      public onUpdateNodeDetail=(values: any, actions: any)=>{
+        actions.setSubmitting(true);
+        this.setState({
+          ...this.state,
+          isBackDropVisible: true
+        });
+        console.log(values);
+        (async()=>{
+          const data = {
+            ...values,
+            nodeTypeId:this.selectedNodeIdArray[this.selectedNodeIdArray.length-1]
+          }
+          const response = await axios.post("api/node-inventory/v1/updateNodeDetails/",data);
+          console.log(response);
+    
+          this.setState({
+              ...this.state,
+              isBackDropVisible: false,
+              isModalVisible: false,
+            });
+            notification.open({
+              message: "Upadate Node Detail",
+              description: response.data,
+              duration: 2
+            });
+            // this.isTableHasToReload = true;
+            // if(response.data){
+            //   this.setTableState({
+            //     ...this.tableState,
+            //      data: [...this.tableState.data, response.data]
+            //    })
+            // }
+            actions.setSubmitting(false);
+            this.populateNodeDetailsTable();
+          })();
       }
       public onCancelModal=()=>{
         this.setState({ ...this.state, isModalVisible: false }) 
