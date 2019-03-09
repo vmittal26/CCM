@@ -12,6 +12,7 @@
 // @import '~antd/dist/antd.min.css';
 @import "./abstracts/mixins";
 @import "./base/base";
+@import "./components/Collapsible";
 @import "./components/Field";
 @import "./components/ReactTable";
 @import "./components/AntIcon";
@@ -33,3 +34,5 @@
 @import "../components/NodeDetailsManagement/NodeDetails";
 @import "../components/AddNodeType/AddNodeType";
 @import "../components/BaseLineManagement/BaseLineManagement";
+@import "../components/SegmentTable/SegmentTable";
+@import "../components/CommonBaseLineConfigurationComponent/CommonBaseLineConfigurationComponent";

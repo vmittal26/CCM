@@ -1,60 +1,60 @@
 .cell {
   text-align: center;
 }
+.cell-left{
+  text-align: left;
+}
 
 .header {
   font-family: "Roboto", sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #333;
+  color: $color-secondary;
 }
+.ReactTable{
+  .rt-thead .rt-th,.rt-thead .rt-td{
+    padding: 9px 5px;
+    background-color: #f7f7f763;
+    overflow: visible;
+  }
+  .rt-tr-group{
+    flex:none;
+  }
+  .rt-tbody{
+    max-height: 25rem;
+    min-height: 25rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 
-.ReactTable .rt-thead .rt-th,
-.ReactTable .rt-thead .rt-td {
-  padding: 9px 5px;
-  background-color: #f7f7f763;
-  overflow: visible;
+  .-pagination .-btn{
+    height: auto;
+    background-color:$color-primary-light;
+  }
+
+  .-pagination .-center{
+    flex:none;
+  }
+
 }
-.ReactTable .rt-tr-group{
-  flex:none;
+.parentTableHeader{
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $color-secondary;
+  text-align: start;
 }
-// .ReactTable .rt-tbody{
-//   @include respond(xs) {
-//     min-height: 80vh !important;
-//   }
-//   @include respond(sm) {
-//     min-height: 80vh !important;
-//   }
-//   @include respond(md) {
-//     min-height: 80vh !important;
-//   }
-//   @include respond(lg) {
-//     min-height: 60vh !important;
-//   }
-//   @include respond(xl) {
-//     min-height: 60vh !important;
-//   }
-// }
-// .ReactTable .rt-th, .ReactTable .rt-td{
-//   padding:4px 5px;
-// }
 .ReactKTMTable {
   font-size: 0.75rem;
   font-family: sans-serif;
 }
 
-.ReactTable .rt-tbody {
-  max-height: 25rem;
-  min-height: 25rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 .-loading-inner {
   display: none !important;
 }
-.ReactTable-loading {
-  z-index: 0;
-}
+// .ReactTable-loading {
+//   z-index: 0;
+// }
 
 .rowColorHighlight {
   background-color: lighten($color-primary ,4%)!important;

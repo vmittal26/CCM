@@ -29,7 +29,7 @@ class NodeManagement extends BaseComponent {
     }, []);
     return (
       <div className="NodeManagement">
-        <Card title="Node">
+        <Card>
           <NodeTypeManagement />
           <NodeDetailsManangement />
         </Card>

@@ -1,45 +1,42 @@
 .BaseLineManagement{
-    margin-left:10%;
-    max-width: 85%;
+    margin-left:auto;
     font-size: 0.7rem;
-    padding: 1rem 0rem;
-    .ReactTable .rt-tbody{
-        max-height: 12rem;
-        min-height:12rem;
+    padding:1rem;
+    // padding: 1rem 0rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  
+    .ant-card-bordered{
+        border-radius: 5px;
+    }
+    .ant-card-body{
+        padding:0px;
     }
 
+
+    &__Header{
+        display: flex;
+        align-items: center;
+    }
+
+    &__HeaderLeft{
+        flex-grow: 1;
+    }
     &__Right{
-        border: 1px solid #ccc;
+        // border: 1px solid #ccc;
+        
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         height: auto;
-       
-        .Collapsible__trigger{
-            background-color: $color-primary;
-            color:#fff;
-            font-size: 0.9rem;
-            padding:0.6rem;
-
-            &::after{
-                content: '\002B';
-                position: absolute;
-                left:95%;
-                font-size: 1.2rem;
-                color:white;
-            }
-
-            &.is-open {
-                &:after {
-                    content: '\2212';
-                    position: absolute;
-                    font-size: 1.2rem;
-                    left:95%;
-                    color:white;
-                }
-              }
+        padding:1rem !important;
+        .ReactTable .rt-tbody{
+            max-height: 12rem;
+            min-height:12rem;
         }
     }
 
-    &_Left{
-        
+    &__Left{
+        padding:1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
     &__SegmentTable{
 
@@ -50,8 +47,9 @@
 
 
     &__CommonBaseLineConfiguration{
-        border: 1px solid #ccc;
-        height: 100vh;
-        padding:1rem;
+        // border: 1px inset $color-primary;
+        // border-radius:5px;
+        height: auto;
+      
     }
 }

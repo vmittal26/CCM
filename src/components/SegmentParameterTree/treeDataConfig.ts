@@ -9,7 +9,7 @@ const treeData:any ={
             parameterBaseLineId: "1", 
             parameterName: "SDP", 
             parameterValue: "SDP-Value", 
-            parameterDesc: "This is SDP node description xzxzxaxa xasdsdcsdcs s sdsdsdsdsdsd", 
+            parameterDesc: "This is SDP node description", 
             confileFilePath: "/var/opt/sdp" 
           }, 
           { 

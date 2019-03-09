@@ -1,0 +1,11 @@
+.Collapsible__trigger {
+  background-color: #fff !important;
+  color: $color-secondary;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem;
+  border-radius:5px;
+  position: relative;
+ 
+  @include CollapsibleIcons;
+}

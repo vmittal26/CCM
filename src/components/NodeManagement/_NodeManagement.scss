@@ -1,5 +1,9 @@
 .NodeManagement{
     max-width: 70%;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    margin-left:18%
+    margin-left:18%;
+
+    .ant-card-wider-padding .ant-card-body{
+        padding:0.5rem 0.8rem;
+    }
 }
