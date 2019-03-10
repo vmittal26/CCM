@@ -1,8 +1,9 @@
 import * as React from "react";
 import ReactTable from "react-table";
 import { Icon } from "antd";
-import {headerConfig, dummyParameterData , dummySubGroupData ,dummyGroupData} from "./commonBaseLineConfig";
+import {headerConfig, dummyParameterData , dummySubGroupData1 ,dummySubGroupData2,dummyGroupData} from "./commonBaseLineConfig";
 import BaseComponent from "../BaseComponent/BaseComponent";
+import SubGroupTableComponent from "../SubGroupTableComponent/SubGroupTableComponent";
 
 const parameterTable = (
   <ReactTable
@@ -10,33 +11,14 @@ const parameterTable = (
     style={{paddingLeft:"1rem"}}
     columns={headerConfig.headerConfig}
     loading={false}
-    defaultPageSize={3}
+    showPagination={false}
+    defaultPageSize={10}
     onPageSizeChange={() => {}}
     onPageChange={() => {}}
     data={dummyParameterData}
   />
 );
-const subgroupTable = (
-  <ReactTable
-    className="SubgroupTable"
-    style={{paddingLeft:"1rem"}}
-    columns={[
-      {
-        Header: "Subgroup Name",
-        accessor: "subGroupName",
-        headerClassName: "parentTableHeader",
-        className: "cell-left",
-        minWidth: 50
-      }
-    ]}
-    data={dummySubGroupData}
-    loading={false}
-    defaultPageSize={3}
-    onPageSizeChange={() => {}}
-    onPageChange={() => {}}
-    SubComponent={() => parameterTable}
-  />
-);
+
 
 
 class CommonBaseLineConfigurationContainer extends BaseComponent{
@@ -46,6 +28,7 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
   }
 
   public commonBaseLineComponent = (props:any):JSX.Element=>{
+
     return (
       <div className="BaseLineManagement__CommonBaseLineConfiguration">
         <ReactTable
@@ -63,17 +46,20 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
           loading={false}
           showPaginationTop={true}
           showPaginationBottom={false}
+          freezeWhenExpanded={true}
           filterable
           defaultPageSize={10}
           previousText={<Icon style={{fontSize:"1rem"}} type="fast-backward" />}
           nextText={<Icon style={{fontSize:"1rem"}} type="fast-forward" />}
           onPageSizeChange={() => {}}
           onPageChange={() => {}}
-          SubComponent={() => subgroupTable}
+          SubComponent={(row)=>{console.log(row);return <SubGroupTableComponent groupId={row.original.groupId}/>}}
         />
       </div>
     );
   }
+
+ 
   public getComponent=():React.FunctionComponent=>{
     return this.commonBaseLineComponent
   }

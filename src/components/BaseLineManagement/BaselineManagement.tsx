@@ -1,12 +1,12 @@
 import * as React from "react";
 import Collapsible from "react-collapsible";
 import BaseComponent from "../BaseComponent/BaseComponent";
-import SegmentTable from "../SegmentTable/SegmentTable";
 import CommonBaseLineConfigurationComponent from "../CommonBaseLineConfigurationComponent/CommonBaseLineConfigurationComponent";
-import { Select, Row, Col, Card, Icon } from "antd";
+import { Select, Icon, Tooltip } from "antd";
 import "antd/lib/grid/style/index.css";
 import "antd/lib/select/style/index.css";
 import "antd/lib/card/style/index.css";
+import "antd/lib/tooltip/style/index.css";
 import IndividualBaselineComponent from "../IndividualBaselineComponent/IndividualBaselineComponent";
 import SegmentBaseLineComponent from "../SegmentBaseLineComponent/SegmentBaseLineComponent";
 const Option = Select.Option;
@@ -61,10 +61,15 @@ class BaseLineManagementContainer extends BaseComponent {
     return (
       <div className="BaseLineManagement">
         <div className={ this.baseLineClassName} >
-        <div className="ExpandButton">
-              {state.isBaseLineSectionExpand ? 
-              (<Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isBaseLineSectionExpand:false})}/> ) : 
-              (<Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() => setState({...state,isBaseLineSectionExpand:true})} /> )}
+           <div className="ExpandButton">
+              {state.isBaseLineSectionExpand ?
+              <Tooltip title="Click To Collapse">
+                <Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isBaseLineSectionExpand:false})}/> 
+              </Tooltip>
+               :
+               <Tooltip title="Click To Expand">
+                <Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() => setState({...state,isBaseLineSectionExpand:true})} />
+               </Tooltip>}
             </div>
           <div className="BaseLineManagement__Header">
             <div className="BaseLineManagement__HeaderLeft">
@@ -87,9 +92,14 @@ class BaseLineManagementContainer extends BaseComponent {
         </div>
         <div className={this.segmentBaselineClassName}>
           <div className="ExpandButton">
-          {state.isSegmentBaseLineExpanded ? 
-              (<Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isSegmentBaseLineExpanded:false})} /> ) : 
-              (<Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() =>  setState({...state,isSegmentBaseLineExpanded:true})}/> )}
+          {state.isSegmentBaseLineExpanded ?
+             <Tooltip title="Click To Collapse"> 
+                <Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isSegmentBaseLineExpanded:false})} />
+              </Tooltip>
+              :
+              <Tooltip title="Click To Expand">
+                <Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() =>  setState({...state,isSegmentBaseLineExpanded:true})}/> 
+              </Tooltip>}
           </div>
           <Collapsible trigger="Segment Baseline Configuration" open>
             <SegmentBaseLineComponent/>
@@ -98,8 +108,13 @@ class BaseLineManagementContainer extends BaseComponent {
         <div className={this.individualBaseLineClassName}>
         <div className="ExpandButton">
           {state.isIndividualBaseLineExpanded ? 
-              (<Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isIndividualBaseLineExpanded:false})}  /> ) : 
-              (<Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() => setState({...state,isIndividualBaseLineExpanded:true})}/>)}
+              <Tooltip title="Click To Collapse"> 
+              <Icon type="minus" style={{ fontSize: "0.9rem" }} onClick={() => setState({...state,isIndividualBaseLineExpanded:false})} />
+            </Tooltip>
+            :
+            <Tooltip title="Click To Expand">
+              <Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() =>  setState({...state,isIndividualBaseLineExpanded:true})}/> 
+            </Tooltip>}
           </div>
           <Collapsible trigger="Individual Baseline Configuration" open>
            <IndividualBaselineComponent/>

@@ -3,7 +3,7 @@ import ReactTable from 'react-table';
 import{sementTableHeaderConfig ,segmentTableDummyData} from "./segmentBaseLineConfig";
 import CommonBaseLineConfigurationComponent from '../CommonBaseLineConfigurationComponent/CommonBaseLineConfigurationComponent';
 import SegmentParameterTree from '../SegmentParameterTree/SegmentParameterTree';
-import { Icon } from 'antd';
+import { Icon, Tooltip } from 'antd';
 import getCheckBoxHeader from '../../Utils/getCheckBoxHeader';
 import BaseComponent from '../BaseComponent/BaseComponent';
 
@@ -16,6 +16,24 @@ const checkboxHeader =getCheckBoxHeader(20,(e: React.ChangeEvent<HTMLInputElemen
    
   }});
 
+const getViewEditNodeListButton = ()=>{
+  return (
+    {
+    Header: "View/Modify Node List",
+    minWidth: 100,
+    className: "cell",
+    headerClassName: "header",
+    Cell: (row: any) => {
+      return (
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={(e:any)=>{console.log(row)}}
+        >View/Modify Node List</button>
+      );
+    }
+  }
+  );
+}
 class SegmentBaseLineContainer extends BaseComponent{
 
   constructor(){
@@ -26,7 +44,7 @@ class SegmentBaseLineContainer extends BaseComponent{
     return (
       <div className="SegmentBaseLine">
         <ReactTable
-          columns={[checkboxHeader,...sementTableHeaderConfig.headerConfig]}
+          columns={[getViewEditNodeListButton(),...sementTableHeaderConfig.headerConfig]}
           showPagination={true}
           loading={false}
           showPaginationTop={true}
