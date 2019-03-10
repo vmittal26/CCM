@@ -1,23 +1,15 @@
 .BaseLineManagement{
     margin-left:auto;
     font-size: 0.7rem;
-    height: 100vh;
+    height: 100%;
     left:1rem;
     right:1rem;
     // padding: 1rem 0rem;
-    overflow-y: scroll;
-    overflow-x: hidden;
+   
     position: relative;
     .Collapsible__trigger{
         padding:0.5rem;
     }
-    .ant-card-bordered{
-        border-radius: 5px;
-    }
-    .ant-card-body{
-        padding:0px;
-    }
-    
     &__Header{
         display: flex;
         align-items: center;
@@ -27,14 +19,45 @@
         flex-grow: 1;
      
     }
+
     &__Right{
+        display: flex;
+        flex-direction: column;
+    }
+    &__SegmentBaseLine{
         // border: 1px solid #ccc;
         position: absolute;
         right: 0;
         top:0;
-        width:49.9%;
+        width:50%;
         border-radius: 5px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        border:0.5px solid $color-grey-light-4;
+        height: auto;
+        padding:1.4rem 0.5rem!important;
+        .ReactTable .rt-tbody{
+            max-height: 12rem;
+            min-height:12rem;
+        }
+        transition:all 0.4s  ease-in;
+
+        .ExpandButton{
+            position: absolute;
+            top:0;
+            left: 4px;
+            font-weight:500;
+            color:red;
+            cursor: pointer;
+        }
+    }
+
+    &__IndividualBaseLine{
+        position: absolute;
+        right: 0;
+        top:26rem;
+        width:49.9%;
+        border-radius: 5px;
+        // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         border:0.5px solid $color-grey-light-4;
         height: auto;
         padding:1rem !important;
@@ -42,7 +65,16 @@
             max-height: 12rem;
             min-height:12rem;
         }
-        transition:width 0.3s;
+        transition:all 0.4s  ease-in;
+
+        .ExpandButton{
+            position: absolute;
+            top:0;
+            left: 4px;
+            font-weight:500;
+            color:red;
+            cursor: pointer;
+        }
     }
 
     &__Left{
@@ -55,14 +87,16 @@
         position: absolute;
         border:0.5px solid $color-grey-light-4;
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-        transition:width 0.3s;
-    }
+        transition:all 0.4s ease-in;
 
-    &__SegmentTable{
-
-    }
-
-    &__IndividualTable{
+        .ExpandButton{
+            position: absolute;
+            top:0;
+            right: 4px;
+            font-weight:500;
+            color:red;
+            cursor: pointer;
+        }
     }
 
 
@@ -74,13 +108,13 @@
     }
 
     &__Expand {
-        width:100%;
+        width:80%;
+        top:0;
+        left:50%;
+        height: 100%;
+        transform: translateX(-50%);
     }
-    
-    &__Collapse {
-        width:50vw;
-    }
-
+ 
     &__Hide{
         display: none;
     }
