@@ -1,5 +1,4 @@
 import * as React from "react";
-import BaseComponent from "../BaseComponent/BaseComponent";
 import ReactTable from "react-table";
 import {
   dummySubGroupData1,

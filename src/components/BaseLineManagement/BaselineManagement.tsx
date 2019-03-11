@@ -21,10 +21,12 @@ class BaseLineManagementContainer extends BaseComponent {
   private baseLineClassName="BaseLineManagement__Left";
   private segmentBaselineClassName ="BaseLineManagement__SegmentBaseLine";
   private individualBaseLineClassName="BaseLineManagement__IndividualBaseLine";
-  public onChangeNodeType = (value: any) => {
+  public onNodeTypeSelection = (value: any) => {
+    this.EE.emit("onNodeTypeSelection",value);
     console.log("on change node type", value);
   };
 
+  
   public handleExpansionOfPanels =()=>{
 
     this.baseLineClassName="BaseLineManagement__Left";
@@ -76,13 +78,10 @@ class BaseLineManagementContainer extends BaseComponent {
               <label style={{ fontSize: "0.9rem" }} htmlFor="">
                 Select Node Type
               </label>
-              <Select className={"mb-2"} style={{ width: 200 }} onChange={() => {}} >
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="disabled" disabled>
-                  Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
+              <Select className={"mb-2"} style={{ width: 200 }} onChange={this.onNodeTypeSelection} >
+                <Option value="1">SDP</Option>
+                <Option value="2">AIR</Option>
+                <Option value="3">OCC</Option>
               </Select>
             </div>
           </div>

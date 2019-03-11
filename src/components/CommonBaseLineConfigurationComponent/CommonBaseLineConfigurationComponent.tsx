@@ -27,7 +27,18 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
     super();
   }
 
+  public onNodeTypeSelection = (nodeTypeId:string)=>{
+      console.log(nodeTypeId);
+  }
   public commonBaseLineComponent = (props:any):JSX.Element=>{
+
+    React.useEffect(()=>{
+
+      this.EE.on("onNodeTypeSelection", this.onNodeTypeSelection)
+      return()=>{
+        this.EE.removeListener("onNodeTypeSelection", this.onNodeTypeSelection);
+      }
+    },[])
 
     return (
       <div className="BaseLineManagement__CommonBaseLineConfiguration">

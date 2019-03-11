@@ -5,21 +5,21 @@ export const headerConfig:any = {
         accessor: "parameterName",
         headerClassName: "header",
         className: "cell",
-        minWidth: 100
+        minWidth: 60
       },
       {
         Header: "Parameter Value",
         accessor: "parameterValue",
         headerClassName: "header",
         className: "cell",
-        minWidth: 100
+        minWidth: 60
       },
       {
         Header: "Parameter Description",
         accessor: "parameterDescription",
         headerClassName: "header",
         className: "cell",
-        minWidth: 150
+        minWidth: 200
       }
     ]
   };
