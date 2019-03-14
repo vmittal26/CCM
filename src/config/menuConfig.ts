@@ -4,7 +4,8 @@ const menuConfig: any = {
     subMenu: [
       { link: "/nodeManagement", caption: "Node Management" },
       { link: "/userManagement", caption: "User Management" },
-      { link: "/baseLineManagement", caption: "Base Line Configuration Management" }
+      { link: "/baseLineManagement", caption: "Base Line Configuration Management" },
+      // { link: "/baseLineConfigurationManagement", caption: "Base Line Configuration Management" }
     ]
   }
 };

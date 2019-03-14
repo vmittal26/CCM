@@ -13,11 +13,11 @@ import BaseComponent from '../BaseComponent/BaseComponent';
 import Spinner from '../UI/Spinner/Spinner';
 import highlightRowOnChangeCheckbox from '../../Utils/highlightRowOnChangeCheckbox';
 import { deselectAllCheckbox } from '../../Utils/TableRowSelectionsUtil';
-import axios from '../../config/axiosKTMConfig';
 import INodeTypeTableState from '../../model/INodeTypeTableState';
 import ITableState from '../../model/ITableState';
 import INodeDetail from '../../model/INodeDetail';
 import INodeDetailTableState from '../../model/INodeDetailTableState';
+import { axiosNodeManagement } from '../../config/axiosConfig';
 
 class NodeDetailContainer extends BaseComponent{
     private addNodeDetail: JSX.Element;
@@ -83,7 +83,7 @@ class NodeDetailContainer extends BaseComponent{
             ...values,
             nodeTypeId:this.selectedNodeIdArray[this.selectedNodeIdArray.length-1]
           }
-          const response = await axios.post("api/node-inventory/v1/addNodeDetails/",data);
+          const response = await axiosNodeManagement.post("api/node-inventory/v1/addNodeDetails/",data);
           console.log(response);
     
             this.setState({
@@ -123,7 +123,7 @@ class NodeDetailContainer extends BaseComponent{
             ...values,
             nodeTypeId:this.selectedNodeIdArray[this.selectedNodeIdArray.length-1]
           }
-          const response = await axios.post("api/node-inventory/v1/updateNodeDetails/",data);
+          const response = await axiosNodeManagement.post("api/node-inventory/v1/updateNodeDetails/",data);
           console.log(response);
     
           this.setState({
@@ -197,7 +197,7 @@ class NodeDetailContainer extends BaseComponent{
               loading:true
             });
             (async()=>{
-              const response = await axios.post("/api/node-inventory/v1/getNodeDetails/",nodeTypeIds);
+              const response = await axiosNodeManagement.post("/api/node-inventory/v1/getNodeDetails/",nodeTypeIds);
               console.log(response);
               this.nodeDetailsList = response.data;
               this.setTableState({
@@ -252,7 +252,7 @@ class NodeDetailContainer extends BaseComponent{
       });
       (async()=>{
         console.log(this.getSelectedNodeDetail());
-        const response = await axios.get("/api/node-inventory/v1/deleteNodeDetails/"+this.getSelectedNodeDetail());
+        const response = await axiosNodeManagement.get("/api/node-inventory/v1/deleteNodeDetails/"+this.getSelectedNodeDetail());
         let message:string = response.data;
         let newData = null;
         if(message==="success"){
@@ -338,7 +338,8 @@ class NodeDetailContainer extends BaseComponent{
           };
         },[])
 
-        let nodeDetailForm =  <AddNodeDetail  
+        let nodeDetailForm =  <AddNodeDetail
+                                  isUpdateNodeDetail ={state.isUpdateModal}                          
                                   initialValues = {state.nodeDetailsToBeUpdated} 
                                   onSubmit={state.isUpdateModal?this.onUpdateNodeDetail:this.onSubmitAddNodeDetail} 
                                   onCancel={this.onCancelModal} />;

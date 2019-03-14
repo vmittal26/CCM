@@ -23,8 +23,11 @@ export default (componentprops: any) => {
         enableReinitialize
         initialValues={componentprops.initialValues}
         onSubmit={componentprops.onSubmit}
-        validationSchema={Yup.object().shape({
+        validationSchema={
+          Yup.object().shape({
           nodeDetailName: Yup.string().required("Plese Enter Node Name"),
+          nodePassword:!componentprops.isUpdateNodeDetail?Yup.string().required("Plese Enter Password"):null,
+          nodeDetailUserName:!componentprops.isUpdateNodeDetail?Yup.string().required("Plese Enter User Name"):null
         })}
         children={props => 
           (<Form>
@@ -39,7 +42,7 @@ export default (componentprops: any) => {
             <Field
               // style={{borderLeft:"2px inset #e74c3c"}}
               label="Enter Node Name"
-              ismandatory
+              ismandatory={"true"}
               component={AntInputInline}
               name="nodeDetailName"
               type="text"
@@ -54,16 +57,21 @@ export default (componentprops: any) => {
             />
             <Field
               label="Enter Node Username"
+              disabled={componentprops.isUpdateNodeDetail}
+              ismandatory={componentprops.isUpdateNodeDetail?"false":"true"}
               component={AntInputInline}
               name="nodeDetailUserName"
               type="text"
             />
+              {props.touched.nodeDetailUserName && props.errors.nodeDetailUserName && <div >{<span className="text-danger">{props.errors.nodeDetailUserName}</span>}</div>}
             <Field
               label="Enter Node Password"
+              ismandatory={componentprops.isUpdateNodeDetail?"false":"true"}
               component={AntInputInline}
               name="nodePassword"
               type="password"
             />
+               {props.touched.nodePassword && props.errors.nodePassword && <div >{<span className="text-danger">{props.errors.nodePassword}</span>}</div>}
             {/* <Field
               mode="multiple"
               label="Select Segment"

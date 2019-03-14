@@ -10,10 +10,15 @@ import "antd/lib/tooltip/style/index.css";
 import IndividualBaselineComponent from "../IndividualBaselineComponent/IndividualBaselineComponent";
 import SegmentBaseLineComponent from "../SegmentBaseLineComponent/SegmentBaseLineComponent";
 const Option = Select.Option;
+import {parametersModificationsMap } from "../ParameterGroupTableComponent/ParameterGroupTableComponent";
+import { INodeType } from "../../model/INodeType";
+import { axiosNodeManagement, axiosBaseLineManagement } from "../../config/axiosConfig";
+
 
 class BaseLineManagementContainer extends BaseComponent {
   constructor() {
     super();
+    this.EE.on("onParameterTableExpansion", this.onParameterTableExpansion)
   }
 
   private setState:Function;
@@ -21,12 +26,27 @@ class BaseLineManagementContainer extends BaseComponent {
   private baseLineClassName="BaseLineManagement__Left";
   private segmentBaselineClassName ="BaseLineManagement__SegmentBaseLine";
   private individualBaseLineClassName="BaseLineManagement__IndividualBaseLine";
+  private nodeListData:Array<INodeType>;
   public onNodeTypeSelection = (value: any) => {
-    this.EE.emit("onNodeTypeSelection",value);
+    this.setState({
+      ...this.state,
+      isNodeTypeSelected:true
+    })
+
+    let node = this.nodeListData.find((nodeType:INodeType)=>nodeType.nodeId==value);
+    this.EE.emit("onNodeTypeSelection",value,node.nodeType);
     console.log("on change node type", value);
   };
 
-  
+  public onParameterTableExpansion = (panelToBeExpanded:string)=>{
+
+    if(panelToBeExpanded==="commonBaseline"){
+      this.setState({...this.state,isBaseLineSectionExpand:true})
+    }else if(panelToBeExpanded==="segmentBaseline"){
+      this.setState({...this.state,isSegmentBaseLineExpanded:true})
+    }
+
+  }
   public handleExpansionOfPanels =()=>{
 
     this.baseLineClassName="BaseLineManagement__Left";
@@ -49,20 +69,40 @@ class BaseLineManagementContainer extends BaseComponent {
     }
   }
   public baseLineManagementComponent = (props: any): JSX.Element => {
-    const [state, setState] = React.useState({
+    const [state, setState] = React.useState({  
       isBaseLineSectionExpand:false,
       isSegmentBaseLineExpanded:false,
-      isIndividualBaseLineExpanded:false
+      isIndividualBaseLineExpanded:false,
+      isNodeTypeDownLoading:true,
+      isNodeTypeSelected:false
     });
 
     this.state = state;
     this.setState = setState;
 
     this.handleExpansionOfPanels();
-
+    
+    React.useEffect(() => {
+      this.EE.emit("onNavigation", [
+        { breadCrumbName: "Home", breadCrumbLink: "/" },
+        { breadCrumbName: "House Keeping" },
+        { breadCrumbName: "Baseline Congifuration Management" }
+      ]);
+          (async()=>{
+            const response = await axiosBaseLineManagement.get("api/base-config-manager/v1/baseconfig/getNodeTypes/ ");
+            console.log(response);
+            this.nodeListData = response.data;
+            setTimeout(()=>{
+              setState({
+                ...state,
+                isNodeTypeDownLoading:false,
+              });
+            },1000);
+        })();
+      },[]);
     return (
       <div className="BaseLineManagement">
-        <div className={ this.baseLineClassName} >
+      <div className={ this.baseLineClassName} >
            <div className="ExpandButton">
               {state.isBaseLineSectionExpand ?
               <Tooltip title="Click To Collapse">
@@ -75,17 +115,26 @@ class BaseLineManagementContainer extends BaseComponent {
             </div>
           <div className="BaseLineManagement__Header">
             <div className="BaseLineManagement__HeaderLeft">
-              <label style={{ fontSize: "0.9rem" }} htmlFor="">
+              <label htmlFor="">
                 Select Node Type
               </label>
-              <Select className={"mb-2"} style={{ width: 200 }} onChange={this.onNodeTypeSelection} >
-                <Option value="1">SDP</Option>
-                <Option value="2">AIR</Option>
-                <Option value="3">OCC</Option>
-              </Select>
+              <Select className={"mb-2"} style={{ width: 200 }} 
+                      onChange={this.onNodeTypeSelection} 
+                      loading = {state.isNodeTypeDownLoading} 
+                      placeholder={state.isNodeTypeDownLoading?"Please wait...":"Please Select Node Type"}>
+                      {state.isNodeTypeDownLoading?
+                      <Option key ="1">Please wait</Option>:
+                        this.nodeListData.map((nodeType:INodeType)=>(
+                              <Option key = {nodeType.nodeId}>{nodeType.nodeType}</Option>
+                        ))
+                      }
+                    </Select>
             </div>
+            <button className="btn btn-primary" onClick={()=>{console.log(parametersModificationsMap)}} >
+                Save Modifications
+            </button>
           </div>
-          <Collapsible trigger="Common Baseline Configuration" open>
+          <Collapsible trigger="Common Baseline Configuration" triggerDisabled ={!state.isNodeTypeSelected} open={state.isNodeTypeSelected}>
             <CommonBaseLineConfigurationComponent  />
           </Collapsible>
         </div>
@@ -100,7 +149,7 @@ class BaseLineManagementContainer extends BaseComponent {
                 <Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() =>  setState({...state,isSegmentBaseLineExpanded:true})}/> 
               </Tooltip>}
           </div>
-          <Collapsible trigger="Segment Baseline Configuration" open>
+          <Collapsible trigger="Segment Baseline Configuration"  triggerDisabled ={!state.isNodeTypeSelected} open={state.isNodeTypeSelected}>
             <SegmentBaseLineComponent/>
           </Collapsible>
         </div>
@@ -115,7 +164,7 @@ class BaseLineManagementContainer extends BaseComponent {
               <Icon style={{ fontSize: "0.9rem" }} type="plus" onClick={() =>  setState({...state,isIndividualBaseLineExpanded:true})}/> 
             </Tooltip>}
           </div>
-          <Collapsible trigger="Individual Baseline Configuration" open>
+          <Collapsible trigger="Individual Baseline Configuration"   triggerDisabled ={!state.isNodeTypeSelected} open={state.isNodeTypeSelected}>
            <IndividualBaselineComponent/>
           </Collapsible>
         </div>

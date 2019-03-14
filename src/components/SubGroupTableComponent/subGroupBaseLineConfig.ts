@@ -1,14 +1,14 @@
 export const dummySubGroupData1:any = [
   {
     subGroupId: "1",
-    subGroupName: "Sub Group1"
+    subGroupName: "PSC-SDPInapHD"
   },
-  { subGroupId: "2", subGroupName: "Sub Group2" }
+  { subGroupId: "2", subGroupName: "PSC-PPASInterface" }
 ];
 export const dummySubGroupData2:any = [
     {
       subGroupId: "5",
-      subGroupName: "Sub Group5"
+      subGroupName: "PSC-USSDCallback"
     },
-    { subGroupId: "7", subGroupName: "Sub Group7" }
+    { subGroupId: "7", subGroupName: "PSC-BlockHandler" }
   ];

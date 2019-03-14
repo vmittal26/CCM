@@ -1,0 +1,8 @@
+
+/* .SubgroupTable .rt-thead{
+    display:none;
+} */
+
+.subGroupTableHeader{
+ display: none;
+}

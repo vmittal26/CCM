@@ -4,7 +4,6 @@ import INodeTypeManagement from "../../model/INodeTypeManagement";
 import Backdrop from "../UI/Backdrop/Backdrop";
 import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 import AddnodeType from "../AddnodeType/AddnodeType";
-import axios from "../../config/axiosKTMConfig";
 import { notification, Modal } from "antd";
 import ReactTable from "react-table";
 import Spinner from "../UI/Spinner/Spinner";
@@ -12,6 +11,7 @@ import INodeTypeTableState from "../../model/INodeTypeTableState";
 import { deselectAllCheckbox } from "../../Utils/TableRowSelectionsUtil";
 import highlightRowOnChangeCheckbox from "../../Utils/highlightRowOnChangeCheckbox";
 import { INodeType } from "../../model/INodeType";
+import { axiosNodeManagement } from "../../config/axiosConfig";
 
 
 class NodeTypeManagementContainer extends BaseComponent {
@@ -117,7 +117,7 @@ class NodeTypeManagementContainer extends BaseComponent {
       })
       console.log("inside fetchdata");
       (async()=>{
-        const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+        const response = await axiosNodeManagement.get("api/node-inventory/v1/getNodeTypes/");
         console.log(response);
         this.setTableState({
           ...this.tableState,
@@ -136,7 +136,7 @@ class NodeTypeManagementContainer extends BaseComponent {
       isBackDropVisible: true
     });
     (async()=>{
-      const response = await axios.post("api/node-inventory/v1/addNodeType/",values);
+      const response = await axiosNodeManagement.post("api/node-inventory/v1/addNodeType/",values);
       console.log(response);
 
         this.setState({
@@ -184,7 +184,7 @@ class NodeTypeManagementContainer extends BaseComponent {
     (async()=>{
       let selectedNode = this.state.checkboxArray[ this.state.checkboxArray.length-1];
       console.log(selectedNode);
-      const response = await axios.get('api/node-inventory/v1/deleteNodeType/'+selectedNode);
+      const response = await axiosNodeManagement.get('api/node-inventory/v1/deleteNodeType/'+selectedNode);
       let message:string = response.data;
       let newData = null;
       if(message==="success"){
@@ -267,7 +267,7 @@ class NodeTypeManagementContainer extends BaseComponent {
               loading:true
             });
             (async()=>{
-                  const response = await axios.get("api/node-inventory/v1/getNodeTypes/");
+                  const response = await axiosNodeManagement.get("api/node-inventory/v1/getNodeTypes/");
                   console.log(response);
                   this.nodeListData = response.data;
                   setTableState({

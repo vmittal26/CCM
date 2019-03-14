@@ -16,31 +16,74 @@ export const sementTableHeaderConfig= {
       }
     ]
   };
+export const segmentTableDummyDataOCC:any = [
+    {
+      segmentId:"7",
+      segmentName: "Polaris OCC",
+      segmentDescription: "Polaris OCC",
+    },
+    {
+      segmentId:"8",
+      segmentName: "Titan OCC",
+      segmentDescription: "Titan OCC",
+    },
+    {
+      segmentId:"9",
+      segmentName: "CS18 OCC",
+      segmentDescription: "CS18 OCC",
+    },
+    {
+      segmentId:"10",
+      segmentName: "Ro OCC",
+      segmentDescription: "Ro OCC",
+    },
+    {
+      segmentId:"11",
+      segmentName: "Gy OCC",
+      segmentDescription: "Gy OCC",
+    },
+    {
+      segmentId:"12",
+      segmentName: "Sy OCC",
+      segmentDescription: "Sy OCC",
+    },
+    {
+      segmentId:"13",
+      segmentName: "SCAPv2 OCC",
+      segmentDescription: "SCAPv2  OCC",
+    }
+  ];
   
-export const segmentTableDummyData:any = [
+export const segmentTableDummyDataSDP:any = [
     {
-      segmentName: "Segment Name 1",
-      segmentDescription: "Segment Description 1",
+      segmentId:"1",
+      segmentName: "Postpaid SDP",
+      segmentDescription: "Postpaid SDP",
     },
     {
-      segmentName: "Segment Name 2",
-      segmentDescription: "Segment Description 2",
+      segmentId:"2",
+      segmentName: "Prepaid SDP",
+      segmentDescription: "Prepaid SDP",
     },
     {
-      segmentName: "Segment Name 3",
-      segmentDescription: "Segment Description 3",
+      segmentId:"3",
+      segmentName: "Polaris SDP",
+      segmentDescription: "Polaris SDP",
     },
     {
-      segmentName: "Segment Name 4",
-      segmentDescription: "Segment Description 4",
+      segmentId:"4",
+      segmentName: "Postpaid SDP",
+      segmentDescription: "Postpaid SDP",
     },
     {
-      segmentName: "Segment Name 4",
-      segmentDescription: "Segment Description 4",
+      segmentId:"5",
+      segmentName: "ICP 18 SDP",
+      segmentDescription: "ICP 18 SDP",
     },
     {
-      segmentName: "Segment Name 4",
-      segmentDescription: "Segment Description 4",
+      segmentId:"6",
+      segmentName: "ICP 19 SDP",
+      segmentDescription: "ICP 19 SDP",
     }
   ];
 

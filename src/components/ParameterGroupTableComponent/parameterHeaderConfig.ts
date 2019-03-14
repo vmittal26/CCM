@@ -5,18 +5,32 @@ export const headerConfig:any = {
         accessor: "parameterName",
         headerClassName: "header",
         className: "cell",
-        minWidth: 60
+        minWidth: 100
       },
       {
         Header: "Parameter Value",
         accessor: "parameterValue",
         headerClassName: "header",
         className: "cell",
-        minWidth: 60
+        minWidth: 100
       },
       {
         Header: "Parameter Description",
         accessor: "parameterDescription",
+        headerClassName: "header",
+        className: "cell",
+        minWidth: 200
+      },
+      {
+        Header: "Config File",
+        accessor: "configFilePath",
+        headerClassName: "header",
+        className: "cell",
+        minWidth: 200
+      },
+      {
+        Header: "Update Request",
+        accessor: "updateRequest",
         headerClassName: "header",
         className: "cell",
         minWidth: 200
@@ -27,26 +41,26 @@ export const headerConfig:any = {
 export const dummyParameterData:any = [
     {
       parmeterBaseLineId: "1",
-      parameterName: "XXX",
+      parameterName: "BaseQNum",
       parameterValue: "200",
-      parameterDescription: "This is XXX  Description"
+      parameterDescription: "BaseQNum"
     },
     {
       parmeterBaseLineId: "2",
-      parameterName: "YYY",
-      parameterValue: "100",
-      parameterDescription: "This is YYY  Description"
+      parameterName: "CPUThreshold",
+      parameterValue: "1",
+      parameterDescription: "CPUThreshold"
     },
     {
       parmeterBaseLineId: "3",
-      parameterName: "ZZZ",
+      parameterName: "EventServer",
       parameterValue: "150",
-      parameterDescription: "This is ZZZ  Description"
+      parameterDescription: "EventServer"
     },
     {
       parmeterBaseLineId: "4",
-      parameterName: "PQR",
-      parameterValue: "200",
-      parameterDescription: "This is PQR  Description"
+      parameterName: "FirstInterrogationsPerSecThreshold",
+      parameterValue: "2500",
+      parameterDescription: "FirstInterrogationsPerSecThreshold"
     }
   ];

@@ -3,7 +3,7 @@ import { Formik, Field } from "formik";
 import { Col, Row } from "antd";
 import * as Yup from "yup";
 
-let initialValues={ parmeterBaseLineId:"", parameterName: "" , parameterValue:"" , parameterDescription:""};
+let initialValues={ parameterBaseLineId:"", parameterName: "" , parameterValue:"" , parameterDescription:""};
 export default (props: any) => {
   return (
     <div className="ParameterForm">

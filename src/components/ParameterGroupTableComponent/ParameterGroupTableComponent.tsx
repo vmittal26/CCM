@@ -5,21 +5,37 @@ import {
     dummyParameterData
 } from "./parameterHeaderConfig";
 import ParameterForm from "../ParameterForm/ParameterForm";
+import EE from "../../EventEmitter";
 import { Modal, Icon } from "antd";
 import "antd/lib/modal/style/index.css";
-const subGroupIdParameterDataMap= new Map<string,[]>();
+import { axiosBaseLineManagement } from "../../config/axiosConfig";
+export const subGroupIdParameterDataMap= new Map<string,[]>();
+export const groupIdParmetersMap= new Map<string,[]>();
+export const parametersModificationsMap = new Map<string,[]>();
 
 let state:any=null;
 let setState:Function=null;
+let currentSubGroupId:string=null;
+let currentGroupId:string=null;
+let parentName:string = null;
 
 const onEditParameterForm = function(values:any){
     console.log(values);
-    let data  = state.parameterGroupData.filter((parameter:any)=>parameter.parmeterBaseLineId !== values.parmeterBaseLineId);
+    let data  = state.tableData.filter((parameter:any)=>parameter.parameterBaseLineId !== values.parameterBaseLineId);
+
+    let tableData:any = [values,...data];
     setState({
       ...state,
-      parameterGroupData:[values,...data],
+      tableData,
       isParameterFormVisible:false
     });
+    if(currentSubGroupId) {
+      subGroupIdParameterDataMap.set(currentSubGroupId,tableData);
+    }else if(currentGroupId){
+      groupIdParmetersMap.set(currentGroupId,tableData);
+    }
+
+   parametersModificationsMap.set(values.parameterBaseLineId,values);
 }
 
 const onCancelEdit = function(){
@@ -27,23 +43,23 @@ const onCancelEdit = function(){
 }
 
 
-
-
-const ParameterGroupTableComponent = ({subGroupId}:any): JSX.Element => {
-  const [subParameterTableState, setParameterTableState] = React.useState({
-    isParameterDataLoading: !subGroupIdParameterDataMap.has(subGroupId),
-    parameterGroupData:subGroupIdParameterDataMap.get(subGroupId),
-    isParameterFormVisible:false,
-    parametersToBeUpdated:{}
-    
-  });
-  state = subParameterTableState;
+const ParameterGroupTableComponent = ({ parent , subGroupId, groupId , tableData , nodeTypeId}:any): JSX.Element => {
+  const [parameterTableState, setParameterTableState] = React.useState({
+                                                              isParameterDataLoading: false,
+                                                              tableData:subGroupId?subGroupIdParameterDataMap.get(subGroupId):(groupId?groupIdParmetersMap.get(groupId):[]),
+                                                              isParameterFormVisible:false,
+                                                              parametersToBeUpdated:{}
+                                                            });
+  state = parameterTableState;
   setState = setParameterTableState;
-
+  currentSubGroupId = subGroupId;
+  currentGroupId = groupId;
+  parentName = parent;
+  
   const getEditRow = ()=>{
     return (
       {
-      Header: "Add/Edit",
+      Header: "Remove/Edit",
       minWidth: 100,
       className: "cell",
       headerClassName: "header",
@@ -51,19 +67,14 @@ const ParameterGroupTableComponent = ({subGroupId}:any): JSX.Element => {
 
         return (
           <div className="TableRowButtons">
+            <Icon type="delete" />
             <Icon  onClick={(e:any)=>{
               console.log(row.original);
                 setParameterTableState({
-                ...subParameterTableState,
+                ...parameterTableState,
                 parametersToBeUpdated:{...row.original},
                 isParameterFormVisible:true
             })}} type="edit" />
-            <Icon  onClick={(e:any)=>{
-                setParameterTableState({
-                ...subParameterTableState,
-                parametersToBeUpdated:{},
-                isParameterFormVisible:true
-            })}} type="plus" />
           </div>
         );
       }
@@ -72,42 +83,70 @@ const ParameterGroupTableComponent = ({subGroupId}:any): JSX.Element => {
   }
 
   const getParameterData = ()=>{
-    if(!subGroupIdParameterDataMap.has(subGroupId)){
-        console.log("inside getParameterData")
+    if(groupId && tableData){
+      if(!groupIdParmetersMap.has(groupId)){
+        setParameterTableState({
+          ...parameterTableState,
+            isParameterDataLoading: false,
+            tableData
+          });
+        groupIdParmetersMap.set(groupId,tableData);
+      }
+    }else if(subGroupId){
+      if(!subGroupIdParameterDataMap.has(subGroupId)){
+        console.log("inside getParameterData");
      
-        if (subGroupId === "1") {
-            setTimeout(() => {
-                setParameterTableState({
-                  ...subParameterTableState,
-                isParameterDataLoading: false,
-                parameterGroupData: dummyParameterData
-                });
-                subGroupIdParameterDataMap.set(subGroupId,dummyParameterData);
-            }, 1000);
-            } else if (subGroupId === "2") {
-                setTimeout(() => {
-                    setParameterTableState({
-                        ...subParameterTableState,
-                        isParameterDataLoading: false,
-                        parameterGroupData: dummyParameterData
-                });
-                subGroupIdParameterDataMap.set(subGroupId,dummyParameterData);
-                }, 1000);
-            }
+        setParameterTableState({
+          ...parameterTableState,
+        isParameterDataLoading: true,
+        });
+        
+        (async()=>{
+          const response = await axiosBaseLineManagement.get(`/api/base-config-manager/v1/baseconfig/getParameterDetails/${nodeTypeId}/${subGroupId}`);
+          console.log(response);
+          let tableData = response.data;
+
+          setParameterTableState({
+            ...parameterTableState,
+          isParameterDataLoading: false,
+          tableData
+          });
+        })();
+        // if (subGroupId === "1") {
+        //     setTimeout(() => {
+        //         setParameterTableState({
+        //           ...parameterTableState,
+        //         isParameterDataLoading: false,
+        //         tableData: dummyParameterData
+        //         });
+        //         subGroupIdParameterDataMap.set(subGroupId,dummyParameterData);
+        //     }, 1000);
+        //     } else if (subGroupId === "2") {
+        //         setTimeout(() => {
+        //             setParameterTableState({
+        //                 ...parameterTableState,
+        //                 isParameterDataLoading: false,
+        //                 tableData: dummyParameterData
+        //         });
+        //         subGroupIdParameterDataMap.set(subGroupId,dummyParameterData);
+        //         }, 1000);
+        //     }
+         }
+      }
     }
-  }
+
    let parameterForm = <ParameterForm  
-                            initialValues = {subParameterTableState.parametersToBeUpdated} 
+                            initialValues = {parameterTableState.parametersToBeUpdated} 
                             onSubmit={onEditParameterForm} 
                             onCancel={onCancelEdit}/>
    let parameterModal =  <Modal
-                            title="Add/Edit Parameter"
+                            title="Edit Parameter"
                             width='25rem'
                             centered
                             footer={null}
-                            visible={subParameterTableState.isParameterFormVisible}
+                            visible={parameterTableState.isParameterFormVisible}
                             onCancel={() => {
-                              setState({ ...subParameterTableState, isParameterFormVisible: false });
+                              setState({ ...parameterTableState, isParameterFormVisible: false });
                             }}>
                             <div style={{ position: "relative" }}>
                               { parameterForm}
@@ -118,16 +157,23 @@ const ParameterGroupTableComponent = ({subGroupId}:any): JSX.Element => {
                             className="ParameterTable"
                             style={{ paddingLeft: "4rem" }}
                             columns={[getEditRow(),...headerConfig.headerConfig]}
-                            data={subParameterTableState.parameterGroupData}
+                            data={parameterTableState.tableData}
                             onFetchData = {getParameterData}
-                            loading={subParameterTableState.isParameterDataLoading}
+                            loading={parameterTableState.isParameterDataLoading}
                             defaultPageSize={10}
                             onPageSizeChange={() => {}}
                             onPageChange={() => {}}
                             // SubComponent={}
                             />
+
+    React.useEffect(() => {
+        
+      EE.emit("onParameterTableExpansion",parentName);
+    },[])
+
+     
      return   ( <div className="ParameterGroupTableComponent">
-                            {(subParameterTableState.isParameterFormVisible?parameterModal:null)}{parametersTable};
+                            {(parameterTableState.isParameterFormVisible?parameterModal:null)}{parametersTable};
                 </div>)
 };
 

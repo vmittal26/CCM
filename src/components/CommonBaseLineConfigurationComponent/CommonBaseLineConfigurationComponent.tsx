@@ -4,24 +4,14 @@ import { Icon } from "antd";
 import {headerConfig, dummyParameterData , dummySubGroupData1 ,dummySubGroupData2,dummyGroupData} from "./commonBaseLineConfig";
 import BaseComponent from "../BaseComponent/BaseComponent";
 import SubGroupTableComponent from "../SubGroupTableComponent/SubGroupTableComponent";
-
-const parameterTable = (
-  <ReactTable
-   className="ParameterTable"
-    style={{paddingLeft:"1rem"}}
-    columns={headerConfig.headerConfig}
-    loading={false}
-    showPagination={false}
-    defaultPageSize={10}
-    onPageSizeChange={() => {}}
-    onPageChange={() => {}}
-    data={dummyParameterData}
-  />
-);
-
-
+import { axiosBaseLineManagement } from "../../config/axiosConfig";
+import CommonBaseLineGroupChildGroupComponent from "../CommonBaseLineGroupChildGroupComponent/CommonBaseLineGroupChildGroupComponent";
 
 class CommonBaseLineConfigurationContainer extends BaseComponent{
+
+  private state:any;
+  private setState:Function;
+  private selectedNodeTypeId:string;
 
   constructor(){
     super();
@@ -29,8 +19,27 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
 
   public onNodeTypeSelection = (nodeTypeId:string)=>{
       console.log(nodeTypeId);
+      this.selectedNodeTypeId = nodeTypeId;
+      (async()=>{
+         const response = await axiosBaseLineManagement.get(`api/base-config-manager/v1/baseconfig/getGroupDetails/${nodeTypeId}`);
+
+        this.setState({
+          ...this.state,
+          loading:false,
+          tableData:response.data
+        });
+
+      })();
   }
   public commonBaseLineComponent = (props:any):JSX.Element=>{
+
+    const[state,setState ] = React.useState({
+      tableData:[],
+      loading:true
+    })
+
+    this.state = state;
+    this.setState = setState;
 
     React.useEffect(()=>{
 
@@ -52,9 +61,9 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
               minWidth: 50
             }
           ]}
-          data={dummyGroupData}
+          data={state.tableData}
           showPagination={true}
-          loading={false}
+          loading={state.loading}
           showPaginationTop={true}
           showPaginationBottom={false}
           freezeWhenExpanded={true}
@@ -64,7 +73,7 @@ class CommonBaseLineConfigurationContainer extends BaseComponent{
           nextText={<Icon style={{fontSize:"1rem"}} type="fast-forward" />}
           onPageSizeChange={() => {}}
           onPageChange={() => {}}
-          SubComponent={(row)=>{console.log(row);return <SubGroupTableComponent groupId={row.original.groupId}/>}}
+          SubComponent={(row)=>{console.log(row);return <CommonBaseLineGroupChildGroupComponent nodeTypeId={this.selectedNodeTypeId} groupId={row.original.groupId}/>}}
         />
       </div>
     );

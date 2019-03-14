@@ -12,6 +12,7 @@ import Navigation from "../Navigation/Navigation";
 import CoverSpinner from "../UI/CoverSpinner/CoverSpinner";
 import Login from "../Login/Login";
 import BaseComponent from "../BaseComponent/BaseComponent";
+import BaseLineConfigurationManagement from "../BaseLineConfigurationManagement/BaseLineConfigurationManagement";
 
 const NodeManagement = React.lazy(()=>import("../NodeManagement/NodeManagement"));
 const UserManagement = React.lazy(()=>import("../UserManagement/UserManagement"));
@@ -63,6 +64,7 @@ class AppContainer extends BaseComponent{
                 <Route path="/nodeManagement" component={(props:any) => <NodeManagement {...props} />} />
                 <Route path="/userManagement" component={(props:any) => <UserManagement {...props} />} />
                 <Route path="/baseLineManagement" component={(props:any) => <BaseLineManagement {...props} />} />
+                {/* <Route path="/baseLineConfigurationManagement" component={(props:any) => <BaseLineConfigurationManagement {...props} />} /> */}
               </React.Suspense>
           </Switch>
          </div>

@@ -7,24 +7,36 @@ const Option = Select.Option;
 
 const dummyData = [
   {
-    nodeDetailName: "Test1",
-    parameterName: "test parameter",
-    parameterValue: "test value"
+    nodeDetailName: "IP1",
+    parameterName: "Checksum",
+    parameterValue: "AHEFGFDDQCL9LCAG"
   },
   {
-    nodeDetailName: "Test2",
-    parameterName: "test parameter2",
-    parameterValue: "test value2"
-  }
+    nodeDetailName: "IP2",
+    parameterName: "Counter",
+    parameterValue: "1548175008"
+  },
+  {
+    nodeDetailName: "sdp_1",
+    parameterName: "Active",
+    parameterValue: "true"
+  },
 ];
 
 class IndividualBaselineContainer extends BaseComponent{
-  private multiSelectOptions:Array<{}>=[];
+  private nodes:Array<string>=[
+          "sdp_1",
+          "IP1",
+          "IP2",
+          "IP3",
+          "IP4",
+          "IP5",
+          "IP6",
+          "IP7"
+  ];
   constructor(){
     super();
-      for (let i = 10; i < 36; i++) {
-        this.multiSelectOptions.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-       }
+    // this.nodes.map((node)=><Option key={node}>{node}</Option>);
   }
 
   public onNodeMultiSelect = (value:any)=>{
@@ -40,10 +52,10 @@ class IndividualBaselineContainer extends BaseComponent{
                   mode="multiple"
                   size={'default'}
                   placeholder="Please select"
-                  defaultValue={['a10', 'c12']}
+                  defaultValue={['IP1', 'IP2']}
                   onChange={this.onNodeMultiSelect}
                   style={{ width: '100%' }}>
-                   {this.multiSelectOptions}
+                   { this.nodes.map((node)=><Option key={node}>{node}</Option>)}
                 </Select>
                 <button className="btn btn-primary">Collect</button>
          </div>

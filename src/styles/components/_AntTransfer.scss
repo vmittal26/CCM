@@ -1,0 +1,12 @@
+.ant-transfer-list{
+    height: 20rem !important;
+    padding-top: 3rem;
+}
+.ant-transfer-list-header .ant-checkbox{
+    display: none;
+}
+.ant-transfer-list-content-item{
+    > span{
+      margin-left: 0.5rem;
+    }
+}

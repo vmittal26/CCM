@@ -4,5 +4,10 @@
 
     span,.ant-breadcrumb a{
         color:white;
+        
+    }
+
+    .ant-breadcrumb:hover{
+        color:$color-primary;
     }
 }
